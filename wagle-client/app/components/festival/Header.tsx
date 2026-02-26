@@ -89,7 +89,7 @@ function SideDrawer({
 export function Header() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  console.log("drawerOpen:", drawerOpen);
+  console.log("drawerOpen:", drawerOpen); // 오류확인
 
   return (
     <>
