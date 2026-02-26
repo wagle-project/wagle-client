@@ -43,6 +43,7 @@ function SideDrawer({
             className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
             aria-label="메뉴 닫기"
           >
+            {" "}
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
               <path
                 d="M18 6L6 18M6 6l12 12"
@@ -71,19 +72,24 @@ function SideDrawer({
           ))}
         </nav>
 
-        {/* 드로어 하단 */}
-        <div className="px-6 py-5 border-t border-white/10">
+        {/* 드로어 하단 <div className="px-6 py-5 border-t border-white/10">
           <p className="text-white/20 text-xs">WagleWagle v1.0.0</p>
-        </div>
+        </div> */}
       </div>
     </>
   );
 }
+/*
+<SideDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
+사이드바 열어주는 역할
+
+*/
 
 // ── Header ──────────────────────────────────────────────────────
 export function Header() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  console.log("drawerOpen:", drawerOpen);
 
   return (
     <>
@@ -131,8 +137,6 @@ export function Header() {
           <span className="w-2.5 h-[1.5px] bg-white/70 rounded-full self-start ml-[10px]" />
         </button>
       </header>
-
-      <SideDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </>
   );
 }
