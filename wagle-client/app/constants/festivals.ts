@@ -3,10 +3,10 @@ import { Festival } from "@/app/types/festival";
 export const DUMMY_FESTIVALS: Festival[] = [
   {
     id: 1,
-    name: "2026 김천 김밥 축제",
-    location: "김천 사명대사공원",
-    startDate: "2026.10.15",
-    endDate: "10.18",
+    name: "2025 영대축제",
+    location: "영남대학교 천연잔디구장 등 캠퍼스 일원",
+    startDate: "2025년 9월 30일",
+    endDate: "10월 2일",
     imageUrl:
       "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=800&q=80",
     status: "ONGOING",
