@@ -1,25 +1,32 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 export default function SplashScreen() {
   const [progress, setProgress] = useState(0);
   const router = useRouter();
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Effect to handle progress increment
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          router.push("/onboarding");
-          return 100;
-        }
-        return prev + 1;
-      });
+    timerRef.current = setInterval(() => {
+      setProgress((prev) => Math.min(prev + 1, 100));
     }, 30);
-    return () => clearInterval(timer);
-  }, [router]);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+
+  // Effect to handle navigation when progress reaches 100
+  useEffect(() => {
+    if (progress >= 100 && timerRef.current) {
+      clearInterval(timerRef.current);
+      router.push("/onboarding");
+    }
+  }, [progress, router]);
 
   return (
     <div className="relative flex h-screen w-full flex-col items-center justify-between bg-black p-8 overflow-hidden ">
