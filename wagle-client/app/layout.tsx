@@ -6,7 +6,7 @@ const agbalumo = Agbalumo({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-agbalumo",
-  // 이렇게 해줌녀 내부저긍로 이런 css를 생성함
+  // 이렇게 하면 내부적으로 이런 css를 생성함
 });
 
 const notoSansKR = Noto_Sans_KR({
@@ -38,8 +38,6 @@ export const viewport: Viewport = {
   themeColor: "#0a0b1e",
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
 };
 
 export default function RootLayout({
@@ -49,9 +47,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko" className="dark">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </head>
       <body
         className={`${agbalumo.variable} ${notoSansKR.variable} bg-[#0a0b1e] text-white antialiased min-h-dvh w-full overflow-x-hidden`}
         style={{ fontFamily: "var(--font-noto)" }}

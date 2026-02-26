@@ -1,65 +1,133 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useEffect, useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+
+export default function SplashScreen() {
+  const [progress, setProgress] = useState(0);
+  const router = useRouter();
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Effect to handle progress increment
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setProgress((prev) => Math.min(prev + 1, 100));
+    }, 30);
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, []);
+
+  // Effect to handle navigation when progress reaches 100
+  useEffect(() => {
+    if (progress >= 100 && timerRef.current) {
+      clearInterval(timerRef.current);
+      router.push("/onboarding");
+    }
+  }, [progress, router]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="relative flex h-screen w-full flex-col items-center justify-between bg-black p-8 overflow-hidden ">
+      {/* 상단 여백 */}
+      <div className="h-14 w-full"></div>
+
+      {/* 중앙 로고 섹션 */}
+      <div className="flex flex-col items-center justify-center grow w-full max-w-sm">
+        <div className="relative w-64 h-64 mb-10 flex items-center justify-center">
+          {/* 네온 글로우 효과 */}
+          <div className="absolute inset-0 bg-[#2bbdee]/10 blur-[70px] rounded-full"></div>
+
+          <div
+            className="relative z-10 w-full h-full flex items-center justify-center"
+            style={{
+              filter:
+                "drop-shadow(0 0 10px rgba(43, 189, 238, 0.5)) drop-shadow(0 0 25px rgba(168, 85, 247, 0.3))",
+            }}
+          >
+            <svg
+              className="w-full h-full"
+              fill="none"
+              viewBox="0 0 200 200"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+              <defs>
+                <linearGradient
+                  id="neonGradient"
+                  x1="0%"
+                  x2="100%"
+                  y1="0%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#2bbdee"></stop>
+                  <stop offset="100%" stopColor="#a855f7"></stop>
+                </linearGradient>
+              </defs>
+              <path
+                d="M30 110C30 85 50 75 70 75C85 75 95 85 100 100C105 115 115 125 130 125C150 125 170 115 170 90C170 65 150 55 130 55M10 120C10 150 40 175 75 175C110 175 130 155 150 155C170 155 190 170 190 190"
+                stroke="url(#neonGradient)"
+                strokeWidth="4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <circle
+                cx="70"
+                cy="55"
+                r="10"
+                stroke="url(#neonGradient)"
+                strokeWidth="3"
+              ></circle>
+              <circle
+                cx="130"
+                cy="35"
+                r="10"
+                stroke="url(#neonGradient)"
+                strokeWidth="3"
+              ></circle>
+              <circle
+                cx="130"
+                cy="175"
+                r="10"
+                stroke="url(#neonGradient)"
+                strokeWidth="3"
+              ></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div className="text-center">
+          <h1 style={{ fontFamily: "var(--font-agbalumo)" }}>WagleWagle</h1>
+          <p className="text-[#2bbdee]/80 text-[15px] font-normal tracking-tight opacity-90">
+            축제의 모든 즐거움이 와글와글!
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </div>
+
+      {/* 하단 로딩 바 섹션 */}
+      <div className="w-full max-w-[280px] flex flex-col items-center gap-10">
+        <div className="w-full flex flex-col gap-3">
+          <div className="flex justify-between items-center px-1">
+            <p className="text-white/30 text-[9px] tracking-[0.2em] font-medium uppercase">
+              Detecting Nearby Festivals
+            </p>
+            <p className="text-white/30 text-[9px] tracking-[0.2em] font-medium uppercase">
+              {progress}%
+            </p>
+          </div>
+          <div className="h-[1.5px] w-full bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#2bbdee] to-[#a855f7] rounded-full transition-all duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
         </div>
-      </main>
+        <div className="h-2"></div>
+      </div>
+
+      {/* 배경 장식 광원 */}
+      <div className="absolute top-[-15%] left-[-15%] w-[50%] h-[50%] bg-[#2bbdee]/5 blur-[130px] rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#a855f7]/5 blur-[110px] rounded-full pointer-events-none"></div>
     </div>
   );
 }
