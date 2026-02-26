@@ -26,9 +26,16 @@ function SideDrawer({
       )}
 
       {/* 드로어 패널 */}
+
       <div
-        className="fixed top-0 right-0 z-50 h-full w-[75%] max-w-[300px] bg-[#0e0f24] border-l border-white/10 flex flex-col transition-transform duration-300 ease-in-out"
-        style={{ transform: isOpen ? "translateX(0)" : "translateX(100%)" }}
+        className={`
+    fixed top-0 right-0 z-50 h-full w-[75%] max-w-[300px]
+    bg-[#0e0f24] border-l border-white/10 flex flex-col
+    transition-transform duration-300 ease-in-out
+    ${
+      isOpen ? "translate-x-0" : "translate-x-full invisible" // 👈 invisible 추가
+    }
+        `}
       >
         {/* 드로어 헤더 */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
@@ -38,12 +45,12 @@ function SideDrawer({
           >
             WagleWagle
           </h2>
+
           <button
             onClick={onClose}
             className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
             aria-label="메뉴 닫기"
           >
-            {" "}
             <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
               <path
                 d="M18 6L6 18M6 6l12 12"
@@ -72,25 +79,20 @@ function SideDrawer({
           ))}
         </nav>
 
-        {/* 드로어 하단 <div className="px-6 py-5 border-t border-white/10">
+        {/* 드로어 하단 */}
+        <div className="px-6 py-5 border-t border-white/10">
           <p className="text-white/20 text-xs">WagleWagle v1.0.0</p>
-        </div> */}
+        </div>
       </div>
     </>
   );
 }
-/*
-<SideDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
-사이드바 열어주는 역할
-
-*/
 
 // ── Header ──────────────────────────────────────────────────────
 export function Header() {
   const router = useRouter();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  console.log("drawerOpen:", drawerOpen); // 오류확인
-
+  console.log("drawerOpen:", drawerOpen);
   return (
     <>
       <header className="sticky top-0 z-30 flex items-center justify-between px-5 py-4 bg-[#0a0b1e]/90 backdrop-blur-md border-b border-white/5">
@@ -137,6 +139,9 @@ export function Header() {
           <span className="w-2.5 h-[1.5px] bg-white/70 rounded-full self-start ml-[10px]" />
         </button>
       </header>
+
+      {/* ⭐ 드로어 */}
+      <SideDrawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </>
   );
 }
