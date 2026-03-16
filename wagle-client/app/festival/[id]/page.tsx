@@ -1,8 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import LocationConsentModal from "@/app/components/festival/LocationConsentModal";
+
+const BASE_URL = "https://wagle-wagle.my-project.cloud/api/v1";
 
 interface FestivalDetail {
   id: number;
@@ -20,7 +23,6 @@ interface TimetableItem {
   sequence: number;
 }
 
-// 지도 정보를 담을 인터페이스 추가
 interface FestivalMapInfo {
   mapImageUrl: string;
   sequence: number;
@@ -32,51 +34,58 @@ export default function FestivalDetailPage() {
   const festivalId = params.id as string;
 
   const [activeTab, setActiveTab] = useState<'info' | 'timetable' | 'map'>('info');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [festival, setFestival] = useState<FestivalDetail | null>(null);
   const [timetables, setTimetables] = useState<TimetableItem[]>([]);
-  const [maps, setMaps] = useState<FestivalMapInfo[]>([]); 
+  const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [isDetailLoading, setIsDetailLoading] = useState(true);
+
+  // 위치 전송 interval을 저장해두는 ref
+  const locationIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // 컴포넌트 언마운트 시 interval 정리
+  useEffect(() => {
+    return () => {
+      if (locationIntervalRef.current) {
+        clearInterval(locationIntervalRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     const fetchAllData = async () => {
       setIsDetailLoading(true);
-      const baseUrl = "https://wagle-wagle.my-project.cloud/api/v1";
-
       try {
-        // 1. 축제 상세 정보 조회
-        const detailRes = await fetch(`${baseUrl}/festivals/${festivalId}`);
+        const detailRes = await fetch(`${BASE_URL}/festivals/${festivalId}`);
         if (!detailRes.ok) throw new Error("Server Down");
         const detailData = await detailRes.json();
         if (detailData.isSuccess) setFestival(detailData.result);
 
-        // 2. 타임테이블 조회
-        const timetableRes = await fetch(`${baseUrl}/festivals/${festivalId}/timetables`);
+        const timetableRes = await fetch(`${BASE_URL}/festivals/${festivalId}/timetables`);
         if (timetableRes.ok) {
           const timetableData = await timetableRes.json();
           if (timetableData.isSuccess) setTimetables(timetableData.result.content);
         }
 
-        // 3. 지도 정보 조회
-        const mapRes = await fetch(`${baseUrl}/festivals/${festivalId}/maps`);
+        const mapRes = await fetch(`${BASE_URL}/festivals/${festivalId}/maps`);
         if (mapRes.ok) {
           const mapData = await mapRes.json();
           if (mapData.isSuccess) setMaps(mapData.result.content);
         }
-
       } catch (error) {
         console.warn("백엔드 연결 실패! 더미 데이터를 표시합니다.");
-        // 💡 서버 연결 실패 시 나타날 더미 데이터 (디자인 확인용)
         setFestival({
           id: 1,
           name: "2026 김천 김밥 축제",
           description: "2026년 가을, 김천에서 펼쳐지는 특별한 미식 여행! '김천 김밥 축제'는 지역 특산물을 활용한 창의적인 김밥부터 전국의 숨은 김밥 맛집들이 한자리에 모이는 국내 유일의 김밥 테마 축제입니다.",
-          posterUrl: "https://images.unsplash.com/photo-1628191140046-13a854dc694a?q=80&w=800&auto=format&fit=crop", 
+          posterUrl: "https://images.unsplash.com/photo-1628191140046-13a854dc694a?q=80&w=800&auto=format&fit=crop",
           startDate: "2025-10-15T08:00:00",
           endDate: "2025-10-18T22:00:00",
           placeName: "김천 사명대사공원",
           address: "경상북도 김천시 대항면"
         });
-        setTimetables([]); 
+        setTimetables([]);
       } finally {
         setIsDetailLoading(false);
       }
@@ -84,6 +93,94 @@ export default function FestivalDetailPage() {
 
     if (festivalId) fetchAllData();
   }, [festivalId]);
+
+  // 위치를 서버에 한 번 전송하는 함수
+  const sendLocation = async (lat: number, lng: number, uuid: string, intervalMs: number) => {
+    try {
+      const res = await fetch(`${BASE_URL}/festivals/${festivalId}/visitors/location`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Visitor-UUID": uuid, // uuid를 헤더로 전송 (백엔드 확인 필요)
+        },
+        body: JSON.stringify({ lat, lng }),
+      });
+      const data = await res.json();
+
+      // 서버에서 locationUpdateInterval을 응답으로 주면 그 값으로 interval 업데이트
+      if (data.isSuccess && data.result?.locationUpdateInterval) {
+        return data.result.locationUpdateInterval;
+      }
+    } catch (err) {
+      console.warn("위치 전송 실패:", err);
+    }
+    return intervalMs;
+  };
+
+  // GPS 추적 시작 함수
+  const startLocationTracking = (uuid: string) => {
+    // 이미 실행 중이면 중복 실행 방지
+    if (locationIntervalRef.current) return;
+
+    const DEFAULT_INTERVAL = 3000;
+
+    const track = () => {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          await sendLocation(latitude, longitude, uuid, DEFAULT_INTERVAL);
+        },
+        (err) => {
+          console.warn("GPS 오류:", err);
+        }
+      );
+    };
+
+    // 즉시 한 번 실행 후 interval 시작
+    track();
+    locationIntervalRef.current = setInterval(track, DEFAULT_INTERVAL);
+  };
+
+  // 동의 버튼 클릭 시 실행되는 함수
+  const handleAgree = async () => {
+    setIsModalOpen(false);
+
+    try {
+      // 1. 이미 uuid가 있으면 재사용
+      let uuid = localStorage.getItem("visitor_uuid");
+
+      if (!uuid) {
+        // 2. 동의 API 호출해서 uuid 발급
+        const res = await fetch(`${BASE_URL}/visitors`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ isTermsAgreed: true }),
+        });
+        const data = await res.json();
+        if (data.isSuccess) {
+          uuid = data.result.uuid;
+          localStorage.setItem("visitor_uuid", uuid!);
+        } else {
+          console.warn("동의 API 실패:", data.message);
+          return;
+        }
+      }
+
+      // 3. GPS 권한 요청 및 위치 추적 시작
+      if (!navigator.geolocation) {
+        alert("이 기기는 GPS를 지원하지 않습니다.");
+        return;
+      }
+
+      startLocationTracking(uuid!);
+
+      // 4. 지도 탭으로 이동
+      setActiveTab('map');
+
+    } catch (err) {
+      console.error("동의 처리 중 오류:", err);
+    }
+  };
 
   const getFormattedDate = (start: string, end: string) => {
     if (!start || !end) return { dateStr: "", days: 0 };
@@ -106,6 +203,21 @@ export default function FestivalDetailPage() {
     else setActiveTab(tab);
   };
 
+  const handleMapButtonClick = () => {
+    if (activeTab === 'map') {
+      setActiveTab('info');
+    } else {
+      // 이미 uuid가 있으면 (이미 동의한 경우) 바로 지도 탭으로
+      const uuid = localStorage.getItem("visitor_uuid");
+      if (uuid) {
+        startLocationTracking(uuid);
+        setActiveTab('map');
+      } else {
+        setIsModalOpen(true);
+      }
+    }
+  };
+
   if (isDetailLoading) {
     return (
       <div className="flex flex-col h-[100dvh] w-full max-w-[430px] mx-auto bg-[#0f111a] items-center justify-center">
@@ -117,8 +229,14 @@ export default function FestivalDetailPage() {
   const { dateStr, days } = getFormattedDate(festival?.startDate || "", festival?.endDate || "");
 
   return (
-    <div className="flex flex-col h-[100dvh] w-full max-w-[430px] mx-auto bg-[#0f111a] font-sans text-white overflow-hidden">
-      
+    <div className="flex flex-col h-[100dvh] w-full max-w-[430px] mx-auto bg-[#0f111a] font-sans text-white overflow-hidden relative">
+
+      <LocationConsentModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onAgree={handleAgree}
+      />
+
       <header className="flex-shrink-0 flex items-center justify-between px-5 h-16 bg-[#0f111a] z-20">
         <button onClick={handleBack} className="text-[#E270CA] bg-transparent outline-none border-none p-2 -ml-2 transition-transform active:scale-95">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -175,7 +293,6 @@ export default function FestivalDetailPage() {
           </div>
         )}
 
-        {/* ── 타임테이블 화면 ── */}
         {activeTab === 'timetable' && (
           <div className="flex flex-col items-center animate-fadeIn w-full px-5 py-10 pb-[100px]">
             {timetables.length > 0 ? (
@@ -186,7 +303,6 @@ export default function FestivalDetailPage() {
           </div>
         )}
 
-        {/* ── 행사장 지도 화면 ── */}
         {activeTab === 'map' && (
           <div className="flex flex-col items-center animate-fadeIn w-full px-5 py-10 pb-[100px]">
             {maps.length > 0 ? (
@@ -211,9 +327,9 @@ export default function FestivalDetailPage() {
             </svg>
             타임테이블 확인
           </button>
-          
+
           <button
-            onClick={() => handleTabToggle('map')}
+            onClick={handleMapButtonClick}
             className={`flex-1 h-[52px] rounded-full text-[14px] flex items-center justify-center gap-2 transition-all duration-300 ${
               activeTab === 'map' ? 'bg-[#2bbdee] text-[#0f111a] font-bold' : 'border border-[#2EFAD9] text-[#2EFAD9] bg-[#0f111a] font-medium'
             }`}
