@@ -62,8 +62,6 @@ export default function FestivalDetailPage() {
   }, [festivalId]);
 
   return (
-    // 💡 1. 튕김 버그의 원인이던 h-[100dvh]와 overflow-hidden을 삭제하고, 
-    // 가장 안정적인 min-h-screen으로 뼈대를 다시 잡았습니다.
     <div className="flex flex-col min-h-screen w-full max-w-[430px] mx-auto bg-[#111827] text-white">
       
       {/* 상단 헤더 (네온 핑크 & 중앙 정렬 유지) */}
@@ -115,9 +113,6 @@ export default function FestivalDetailPage() {
         )}
       </main>
 
-      {/* 💡 2. 진짜 확실한 해결책: sticky bottom-10 적용!
-          화면을 아무리 움직여도 무조건 화면 바닥에서 '40px(bottom-10)' 만큼 띄워진 채로 고정됩니다.
-          양옆으로 튕겨 나갈 일도 절대 없습니다. */}
       <div className="sticky bottom-10 w-full px-6 flex gap-3 z-50 mb-8">
         <button 
           onClick={() => setActiveTab('timetable')}
