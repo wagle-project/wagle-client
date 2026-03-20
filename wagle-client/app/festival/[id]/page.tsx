@@ -6,7 +6,7 @@ import Link from "next/link";
 import LocationConsentModal from "@/app/components/festival/LocationConsentModal";
 
 // 💡 수정된 부분: Vercel 배포 환경 및 .env 파일의 환경 변수를 최우선으로 사용합니다.
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || "https://wagle-wagle.my-project.cloud/api/v1";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ;
 
 interface FestivalDetail {
   id: number;
