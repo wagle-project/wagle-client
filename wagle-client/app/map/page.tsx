@@ -7,5 +7,5 @@ const FestivalMap = dynamic(() => import("@/app/components/map/FestivalMap"), {
 });
 
 export default function FestivalPage() {
-  return <FestivalMap />;
+  return <FestivalMap festivalId={1} />;
 }
