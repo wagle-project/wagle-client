@@ -32,6 +32,7 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
 export default function FestivalMap({ festivalId }: { festivalId: number }) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showTraffic, setShowTraffic] = useState(true); // B 담당
 
   // C 담당: 위치 훅 연결
   const { position, permissionState, isSharing, startSharing, stopSharing } = useLocation();
@@ -153,8 +154,8 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
         {/* 축제 지도 이미지 오버레이 */}
         <ImageOverlay url={currentMap.mapImageUrl} bounds={bounds} opacity={1} />
 
-        {/* B: 혼잡도 레이어 (B 작업 완료 후 주석 해제) */}
-        {/* <CongestionLayer mapId={currentMap.mapId} /> */}
+        {/* B: 혼잡도 레이어 */}
+        {showTraffic && <CongestionLayer mapId={currentMap.mapId} />}
 
         {/* C: 내 위치 마커 */}
         <MyLocationMarker position={position} followOnce />
