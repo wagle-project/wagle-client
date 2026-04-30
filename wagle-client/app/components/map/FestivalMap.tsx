@@ -6,7 +6,6 @@ import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
 import MyLocationMarker from "./MyLocationMarker";    // C 담당
-import MapLegend from "./MapLegend";                  // C 담당
 import { useLocation } from "../../hooks/useLocation"; // C 담당
 import type { FestivalMapInfo } from "../../types/festival";
 
@@ -33,7 +32,7 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
 export default function FestivalMap({ festivalId }: { festivalId: number }) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTraffic, setShowTraffic] = useState(true);
+  const [showTraffic, setShowTraffic] = useState(true); // B 담당
 
   // C 담당: 위치 훅 연결
   const { position, permissionState, isSharing, startSharing, stopSharing } = useLocation();
@@ -96,25 +95,6 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
 
   return (
     <div className="relative w-full h-screen">
-      {/* ── 상단: SHOW TRAFFIC 토글 ──────────────────────── */}
-      <div className="absolute top-4 right-4 z-[1000] flex items-center gap-2 rounded-full bg-[#0f111a]/80 backdrop-blur-md px-4 py-2 border border-white/10">
-        <span className="text-white/60 text-[11px] tracking-widest font-medium uppercase">
-          Show Traffic
-        </span>
-        <button
-          onClick={() => setShowTraffic((v) => !v)}
-          className={`relative w-10 h-[22px] rounded-full transition-colors duration-200 ${
-            showTraffic ? "bg-[#2bbdee]" : "bg-white/20"
-          }`}
-          aria-label="혼잡도 표시 토글"
-        >
-          <span
-            className={`absolute top-[3px] w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${
-              showTraffic ? "translate-x-[22px]" : "translate-x-[3px]"
-            }`}
-          />
-        </button>
-      </div>
 
       {/* ── 지도 복수 개일 때: 좌우 화살표 ──────────────── */}
       {maps.length > 1 && (
@@ -180,9 +160,6 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
         {/* C: 내 위치 마커 */}
         <MyLocationMarker position={position} followOnce />
       </MapContainer>
-
-      {/* C: 혼잡도 범례 */}
-      {showTraffic && <MapLegend />}
     </div>
   );
 }
