@@ -1,9 +1,7 @@
 import { FestivalStatus } from "@/app/types/festival";
 
-const STATUS_CONFIG: Record<
-  FestivalStatus,
-  { label: string; className: string; dot: string }
-> = {
+
+const STATUS_CONFIG: Record<FestivalStatus, { label: string; className: string; dot: string }> = {
   ONGOING: {
     label: "ONGOING",
     className: "text-[#00ff88] border border-[#00ff88]/40 bg-[#00ff88]/10",
