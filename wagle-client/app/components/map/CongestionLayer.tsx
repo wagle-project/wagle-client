@@ -4,11 +4,10 @@ import { useEffect, useState, useMemo } from "react";
 import { Polygon } from "react-leaflet";
 import { cellsToMultiPolygon } from "h3-js"; // cellToBoundary 대신 병합 함수 사용!
 
-
 // 백엔드 명세에 맞춘 타입 정의
 interface CongestionData {
   h3Index: string;
-  level: number; // 1(쾌적), 2(주의), 3(혼잡)
+  level: number; // 0(쾌적), 1(보통), 2(혼잡), 3(매우혼잡)
   count?: number; 
 }
 
@@ -49,7 +48,7 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
   const mergedPolygons = useMemo(() => {
     if (rawZones.length === 0) return [];
 
-    // 같은 레벨(1, 2, 3)끼리 h3Index 묶기
+    // 같은 레벨(0, 1, 2, 3)끼리 h3Index 묶기
     const groupedByLevel: Record<number, string[]> = {};
     rawZones.forEach((zone) => {
       if (!groupedByLevel[zone.level]) groupedByLevel[zone.level] = [];
@@ -75,15 +74,17 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
     return result;
   }, [rawZones]);
 
-  // 3. 레벨에 따른 스타일 지정
+  // 3. 레벨에 따른 스타일 지정 (코랄 오렌지 그라데이션)
   const getLevelStyle = (level: number) => {
     switch (level) {
       case 3:
-        return { color: "#FF4B4B", fillColor: "#FF4B4B", fillOpacity: 0.6 }; // 혼잡 (빨강)
+        return { color: "#FF3B22", fillColor: "#FF3B22", fillOpacity: 0.7 }; // 매우혼잡 (강렬한 코랄 오렌지)
       case 2:
-        return { color: "#FFD12E", fillColor: "#FFD12E", fillOpacity: 0.5 }; // 주의 (노랑)
+        return { color: "#FF7A68", fillColor: "#FF7A68", fillOpacity: 0.6 }; // 혼잡 (진한 코랄)
       case 1:
-        return { color: "#00E676", fillColor: "#00E676", fillOpacity: 0.4 }; // 쾌적 (초록)
+        return { color: "#FFB4A9", fillColor: "#FFB4A9", fillOpacity: 0.5 }; // 보통 (중간 코랄)
+      case 0:
+        return { color: "#FFE8E5", fillColor: "#FFE8E5", fillOpacity: 0.4 }; // 쾌적 (연한 코랄)
       default:
         return { color: "#B0BEC5", fillColor: "#B0BEC5", fillOpacity: 0.4 }; // 기본
     }
