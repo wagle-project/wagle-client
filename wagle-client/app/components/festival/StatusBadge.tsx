@@ -1,9 +1,6 @@
 import { FestivalStatus } from "@/app/types/festival";
 
-const STATUS_CONFIG: Record<
-  FestivalStatus,
-  { label: string; className: string; dot: string }
-> = {
+const STATUS_CONFIG: Record<FestivalStatus, { label: string; className: string; dot: string }> = {
   ONGOING: {
     label: "ONGOING",
     className: "text-[#00ff88] border border-[#00ff88]/40 bg-[#00ff88]/10",
@@ -19,14 +16,17 @@ const STATUS_CONFIG: Record<
     className: "text-[#ff3d71] border border-[#ff3d71]/40 bg-[#ff3d71]/10",
     dot: "bg-[#ff3d71]",
   },
+  ENDED: {
+    label: "ENDED",
+    className: "text-[#ff3d71] border border-[#ff3d71]/40 bg-[#ff3d71]/10",
+    dot: "bg-[#ff3d71]",
+  },
 };
 
 export function StatusBadge({ status }: { status: FestivalStatus }) {
   const { label, className, dot } = STATUS_CONFIG[status];
   return (
-    <span
-      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${className}`}
-    >
+    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold tracking-widest ${className}`}>
       <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
       {label}
     </span>

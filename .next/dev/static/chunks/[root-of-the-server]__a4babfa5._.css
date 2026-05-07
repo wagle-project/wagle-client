@@ -3528,6 +3528,10 @@
   bottom: -10%;
 }
 
+.left-1\/2 {
+  left: 50%;
+}
+
 .left-\[-15\%\] {
   left: -15%;
 }
@@ -3556,12 +3560,20 @@
   z-index: 50;
 }
 
+.z-\[9999\] {
+  z-index: 9999;
+}
+
 .mx-auto {
   margin-inline: auto;
 }
 
-.mb-\[60px\] {
-  margin-bottom: 60px;
+.mt-\[36px\] {
+  margin-top: 36px;
+}
+
+.mt-\[48px\] {
+  margin-top: 48px;
 }
 
 .mb-\[80px\] {
@@ -3580,6 +3592,10 @@
   display: flex;
 }
 
+.hidden {
+  display: none;
+}
+
 .inline-block {
   display: inline-block;
 }
@@ -3596,6 +3612,10 @@
   height: 1.5px;
 }
 
+.h-\[14px\] {
+  height: 14px;
+}
+
 .h-\[16px\] {
   height: 16px;
 }
@@ -3604,12 +3624,20 @@
   height: 40%;
 }
 
+.h-\[48px\] {
+  height: 48px;
+}
+
 .h-\[50\%\] {
   height: 50%;
 }
 
 .h-\[52px\] {
   height: 52px;
+}
+
+.h-\[54px\] {
+  height: 54px;
 }
 
 .h-\[60px\] {
@@ -3626,6 +3654,10 @@
 
 .h-\[100px\] {
   height: 100px;
+}
+
+.h-\[180px\] {
+  height: 180px;
 }
 
 .h-\[280px\] {
@@ -3652,6 +3684,10 @@
   width: 16px;
 }
 
+.w-\[38px\] {
+  width: 38px;
+}
+
 .w-\[40\%\] {
   width: 40%;
 }
@@ -3670,6 +3706,14 @@
 
 .w-\[100px\] {
   width: 100px;
+}
+
+.w-\[180px\] {
+  width: 180px;
+}
+
+.w-\[200px\] {
+  width: 200px;
 }
 
 .w-full {
@@ -3708,6 +3752,11 @@
   flex-grow: 1;
 }
 
+.-translate-x-1\/2 {
+  --tw-translate-x: calc(calc(1 / 2 * 100%) * -1);
+  translate: var(--tw-translate-x) var(--tw-translate-y);
+}
+
 .translate-x-full {
   --tw-translate-x: 100%;
   translate: var(--tw-translate-x) var(--tw-translate-y);
@@ -3741,8 +3790,8 @@
   justify-content: center;
 }
 
-.justify-start {
-  justify-content: flex-start;
+.justify-end {
+  justify-content: flex-end;
 }
 
 .gap-\[5px\] {
@@ -3751,6 +3800,10 @@
 
 .gap-\[24px\] {
   gap: 24px;
+}
+
+.gap-\[40px\] {
+  gap: 40px;
 }
 
 .gap-\[60px\] {
@@ -3779,8 +3832,16 @@
   overflow-y: auto;
 }
 
+.rounded-\[14px\] {
+  border-radius: 14px;
+}
+
 .rounded-\[20px\] {
   border-radius: 20px;
+}
+
+.rounded-\[28px\] {
+  border-radius: 28px;
 }
 
 .rounded-full {
@@ -4013,6 +4074,10 @@
   object-fit: cover;
 }
 
+.p-\[24px\] {
+  padding: 24px;
+}
+
 .pb-\[80px\] {
   padding-bottom: 80px;
 }
@@ -4069,6 +4134,10 @@
   font-size: 17px;
 }
 
+.text-\[18px\] {
+  font-size: 18px;
+}
+
 .text-\[19px\] {
   font-size: 19px;
 }
@@ -4077,9 +4146,18 @@
   font-size: 20px;
 }
 
+.text-\[22px\] {
+  font-size: 22px;
+}
+
 .leading-\[1\.5\] {
   --tw-leading: 1.5;
   line-height: 1.5;
+}
+
+.leading-\[1\.6\] {
+  --tw-leading: 1.6;
+  line-height: 1.6;
 }
 
 .leading-\[1\.8\] {
@@ -4131,12 +4209,20 @@
   color: lab(71.0096% -25.71 -35.6662 / .8);
 }
 
+.text-\[\#64748b\] {
+  color: #64748b;
+}
+
 .text-\[\#CBD5E1\] {
   color: #cbd5e1;
 }
 
 .text-\[\#E270CA\] {
   color: #e270ca;
+}
+
+.text-\[\#FF5AEB\] {
+  color: #ff5aeb;
 }
 
 .text-\[\#ff3d71\] {
@@ -4208,6 +4294,12 @@
   filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
 }
 
+.drop-shadow-\[0_0_40px_rgba\(43\,189\,238\,0\.25\)\] {
+  --tw-drop-shadow-size: drop-shadow(0 0 40px var(--tw-drop-shadow-color, #2bbdee40));
+  --tw-drop-shadow: var(--tw-drop-shadow-size);
+  filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
+}
+
 .filter {
   filter: var(--tw-blur, ) var(--tw-brightness, ) var(--tw-contrast, ) var(--tw-grayscale, ) var(--tw-hue-rotate, ) var(--tw-invert, ) var(--tw-saturate, ) var(--tw-sepia, ) var(--tw-drop-shadow, );
 }
@@ -4230,10 +4322,21 @@
   transition-duration: var(--tw-duration, 0s);
 }
 
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: var(--tw-ease, ease);
+  transition-duration: var(--tw-duration, 0s);
+}
+
 .transition-transform {
   transition-property: transform, translate, scale, rotate;
   transition-timing-function: var(--tw-ease, ease);
   transition-duration: var(--tw-duration, 0s);
+}
+
+.duration-200 {
+  --tw-duration: .2s;
+  transition-duration: .2s;
 }
 
 .duration-300 {
@@ -4280,6 +4383,12 @@
   }
 }
 
+@media (hover: hover) {
+  .hover\:opacity-80:hover {
+    opacity: .8;
+  }
+}
+
 .focus\:outline-none:focus {
   --tw-outline-style: none;
   outline-style: none;
@@ -4294,6 +4403,10 @@
 
 .active\:scale-\[0\.97\]:active {
   scale: .97;
+}
+
+.active\:scale-\[0\.98\]:active {
+  scale: .98;
 }
 
 * {
