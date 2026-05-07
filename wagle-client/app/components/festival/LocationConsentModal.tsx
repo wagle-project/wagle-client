@@ -1,14 +1,17 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface LocationConsentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAgree: () => void; // 동의 버튼 전용 콜백
+  onAgree: () => void; // API 통신 성공 후 실행될 부모 컴포넌트의 콜백
 }
 
 export default function LocationConsentModal({ isOpen, onClose, onAgree }: LocationConsentModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -21,6 +24,41 @@ export default function LocationConsentModal({ isOpen, onClose, onAgree }: Locat
   }, [isOpen]);
 
   if (!isOpen) return null;
+
+  // ── API 동의 요청 처리 로직 ──
+  const handleAgreeClick = async () => {
+    if (isLoading) return; // 이미 요청 중이면 중복 클릭 방지
+    setIsLoading(true);
+
+    try {
+      const res = await fetch(`${BASE_URL}/visitors`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isTermsAgreed: true }),
+      });
+
+      const data = await res.json();
+
+      // Swagger 응답 명세에 맞춰 성공 여부 확인
+      if (data.isSuccess && data.result?.accessToken) {
+        // 성공 시 발급받은 accessToken을 localStorage에 저장
+        localStorage.setItem("accessToken", data.result.accessToken);
+        
+        // 부모 컴포넌트에 동의 및 토큰 발급 완료를 알림 (모달 닫기, 지도 탭 전환 등)
+        onAgree(); 
+      } else {
+        console.warn("API 에러 응답:", data.message);
+        alert(data.message || "동의 처리 중 문제가 발생했습니다.");
+      }
+    } catch (error) {
+      console.error("위치 동의 API 통신 실패:", error);
+      alert("서버와 연결할 수 없습니다. 잠시 후 다시 시도해주세요.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 z-[9999] w-full max-w-[430px] left-1/2 -translate-x-1/2 h-[100dvh] bg-[#0f111a] flex flex-col animate-in fade-in duration-200">
@@ -63,12 +101,15 @@ export default function LocationConsentModal({ isOpen, onClose, onAgree }: Locat
 
       {/* 하단 버튼 영역 */}
       <div className="w-full px-5 pb-8 shrink-0 flex flex-col gap-3">
-        {/* 동의 버튼 → onAgree 호출 */}
+        {/* 동의 버튼 → API 통신 로직인 handleAgreeClick 호출 */}
         <button
-          onClick={onAgree}
-          className="w-full h-[54px] rounded-[14px] bg-[#2bbdee] text-[#0f111a] text-[16px] font-bold transition-transform active:scale-[0.98]"
+          onClick={handleAgreeClick}
+          disabled={isLoading}
+          className={`w-full h-[54px] rounded-[14px] text-[#0f111a] text-[16px] font-bold transition-transform ${
+            isLoading ? "bg-[#8bdcf4] cursor-not-allowed" : "bg-[#2bbdee] active:scale-[0.98]"
+          }`}
         >
-          동의하고 시작하기
+          {isLoading ? "처리 중..." : "동의하고 시작하기"}
         </button>
         {/* 나중에 하기 → onClose 호출 */}
         <button
