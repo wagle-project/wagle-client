@@ -29,11 +29,10 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
           return;
         }
 
-        // Base URL 환경변수 처리 (필요시 .env 파일에 NEXT_PUBLIC_API_URL 설정)
-        // 프록시 설정이 되어 있다면 baseUrl을 빈 문자열로 두셔도 됩니다.
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || ''; 
+        // ✅ 수정
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
         
-        const response = await fetch(`${baseUrl}/api/v1/maps/${mapId}/congestion`, {
+        const response = await fetch(`${baseUrl}/maps/${mapId}/congestion`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
