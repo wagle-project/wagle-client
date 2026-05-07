@@ -157,41 +157,37 @@ export default function FestivalDetailPage() {
     locationIntervalRef.current = setInterval(track, DEFAULT_INTERVAL);
   };
 
-  // ── 동의 버튼 클릭 ────────────────────────────────────────
+// ── 동의 버튼 클릭 ────────────────────────────────────────
   const handleAgree = async () => {
     setIsModalOpen(false);
 
-    // TODO: 백엔드 연결 후 아래 임시 코드 제거하고 주석 해제
-    localStorage.setItem("accessToken", "test-token");
-    startLocationTracking();
-    setActiveTab("map");
-
-    // try {
-    //   let token = localStorage.getItem("accessToken");
-    //   if (!token) {
-    //     const res = await fetch(`${BASE_URL}/visitors`, {
-    //       method: "POST",
-    //       headers: { "Content-Type": "application/json" },
-    //       body: JSON.stringify({ isTermsAgreed: true }),
-    //     });
-    //     const data = await res.json();
-    //     if (data.isSuccess) {
-    //       token = data.result.accessToken;
-    //       localStorage.setItem("accessToken", token!);
-    //     } else {
-    //       console.warn("동의 API 실패:", data.message);
-    //       return;
-    //     }
-    //   }
-    //   if (!navigator.geolocation) {
-    //     alert("이 기기는 GPS를 지원하지 않습니다.");
-    //     return;
-    //   }
-    //   startLocationTracking();
-    //   setActiveTab("map");
-    // } catch (err) {
-    //   console.error("동의 처리 중 오류:", err);
-    // }
+    // ✅ test-token 제거 → 실제 visitors API로 토큰 발급
+    try {
+      let token = localStorage.getItem("accessToken");
+      if (!token) {
+        const res = await fetch(`${BASE_URL}/visitors`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ isTermsAgreed: true }),
+        });
+        const data = await res.json();
+        if (data.isSuccess) {
+          token = data.result.accessToken;
+          localStorage.setItem("accessToken", token!);
+        } else {
+          console.warn("동의 API 실패:", data.message);
+          return;
+        }
+      }
+      if (!navigator.geolocation) {
+        alert("이 기기는 GPS를 지원하지 않습니다.");
+        return;
+      }
+      startLocationTracking();
+      setActiveTab("map");
+    } catch (err) {
+      console.error("동의 처리 중 오류:", err);
+    }
   };
 
   // ── 지도 버튼 클릭 (C 담당: checkMyStatus로 토큰 유효성 검사) ──
