@@ -59,15 +59,30 @@ export default function FestivalDetailPage() {
     const fetchAllData = async () => {
       setIsDetailLoading(true);
       try {
-        const detailRes = await fetch(`${BASE_URL}/festivals/${festivalId}`);
+        const token = localStorage.getItem("accessToken");
+        const headers: HeadersInit = {
+          "Content-Type": "application/json",
+          // Swagger 401 에러 방지를 위한 토큰 추가
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        };
+
+        // 1. 축제 상세 정보 조회
+        const detailRes = await fetch(`${BASE_URL}/festivals/${festivalId}`, { headers });
         if (!detailRes.ok) throw new Error("Server Down");
         const detailData = await detailRes.json();
         if (detailData.isSuccess) setFestival(detailData.result);
 
-        const timetableRes = await fetch(`${BASE_URL}/festivals/${festivalId}/timetables`);
+        // 2. 타임테이블 조회 (Swagger 명세 반영)
+        const timetableRes = await fetch(`${BASE_URL}/festivals/${festivalId}/timetables`, { headers });
         if (timetableRes.ok) {
           const timetableData = await timetableRes.json();
-          if (timetableData.isSuccess) setTimetables(timetableData.result.content);
+          if (timetableData.isSuccess && timetableData.result?.content) {
+            // sequence 기준으로 정렬하여 상태에 저장
+            const sortedTimetables = timetableData.result.content.sort(
+              (a: TimetableItem, b: TimetableItem) => a.sequence - b.sequence
+            );
+            setTimetables(sortedTimetables);
+          }
         }
       } catch (error) {
         console.warn("백엔드 연결 실패! 더미 데이터를 표시합니다.");
@@ -83,7 +98,14 @@ export default function FestivalDetailPage() {
           placeName: "김천 사명대사공원",
           address: "경상북도 김천시 대항면",
         });
-        setTimetables([]);
+        
+        // 백엔드가 꺼져있을 때 UI 확인용 더미 타임테이블 데이터
+        setTimetables([
+          {
+            imageUrl: "https://images.unsplash.com/photo-1540039155732-68473638c035?q=80&w=800&auto=format&fit=crop",
+            sequence: 1,
+          }
+        ]);
       } finally {
         setIsDetailLoading(false);
       }
@@ -295,8 +317,8 @@ export default function FestivalDetailPage() {
         {activeTab === "timetable" && (
           <div className="flex flex-col items-center animate-fadeIn w-full px-5 py-10 pb-[100px]">
             {timetables.length > 0 ? (
-              timetables.map((t, i) => (
-                <img key={i} src={t.imageUrl} className="w-full rounded-2xl mb-4" alt={`타임테이블 ${i + 1}`} />
+              timetables.map((t) => (
+                <img key={t.sequence} src={t.imageUrl} className="w-full rounded-2xl mb-4" alt={`타임테이블 ${t.sequence}`} />
               ))
             ) : (
               <p className="font-medium text-[15px] mt-20">등록된 타임테이블이 없습니다.</p>
