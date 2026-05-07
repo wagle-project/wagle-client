@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
 // bounds에 지도 고정 (지도 전환 시마다 호출)
 function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
