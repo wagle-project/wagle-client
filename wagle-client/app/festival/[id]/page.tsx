@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import LocationConsentModal from "@/app/components/festival/LocationConsentModal";
+import { checkMyStatus } from "@/app/hooks/useLocation"; // C 담당
 
 // SSR 비활성화 (Leaflet은 브라우저 전용)
 const FestivalMap = dynamic(() => import("@/app/components/map/FestivalMap"), {
@@ -171,16 +172,18 @@ export default function FestivalDetailPage() {
     // }
   };
 
-  // ── 지도 버튼 클릭 ────────────────────────────────────────
-  const handleMapButtonClick = () => {
+  // ── 지도 버튼 클릭 (C 담당: checkMyStatus로 토큰 유효성 검사) ──
+  const handleMapButtonClick = async () => {
     if (activeTab === "map") {
       setActiveTab("info");
     } else {
-      const token = localStorage.getItem("accessToken");
-      if (token) {
+      const me = await checkMyStatus();
+      if (me) {
+        // 토큰 유효 → 바로 지도로
         startLocationTracking();
         setActiveTab("map");
       } else {
+        // 토큰 없거나 만료 → 동의 모달
         setIsModalOpen(true);
       }
     }
