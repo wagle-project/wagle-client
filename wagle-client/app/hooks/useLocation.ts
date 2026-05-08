@@ -4,7 +4,8 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import type { LocationUpdateResponse } from "../types/festival";
 
 const ACCESS_TOKEN_KEY = "accessToken";
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
+// BASE_URL에 /api/v1이 포함되어 있으므로 API 호출 시 경로에서 /api/v1 제거
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 const DEFAULT_INTERVAL = 5000; // 5초 기본값
 
 export interface UseLocationReturn {
@@ -48,7 +49,8 @@ export function useLocation(): UseLocationReturn {
     if (!festivalId || !token) return;
 
     try {
-      const res = await fetch(`${BASE_URL}/api/v1/festivals/${festivalId}/visitors/location`, {
+      // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
+      const res = await fetch(`${BASE_URL}/festivals/${festivalId}/visitors/location`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -138,8 +140,9 @@ export function useLocation(): UseLocationReturn {
       if (!festivalId || !token) return;
 
       // sendBeacon은 페이지 종료 시에도 전송 보장
+      // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
       navigator.sendBeacon(
-        `${BASE_URL}/api/v1/festivals/${festivalId}/visitors/location`,
+        `${BASE_URL}/festivals/${festivalId}/visitors/location`,
       );
     };
 
@@ -165,7 +168,8 @@ export async function checkMyStatus(): Promise<{ uuid: string; isTermsAgreed: bo
   if (!token) return null;
 
   try {
-    const res = await fetch(`${BASE_URL}/api/v1/visitors/me`, {
+    // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
+    const res = await fetch(`${BASE_URL}/visitors/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     const data = await res.json();
@@ -184,7 +188,8 @@ export async function checkMyStatus(): Promise<{ uuid: string; isTermsAgreed: bo
  */
 export async function agreeAndRegister(): Promise<string | null> {
   try {
-    const res = await fetch(`${BASE_URL}/api/v1/visitors`, {
+    // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
+    const res = await fetch(`${BASE_URL}/visitors`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ isTermsAgreed: true }),
