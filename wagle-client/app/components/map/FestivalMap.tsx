@@ -5,7 +5,7 @@ import { MapContainer, ImageOverlay, useMap } from "react-leaflet";
 import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
-import MyLocationMarker from "./MyLocationMarker";    // C 담당
+import MyLocationMarker from "./MyLocationMarker"; // C 담당
 import { useLocation } from "../../hooks/useLocation"; // C 담당
 import type { FestivalMapInfo } from "../../types/festival";
 
@@ -14,11 +14,10 @@ import type { FestivalMapInfo } from "../../types/festival";
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+  iconRetinaUrl:
+    "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
-
-const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
 
 // bounds에 지도 고정 (지도 전환 시마다 호출)
 function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
@@ -35,33 +34,38 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
   const [showTraffic, setShowTraffic] = useState(true); // B 담당
 
   // C 담당: 위치 훅 연결
-  const { position, permissionState, isSharing, startSharing, stopSharing } = useLocation();
+  const { position, permissionState, isSharing, startSharing, stopSharing } =
+    useLocation();
 
-  // A 담당 API: 지도 목록 불러오기
-  // TODO: 백엔드 연결 후 더미 데이터 제거하고 아래 주석 해제
+  //A : 축제 지도 정보 불러오기
   useEffect(() => {
-    // 임시 더미 데이터
-    setMaps([
-      {
-        sequence: 1,
-        mapId: 1,
-        mapImageUrl: "https://images.unsplash.com/photo-1628191140046-13a854dc694a?q=80&w=800",
-        bounds: {
-          southWest: { lat: 36.110, lng: 128.095 },
-          northEast: { lat: 36.120, lng: 128.110 },
-        },
-      },
-    ]);
+    const token =
+      typeof window !== "undefined"
+        ? localStorage.getItem("accessToken")
+        : null;
+    if (!token) {
+      console.warn("로그인이 필요합니다. (토큰 없음)");
+      return;
+    }
 
-    // const token = localStorage.getItem("accessToken");
-    // fetch(`${BASE_URL}/api/v1/festivals/${festivalId}/maps`, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // })
-    //   .then((r) => r.json())
-    //   .then((data) => {
-    //     if (data.isSuccess) setMaps(data.result.content);
-    //   })
-    //   .catch((err) => console.error("지도 목록 fetch 실패:", err));
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
+    fetch(`${baseUrl}/festivals/${festivalId}/maps`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.isSuccess) {
+          setMaps(data.result.content);
+        } else {
+          console.error("지도 목록 API 실패:", data.message);
+        }
+      })
+      .catch((err) => console.error("지도 목록 fetch 실패:", err));
   }, [festivalId]);
 
   // C 담당: 지도 로드 완료 후 위치 공유 자동 시작
@@ -78,7 +82,11 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
   const currentMap = maps[currentIndex];
 
   const bounds = useMemo<[[number, number], [number, number]]>(() => {
-    if (!currentMap) return [[0, 0], [0, 0]];
+    if (!currentMap)
+      return [
+        [0, 0],
+        [0, 0],
+      ];
     return [
       [currentMap.bounds.southWest.lat, currentMap.bounds.southWest.lng],
       [currentMap.bounds.northEast.lat, currentMap.bounds.northEast.lng],
@@ -88,14 +96,15 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
   if (maps.length === 0) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-[#0a0b1e]">
-        <p className="text-white/40 text-sm tracking-widest animate-pulse">지도 불러오는 중...</p>
+        <p className="text-white/40 text-sm tracking-widest animate-pulse">
+          지도 불러오는 중...
+        </p>
       </div>
     );
   }
 
   return (
     <div className="relative w-full h-screen">
-
       {/* ── 지도 복수 개일 때: 좌우 화살표 ──────────────── */}
       {maps.length > 1 && (
         <>
@@ -108,7 +117,9 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
             ‹
           </button>
           <button
-            onClick={() => setCurrentIndex((i) => Math.min(maps.length - 1, i + 1))}
+            onClick={() =>
+              setCurrentIndex((i) => Math.min(maps.length - 1, i + 1))
+            }
             disabled={currentIndex === maps.length - 1}
             className="absolute right-3 top-1/2 -translate-y-1/2 z-[1000] w-9 h-9 rounded-full bg-[#0f111a]/80 backdrop-blur-md border border-white/10 flex items-center justify-center text-white disabled:opacity-30 transition-opacity"
             aria-label="다음 지도"
@@ -152,7 +163,11 @@ export default function FestivalMap({ festivalId }: { festivalId: number }) {
         <FixedMap bounds={bounds} />
 
         {/* 축제 지도 이미지 오버레이 */}
-        <ImageOverlay url={currentMap.mapImageUrl} bounds={bounds} opacity={1} />
+        <ImageOverlay
+          url={currentMap.mapImageUrl}
+          bounds={bounds}
+          opacity={1}
+        />
 
         {/* B: 혼잡도 레이어 */}
         {showTraffic && <CongestionLayer mapId={currentMap.mapId} />}

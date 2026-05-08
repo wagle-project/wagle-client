@@ -8,7 +8,7 @@ import { cellsToMultiPolygon } from "h3-js"; // cellToBoundary 대신 병합 함
 interface CongestionData {
   h3Index: string;
   level: number; // 0(쾌적), 1(보통), 2(혼잡), 3(매우혼잡)
-  count?: number; 
+  count?: number;
 }
 
 interface CongestionLayerProps {
@@ -23,15 +23,18 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
     const fetchCongestion = async () => {
       try {
         // 토큰 확인 (토큰이 없으면 불필요한 API 호출 방지, SSR 에러 방지)
-        const token = typeof window !== 'undefined' ? localStorage.getItem("accessToken") : null;
+        const token =
+          typeof window !== "undefined"
+            ? localStorage.getItem("accessToken")
+            : null;
         if (!token) {
           console.warn("로그인이 필요합니다. (토큰 없음)");
           return;
         }
 
         // ✅ 수정
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-        
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+
         const response = await fetch(`${baseUrl}/maps/${mapId}/congestion`, {
           method: "GET",
           headers: {
@@ -46,7 +49,7 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
         if (response.ok && data.isSuccess) {
           // data.result.zones 배열을 상태에 저장!
           setRawZones(data.result.zones);
-        } 
+        }
         // 400, 401, 404 등 실패 응답 처리 (Swagger 기준)
         else {
           if (data.code === "AUTH4000") {
@@ -90,7 +93,7 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
 
       // 백엔드가 말한 마법의 코드: 인접한 육각형들의 내부 선을 지우고 외곽선만 반환
       const polygons = cellsToMultiPolygon(indices, false);
-      
+
       result.push({
         level,
         paths: polygons, // Leaflet Polygon이 그릴 수 있는 2차원/3차원 좌표 배열
@@ -123,7 +126,7 @@ export default function CongestionLayer({ mapId }: CongestionLayerProps) {
     <>
       {mergedPolygons.map((polyGroup) => {
         const style = getLevelStyle(polyGroup.level);
-        
+
         return (
           <Polygon
             key={`level-${polyGroup.level}`}
