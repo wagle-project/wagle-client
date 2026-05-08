@@ -49,9 +49,18 @@ export default function FestivalDetailPage() {
 
   const locationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // ── interval 정리 함수 (C 담당) ───────────────────────────
+  // 지도 탭 벗어날 때 호출 → 다시 들어오면 tracking 새로 시작 가능
+  const stopLocationTracking = () => {
+    if (locationIntervalRef.current) {
+      clearInterval(locationIntervalRef.current);
+      locationIntervalRef.current = null;
+    }
+  };
+
   useEffect(() => {
     return () => {
-      if (locationIntervalRef.current) clearInterval(locationIntervalRef.current);
+      stopLocationTracking();
     };
   }, []);
 
@@ -98,7 +107,7 @@ export default function FestivalDetailPage() {
           placeName: "김천 사명대사공원",
           address: "경상북도 김천시 대항면",
         });
-        
+
         // 백엔드가 꺼져있을 때 UI 확인용 더미 타임테이블 데이터
         setTimetables([
           {
@@ -157,7 +166,7 @@ export default function FestivalDetailPage() {
     locationIntervalRef.current = setInterval(track, DEFAULT_INTERVAL);
   };
 
-// ── 동의 버튼 클릭 ────────────────────────────────────────
+  // ── 동의 버튼 클릭 ────────────────────────────────────────
   const handleAgree = async () => {
     setIsModalOpen(false);
 
@@ -193,6 +202,7 @@ export default function FestivalDetailPage() {
   // ── 지도 버튼 클릭 (C 담당: checkMyStatus로 토큰 유효성 검사) ──
   const handleMapButtonClick = async () => {
     if (activeTab === "map") {
+      stopLocationTracking(); // 지도 탭 벗어날 때 interval 정리
       setActiveTab("info");
     } else {
       const me = await checkMyStatus();
@@ -219,11 +229,13 @@ export default function FestivalDetailPage() {
   };
 
   const handleBack = () => {
+    if (activeTab === "map") stopLocationTracking(); // 지도 탭에서 뒤로가기 시 interval 정리
     if (activeTab !== "info") setActiveTab("info");
     else router.back();
   };
 
   const handleTabToggle = (tab: "timetable" | "map") => {
+    if (activeTab === "map") stopLocationTracking(); // 지도 탭에서 다른 탭으로 이동 시 interval 정리
     if (activeTab === tab) setActiveTab("info");
     else setActiveTab(tab);
   };
