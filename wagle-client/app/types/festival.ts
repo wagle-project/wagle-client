@@ -1,13 +1,13 @@
 // ─── 기존 타입 (useFestivals.ts에서 사용 중) ─────────────────
-export type FestivalStatus = "ONGOING" | "UPCOMING" | "ENDED" | "END";
+export type FestivalStatus = "ONGOING" | "UPCOMING" | "ENDED";
 
 export interface Festival {
   id: number;
   name: string;
-  location: string;
+  placeName: string;
   startDate: string;
   endDate: string;
-  imageUrl: string;
+  posterUrl: string;
   status: FestivalStatus;
 }
 
