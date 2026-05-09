@@ -28,10 +28,18 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   return null;
 }
 
-export default function FestivalMap({ festivalId }: { festivalId: number }) {
+// ✅ 부모로부터 받을 Props 타입 정의
+interface FestivalMapProps {
+  festivalId: number;
+  showTraffic: boolean;
+}
+
+// ✅ 컴포넌트 인자에 showTraffic 추가 및 타입 적용
+export default function FestivalMap({ festivalId, showTraffic }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTraffic, setShowTraffic] = useState(true); // B 담당
+  
+  // 기존에 있던 로컬 상태(useState)는 삭제됨 (부모에서 제어하므로)
 
   // C 담당: 위치 훅 연결
   const { position, permissionState, isSharing, startSharing, stopSharing } =
