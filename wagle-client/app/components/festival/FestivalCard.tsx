@@ -1,6 +1,6 @@
 import { Festival } from "@/app/types/festival";
 import { StatusBadge } from "./StatusBadge";
-
+import Image from "next/image"; //이미지 최적화 위해 Next.js Image 컴포넌트 사용
 interface FestivalCardProps {
   festival: Festival;
   onClick: () => void;
@@ -41,11 +41,23 @@ export function FestivalCard({ festival, onClick }: FestivalCardProps) {
         className="relative w-full overflow-hidden"
         style={{ height: "180px" }}
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url(${festival.posterUrl})` }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+        {festival.posterUrl ? (
+          <>
+            <Image
+              src={festival.posterUrl}
+              alt={festival.name}
+              fill
+              className="object-cover transition-transform duration-500 hover:scale-105"
+            />
+            {/* 그라데이션 오버레이 */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-10" />
+          </>
+        ) : (
+          // 데이터가 없을 때 보여줄 회색 박스 (로딩용)
+          <div className="w-full h-full bg-gray-800 animate-pulse flex items-center justify-center">
+            <span className="text-white/20 text-xs">이미지 준비 중</span>
+          </div>
+        )}
       </div>
 
       {/* 정보 */}
