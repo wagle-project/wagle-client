@@ -42,6 +42,9 @@ export default function FestivalDetailPage() {
 
   const [activeTab, setActiveTab] = useState<"info" | "timetable" | "map">("info");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // ✅ 혼잡도 켜기/끄기 상태 추가
+  const [showTraffic, setShowTraffic] = useState(false);
 
   const [festival, setFestival] = useState<FestivalDetail | null>(null);
   const [timetables, setTimetables] = useState<TimetableItem[]>([]);
@@ -336,8 +339,37 @@ export default function FestivalDetailPage() {
 
         {/* ── 지도 탭: FestivalMap으로 교체 ── */}
         {activeTab === "map" && (
-          <div className="animate-fadeIn w-full h-full">
-            <FestivalMap festivalId={Number(festivalId)} />
+          <div className="animate-fadeIn w-full h-full relative">
+            
+            {/* ✅ 누른 상태(showTraffic)에 따라 버튼 전체 배경색이 확실하게 변하도록 수정 */}
+            <div
+              onClick={() => setShowTraffic(!showTraffic)}
+              className={`absolute top-4 right-4 flex items-center gap-2 rounded-full px-4 py-2 shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
+                showTraffic 
+                  ? "bg-[#2bbdee] border-[#2bbdee] text-[#0f111a]" // 켜졌을 때 (활성화)
+                  : "bg-[#424A5D] border-transparent text-white"   // 꺼졌을 때 (비활성화)
+              }`}
+              style={{ zIndex: 9999 }}
+            >
+              <span className="text-[12px] font-bold tracking-wider select-none pointer-events-none">
+                SHOW TRAFFIC
+              </span>
+              <div
+                className={`w-11 h-6 rounded-full flex items-center p-1 transition-colors duration-300 pointer-events-none ${
+                  showTraffic ? "bg-[#0f111a]" : "bg-gray-400"
+                }`}
+              >
+                <div
+                  className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
+                    showTraffic ? "translate-x-5" : "translate-x-0"
+                  }`}
+                />
+              </div>
+            </div>
+
+            {/* 1. 지도 컴포넌트 렌더링 */}
+            <FestivalMap festivalId={Number(festivalId)} showTraffic={showTraffic} />
+            
           </div>
         )}
       </main>

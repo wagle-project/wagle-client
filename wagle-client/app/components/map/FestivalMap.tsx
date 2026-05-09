@@ -28,10 +28,18 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   return null;
 }
 
-export default function FestivalMap({ festivalId }: { festivalId: number }) {
+// ✅ Vercel 에러 해결: showTraffic 뒤에 ?를 붙여 선택적(Optional) 속성으로 변경
+interface FestivalMapProps {
+  festivalId: number;
+  showTraffic?: boolean; 
+}
+
+// ✅ Vercel 에러 해결: showTraffic의 기본값을 false로 설정하여, 다른 페이지에서 값을 안 넘겨줘도 에러가 안 나게 처리
+export default function FestivalMap({ festivalId, showTraffic = false }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [showTraffic, setShowTraffic] = useState(true); // B 담당
+  
+  // 기존에 있던 로컬 상태(useState)는 삭제됨 (부모에서 제어하므로)
 
   // C 담당: 위치 훅 연결
   const { position, permissionState, isSharing, startSharing, stopSharing } =
