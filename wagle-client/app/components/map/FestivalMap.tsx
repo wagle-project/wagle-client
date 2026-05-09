@@ -28,14 +28,14 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   return null;
 }
 
-// ✅ 부모로부터 받을 Props 타입 정의
+// ✅ Vercel 에러 해결: showTraffic 뒤에 ?를 붙여 선택적(Optional) 속성으로 변경
 interface FestivalMapProps {
   festivalId: number;
-  showTraffic: boolean;
+  showTraffic?: boolean; 
 }
 
-// ✅ 컴포넌트 인자에 showTraffic 추가 및 타입 적용
-export default function FestivalMap({ festivalId, showTraffic }: FestivalMapProps) {
+// ✅ Vercel 에러 해결: showTraffic의 기본값을 false로 설정하여, 다른 페이지에서 값을 안 넘겨줘도 에러가 안 나게 처리
+export default function FestivalMap({ festivalId, showTraffic = false }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   
