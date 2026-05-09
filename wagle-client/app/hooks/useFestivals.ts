@@ -9,6 +9,7 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 async function fetchRecommended(): Promise<Festival[]> {
   const res = await fetch(`${BASE_URL}/festivals/recommendations`);
   const data = await res.json();
+  console.log("추천 축제 API 응답:", data.result.content);
   //에러
   if (!data.isSuccess) throw new Error(data.message);
   //응답구조 : { result: { content: Festival[] } }

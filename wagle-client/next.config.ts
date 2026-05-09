@@ -13,6 +13,16 @@ const nextConfig: NextConfig = {
   turbopack: {}, // 이게 없으면 webpack과 겹쳐서 사용되서 오류가 남
   images: {
     unoptimized: true, //주소가 아닌 원본 파일에서 바로 사용
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // 모든 https 도메인 허용
+      },
+      {
+        protocol: "http",
+        hostname: "**", // 모든 http 도메인 허용
+      },
+    ],
   },
 };
 
