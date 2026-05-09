@@ -20,6 +20,7 @@ export default function FestivalMapPage() {
       <main className="flex-1  px-5 pb-8">
         <FriendWagleIntro />
 
+        {/* 검색 */}
         <div className="mb-8">
           <SearchBar
             value={inputValue}

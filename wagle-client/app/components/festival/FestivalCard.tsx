@@ -43,7 +43,7 @@ export function FestivalCard({ festival, onClick }: FestivalCardProps) {
       >
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-          style={{ backgroundImage: `url(${festival.imageUrl})` }}
+          style={{ backgroundImage: `url(${festival.posterUrl})` }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
       </div>
@@ -57,7 +57,7 @@ export function FestivalCard({ festival, onClick }: FestivalCardProps) {
           <div className="flex flex-col gap-1.5">
             <div className="flex items-center gap-1.5 text-white/50 text-xs">
               <span>📍</span>
-              <span>{festival.location}</span>
+              <span>{festival.placeName}</span>
             </div>
             <div className="flex items-center gap-1.5 text-white/50 text-xs">
               <span>📅</span>

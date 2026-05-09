@@ -4,6 +4,7 @@ interface SearchBarProps {
   onSearch: () => void;
 }
 
+//부모컴포넌트에게 value, onChange, onSearch props값 전달 받아서, 검색어 입력과 검색 버튼 클릭 이벤트 처리
 export function SearchBar({ value, onChange, onSearch }: SearchBarProps) {
   return (
     <div className="flex gap-2">
@@ -15,6 +16,7 @@ export function SearchBar({ value, onChange, onSearch }: SearchBarProps) {
           onKeyDown={(e) => e.key === "Enter" && onSearch()}
           placeholder="축제 이름을 검색해 보세요"
           className="flex-1 bg-transparent text-white text-sm placeholder:text-white/60 focus:outline-none"
+          style={{ color: "white" }}
         />
       </div>
 
