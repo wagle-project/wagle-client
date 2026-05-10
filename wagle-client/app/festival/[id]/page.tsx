@@ -12,7 +12,9 @@ const FestivalMap = dynamic(() => import("@/app/components/map/FestivalMap"), {
   ssr: false,
   loading: () => (
     <div className="flex h-full w-full items-center justify-center">
-      <p className="text-white/40 text-sm tracking-widest animate-pulse">지도 불러오는 중...</p>
+      <p className="text-white/40 text-sm tracking-widest animate-pulse">
+        지도 불러오는 중...
+      </p>
     </div>
   ),
 });
@@ -40,9 +42,11 @@ export default function FestivalDetailPage() {
   const params = useParams();
   const festivalId = params.id as string;
 
-  const [activeTab, setActiveTab] = useState<"info" | "timetable" | "map">("info");
+  const [activeTab, setActiveTab] = useState<"info" | "timetable" | "map">(
+    "info",
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // ✅ 혼잡도 켜기/끄기 상태 추가
   const [showTraffic, setShowTraffic] = useState(false);
 
@@ -79,19 +83,24 @@ export default function FestivalDetailPage() {
         };
 
         // 1. 축제 상세 정보 조회
-        const detailRes = await fetch(`${BASE_URL}/festivals/${festivalId}`, { headers });
+        const detailRes = await fetch(`${BASE_URL}/festivals/${festivalId}`, {
+          headers,
+        });
         if (!detailRes.ok) throw new Error("Server Down");
         const detailData = await detailRes.json();
         if (detailData.isSuccess) setFestival(detailData.result);
 
         // 2. 타임테이블 조회 (Swagger 명세 반영)
-        const timetableRes = await fetch(`${BASE_URL}/festivals/${festivalId}/timetables`, { headers });
+        const timetableRes = await fetch(
+          `${BASE_URL}/festivals/${festivalId}/timetables`,
+          { headers },
+        );
         if (timetableRes.ok) {
           const timetableData = await timetableRes.json();
           if (timetableData.isSuccess && timetableData.result?.content) {
             // sequence 기준으로 정렬하여 상태에 저장
             const sortedTimetables = timetableData.result.content.sort(
-              (a: TimetableItem, b: TimetableItem) => a.sequence - b.sequence
+              (a: TimetableItem, b: TimetableItem) => a.sequence - b.sequence,
             );
             setTimetables(sortedTimetables);
           }
@@ -114,9 +123,10 @@ export default function FestivalDetailPage() {
         // 백엔드가 꺼져있을 때 UI 확인용 더미 타임테이블 데이터
         setTimetables([
           {
-            imageUrl: "https://images.unsplash.com/photo-1540039155732-68473638c035?q=80&w=800&auto=format&fit=crop",
+            imageUrl:
+              "https://images.unsplash.com/photo-1540039155732-68473638c035?q=80&w=800&auto=format&fit=crop",
             sequence: 1,
-          }
+          },
         ]);
       } finally {
         setIsDetailLoading(false);
@@ -132,14 +142,17 @@ export default function FestivalDetailPage() {
     if (!token) return;
 
     try {
-      const res = await fetch(`${BASE_URL}/festivals/${festivalId}/visitors/location`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const res = await fetch(
+        `${BASE_URL}/festivals/${festivalId}/visitors/location`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ lat, lng }),
         },
-        body: JSON.stringify({ lat, lng }),
-      });
+      );
       const data = await res.json();
       if (data.isSuccess && data.result?.locationUpdateInterval) {
         return data.result.locationUpdateInterval;
@@ -161,7 +174,7 @@ export default function FestivalDetailPage() {
           const { latitude, longitude } = position.coords;
           await sendLocation(latitude, longitude);
         },
-        (err) => console.warn("GPS 오류:", err)
+        (err) => console.warn("GPS 오류:", err),
       );
     };
 
@@ -251,11 +264,13 @@ export default function FestivalDetailPage() {
     );
   }
 
-  const { dateStr, days } = getFormattedDate(festival?.startDate || "", festival?.endDate || "");
+  const { dateStr, days } = getFormattedDate(
+    festival?.startDate || "",
+    festival?.endDate || "",
+  );
 
   return (
     <div className="flex flex-col h-[100dvh] w-full max-w-[430px] mx-auto bg-[#0f111a] font-sans text-white overflow-hidden relative">
-
       <LocationConsentModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
@@ -267,7 +282,16 @@ export default function FestivalDetailPage() {
           onClick={handleBack}
           className="text-[#E270CA] bg-transparent outline-none border-none p-2 -ml-2 transition-transform active:scale-95"
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M19 12H5" />
             <path d="M12 19l-7-7 7-7" />
           </svg>
@@ -279,7 +303,16 @@ export default function FestivalDetailPage() {
           href="/home"
           className="text-[#E270CA] bg-transparent outline-none border-none p-2 -mr-2 transition-transform active:scale-95"
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
             <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
@@ -287,39 +320,110 @@ export default function FestivalDetailPage() {
       </header>
 
       <main className="flex-1 overflow-y-auto scrollbar-hide w-full relative">
-
         {/* ── 축제 상세 정보 탭 ── */}
         {activeTab === "info" && festival && (
           <div className="animate-fadeIn w-full flex flex-col pb-[80px]">
             <div className="w-full aspect-[4/5] relative bg-[#1a1f35]">
-              <img src={festival.posterUrl} alt={`${festival.name} 포스터`} className="w-full h-full object-cover" />
+              <img
+                src={festival.posterUrl}
+                alt={`${festival.name} 포스터`}
+                className="w-full h-full object-cover"
+              />
               <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-[#0f111a] to-transparent"></div>
             </div>
 
-            <div className="flex flex-col" style={{ paddingLeft: "28px", paddingRight: "28px", marginTop: "60px", gap: "30px" }}>
-              <div className="flex items-center bg-[#1a1f2e]" style={{ padding: "24px 30px", borderRadius: "28px", gap: "24px" }}>
-                <img src="/icons/icon-calendar.png" alt="달력" style={{ width: "36px", height: "36px", objectFit: "contain", flexShrink: 0 }} />
+            <div
+              className="flex flex-col"
+              style={{
+                paddingLeft: "28px",
+                paddingRight: "28px",
+                marginTop: "60px",
+                gap: "30px",
+              }}
+            >
+              <div
+                className="flex items-center bg-[#1a1f2e]"
+                style={{
+                  padding: "24px 30px",
+                  borderRadius: "28px",
+                  gap: "24px",
+                }}
+              >
+                <img
+                  src="/icons/icon-calendar.png"
+                  alt="달력"
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    objectFit: "contain",
+                    flexShrink: 0,
+                  }}
+                />
                 <div className="flex flex-col" style={{ gap: "8px" }}>
-                  <h3 className="text-[19px] font-bold text-white leading-none">{dateStr}</h3>
-                  <p className="text-[15px] text-[#CBD5E1] leading-none">축제 기간 ({days}일간)</p>
+                  <h3 className="text-[19px] font-bold text-white leading-none">
+                    {dateStr}
+                  </h3>
+                  <p className="text-[15px] text-[#CBD5E1] leading-none">
+                    축제 기간 ({days}일간)
+                  </p>
                 </div>
               </div>
 
-              <div className="flex items-center bg-[#1a1f2e]" style={{ padding: "24px 30px", borderRadius: "28px", gap: "24px" }}>
-                <img src="/icons/icon-pin.png" alt="위치" style={{ width: "36px", height: "36px", objectFit: "contain", flexShrink: 0 }} />
-                <div className="flex flex-col overflow-hidden" style={{ gap: "8px" }}>
-                  <h3 className="text-[19px] font-bold text-white leading-none truncate">{festival.placeName}</h3>
-                  <p className="text-[15px] text-[#CBD5E1] leading-none truncate">{festival.address}</p>
+              <div
+                className="flex items-center bg-[#1a1f2e]"
+                style={{
+                  padding: "24px 30px",
+                  borderRadius: "28px",
+                  gap: "24px",
+                }}
+              >
+                <img
+                  src="/icons/icon-pin.png"
+                  alt="위치"
+                  style={{
+                    width: "36px",
+                    height: "36px",
+                    objectFit: "contain",
+                    flexShrink: 0,
+                  }}
+                />
+                <div
+                  className="flex flex-col overflow-hidden"
+                  style={{ gap: "8px" }}
+                >
+                  <h3 className="text-[19px] font-bold text-white leading-none truncate">
+                    {festival.placeName}
+                  </h3>
+                  <p className="text-[15px] text-[#CBD5E1] leading-none truncate">
+                    {festival.address}
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="w-full flex flex-col" style={{ paddingLeft: "28px", paddingRight: "28px", marginTop: "80px" }}>
-              <div className="flex items-center" style={{ gap: "12px", marginBottom: "20px" }}>
-                <div className="bg-[#2EFAD9] rounded-full" style={{ width: "4px", height: "22px" }}></div>
-                <h2 className="text-[20px] font-bold text-white leading-none">축제 소개</h2>
+            <div
+              className="w-full flex flex-col"
+              style={{
+                paddingLeft: "28px",
+                paddingRight: "28px",
+                marginTop: "80px",
+              }}
+            >
+              <div
+                className="flex items-center"
+                style={{ gap: "12px", marginBottom: "20px" }}
+              >
+                <div
+                  className="bg-[#2EFAD9] rounded-full"
+                  style={{ width: "4px", height: "22px" }}
+                ></div>
+                <h2 className="text-[20px] font-bold text-white leading-none">
+                  축제 소개
+                </h2>
               </div>
-              <p className="text-[15px] text-[#CBD5E1] leading-[1.8] break-keep">{festival.description}</p>
+              <p className="text-[15px] text-[#CBD5E1] leading-[1.8] break-keep">
+                {festival.description}
+              </p>
             </div>
           </div>
         )}
@@ -329,10 +433,17 @@ export default function FestivalDetailPage() {
           <div className="flex flex-col items-center animate-fadeIn w-full px-5 py-10 pb-[100px]">
             {timetables.length > 0 ? (
               timetables.map((t) => (
-                <img key={t.sequence} src={t.imageUrl} className="w-full rounded-2xl mb-4" alt={`타임테이블 ${t.sequence}`} />
+                <img
+                  key={t.sequence}
+                  src={t.imageUrl}
+                  className="w-full rounded-2xl mb-4"
+                  alt={`타임테이블 ${t.sequence}`}
+                />
               ))
             ) : (
-              <p className="font-medium text-[15px] mt-20">등록된 타임테이블이 없습니다.</p>
+              <p className="font-medium text-[15px] mt-20">
+                등록된 타임테이블이 없습니다.
+              </p>
             )}
           </div>
         )}
@@ -340,16 +451,15 @@ export default function FestivalDetailPage() {
         {/* ── 지도 탭: FestivalMap으로 교체 ── */}
         {activeTab === "map" && (
           <div className="animate-fadeIn w-full h-full relative">
-            
             {/* ✅ 누른 상태(showTraffic)에 따라 버튼 전체 배경색이 확실하게 변하도록 수정 */}
             <div
               onClick={() => setShowTraffic(!showTraffic)}
-              className={`absolute top-4 right-4 flex items-center gap-2 rounded-full px-4 py-2 shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
-                showTraffic 
-                  ? "bg-[#2bbdee] border-[#2bbdee] text-[#0f111a]" // 켜졌을 때 (활성화)
-                  : "bg-[#424A5D] border-transparent text-white"   // 꺼졌을 때 (비활성화)
+              className={`absolute flex items-center gap-2 rounded-full px-4 py-2 shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
+                showTraffic
+                  ? "bg-[#2bbdee] border-[#2bbdee] text-[#0f111a]"
+                  : "bg-[#424A5D] border-transparent text-white"
               }`}
-              style={{ zIndex: 9999 }}
+              style={{ zIndex: 9999, top: "40px", right: "16px" }} //  top-4 → top 40px으로 레이어 버튼 아래로
             >
               <span className="text-[12px] font-bold tracking-wider select-none pointer-events-none">
                 SHOW TRAFFIC
@@ -368,8 +478,10 @@ export default function FestivalDetailPage() {
             </div>
 
             {/* 1. 지도 컴포넌트 렌더링 */}
-            <FestivalMap festivalId={Number(festivalId)} showTraffic={showTraffic} />
-            
+            <FestivalMap
+              festivalId={Number(festivalId)}
+              showTraffic={showTraffic}
+            />
           </div>
         )}
       </main>
@@ -384,8 +496,19 @@ export default function FestivalDetailPage() {
                 : "border border-[#2EFAD9] text-[#2EFAD9] bg-[#0f111a] font-medium"
             }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-[16px] h-[16px]">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-[16px] h-[16px]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 6v6l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
             </svg>
             타임테이블 확인
           </button>
@@ -398,7 +521,14 @@ export default function FestivalDetailPage() {
                 : "border border-[#2EFAD9] text-[#2EFAD9] bg-[#0f111a] font-medium"
             }`}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-[16px] h-[16px]">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className="w-[16px] h-[16px]"
+            >
               <circle cx="12" cy="12" r="10" />
               <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" />
             </svg>
