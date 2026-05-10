@@ -1,15 +1,14 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-//TileLayer : 지도표시
 import { MapContainer, ImageOverlay, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
-import MyLocationMarker from "./MyLocationMarker"; // C 담당
-import { useLocation } from "../../hooks/useLocation"; // C 담당
+import MyLocationMarker from "./MyLocationMarker";
+import { useLocation } from "../../hooks/useLocation";
 import type { FestivalMapInfo } from "../../types/festival";
-// Leaflet 마커 아이콘 깨짐 방지 (Next.js 필수 설정)
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -18,7 +17,7 @@ L.Icon.Default.mergeOptions({
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
-//leaflet과 반대로 주는거를 수정하기 위한 코드
+
 function normalizeBounds(
   m: FestivalMapInfo,
 ): [[number, number], [number, number]] {
@@ -39,20 +38,18 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   }, [map, bounds]);
   return null;
 }
-//  Vercel 에러 해결: showTraffic 뒤에 ?를 붙여 선택적(Optional) 속성으로 변경
 
 interface FestivalMapProps {
   festivalId: number;
   showTraffic?: boolean;
 }
 
-//  Vercel 에러 해결: showTraffic의 기본값을 false로 설정하여, 다른 페이지에서 값을 안 넘겨줘도 에러가 안 나게 처리
 export default function FestivalMap({
   festivalId,
   showTraffic = false,
 }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
-  //  활성화된 mapId Set으로 관리
+  // ✅ 활성화된 mapId Set으로 관리
   const [visibleMapIds, setVisibleMapIds] = useState<Set<number>>(new Set());
   const [showLayerPanel, setShowLayerPanel] = useState(false);
   const showBaseMap = true;
@@ -60,22 +57,16 @@ export default function FestivalMap({
   const { position, permissionState, isSharing, startSharing, stopSharing } =
     useLocation();
 
-  //A : 축제 지도 정보 불러오기
-  //토큰이 필요한 api
   useEffect(() => {
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("accessToken")
         : null;
-    if (!token) {
-      console.warn("로그인이 필요합니다. (토큰 없음)");
-      return;
-    }
+    if (!token) return;
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     fetch(`${baseUrl}/festivals/${festivalId}/maps`, {
-      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -83,9 +74,6 @@ export default function FestivalMap({
     })
       .then((r) => r.json())
       .then((data) => {
-        console.log("지도 API 응답:", data);
-        console.log("지도 개수:", data?.result?.content?.length);
-
         if (data.isSuccess) {
           const content: FestivalMapInfo[] = data.result.content;
           setMaps(content);
@@ -95,7 +83,7 @@ export default function FestivalMap({
       })
       .catch((err) => console.error("지도 목록 fetch 실패:", err));
   }, [festivalId]);
-  // C 담당: 지도 로드 완료 후 위치 공유 자동 시작
+
   useEffect(() => {
     if (maps.length > 0 && !isSharing) startSharing(festivalId);
     return () => stopSharing();
@@ -223,31 +211,34 @@ export default function FestivalMap({
                 : "전체 보이기"}
             </button>
 
+            {/* 개별 레이어 버튼 - 활성화 여부에 따라 색상 변경 */}
             {maps.map((m, i) => (
-              <label
+              <button
                 key={m.mapId}
+                onClick={() => toggleLayer(m.mapId)}
                 style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
+                  background: visibleMapIds.has(m.mapId)
+                    ? "rgba(43, 189, 238, 0.2)"
+                    : "rgba(255,255,255,0.05)",
+                  border: visibleMapIds.has(m.mapId)
+                    ? "1.5px solid #2bbdee"
+                    : "1.5px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px",
+                  padding: "10px 12px", // 터치 영역 충분히 확보
                   color: visibleMapIds.has(m.mapId)
-                    ? "white"
-                    : "rgba(255,255,255,0.35)",
+                    ? "#2bbdee"
+                    : "rgba(255,255,255,0.4)",
                   fontSize: "12px",
+                  fontWeight: visibleMapIds.has(m.mapId) ? "600" : "400",
                   cursor: "pointer",
-                  padding: "3px 4px",
-                  borderRadius: "6px",
-                  transition: "background 0.15s",
+                  textAlign: "left",
+                  transition: "all 0.15s",
+                  width: "100%",
                 }}
               >
-                <input
-                  type="checkbox"
-                  checked={visibleMapIds.has(m.mapId)}
-                  onChange={() => toggleLayer(m.mapId)}
-                  style={{ accentColor: "#2bbdee", cursor: "pointer" }}
-                />
+                {visibleMapIds.has(m.mapId) ? "● " : "○ "}
                 지도 {i + 1} (#{m.mapId})
-              </label>
+              </button>
             ))}
           </div>
         )}
