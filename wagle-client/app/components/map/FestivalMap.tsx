@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import { MapContainer, ImageOverlay, useMap } from "react-leaflet";
+import { MapContainer, ImageOverlay, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
-import MyLocationMarker from "./MyLocationMarker"; // C 담당
-import { useLocation } from "../../hooks/useLocation"; // C 담당
+import MyLocationMarker from "./MyLocationMarker";
+import { useLocation } from "../../hooks/useLocation";
 import type { FestivalMapInfo } from "../../types/festival";
-// Leaflet 마커 아이콘 깨짐 방지 (Next.js 필수 설정)
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -17,7 +17,19 @@ L.Icon.Default.mergeOptions({
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
-// bounds에 지도 고정 (지도 전환 시마다 호출)
+
+function normalizeBounds(
+  m: FestivalMapInfo,
+): [[number, number], [number, number]] {
+  const minLat = Math.min(m.bounds.southWest.lat, m.bounds.northEast.lat);
+  const maxLat = Math.max(m.bounds.southWest.lat, m.bounds.northEast.lat);
+  const minLng = Math.min(m.bounds.southWest.lng, m.bounds.northEast.lng);
+  const maxLng = Math.max(m.bounds.southWest.lng, m.bounds.northEast.lng);
+  return [
+    [minLat, minLng],
+    [maxLat, maxLng],
+  ];
+}
 
 function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   const map = useMap();
@@ -26,40 +38,35 @@ function FixedMap({ bounds }: { bounds: L.LatLngBoundsExpression }) {
   }, [map, bounds]);
   return null;
 }
-// ✅ Vercel 에러 해결: showTraffic 뒤에 ?를 붙여 선택적(Optional) 속성으로 변경
 
 interface FestivalMapProps {
   festivalId: number;
   showTraffic?: boolean;
 }
 
-// ✅ Vercel 에러 해결: showTraffic의 기본값을 false로 설정하여, 다른 페이지에서 값을 안 넘겨줘도 에러가 안 나게 처리
 export default function FestivalMap({
   festivalId,
   showTraffic = false,
 }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  // 기존에 있던 로컬 상태(useState)는 삭제됨 (부모에서 제어하므로)
-  // C 담당: 위치 훅 연결
+  // ✅ 활성화된 mapId Set으로 관리
+  const [visibleMapIds, setVisibleMapIds] = useState<Set<number>>(new Set());
+  const [showLayerPanel, setShowLayerPanel] = useState(false);
+  const showBaseMap = true;
+
   const { position, permissionState, isSharing, startSharing, stopSharing } =
     useLocation();
 
-  //A : 축제 지도 정보 불러오기
   useEffect(() => {
     const token =
       typeof window !== "undefined"
         ? localStorage.getItem("accessToken")
         : null;
-    if (!token) {
-      console.warn("로그인이 필요합니다. (토큰 없음)");
-      return;
-    }
+    if (!token) return;
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     fetch(`${baseUrl}/festivals/${festivalId}/maps`, {
-      method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -67,43 +74,57 @@ export default function FestivalMap({
     })
       .then((r) => r.json())
       .then((data) => {
-        console.log("지도 API 응답:", data);
-        console.log("지도 개수:", data?.result?.content?.length);
-
         if (data.isSuccess) {
-          setMaps(data.result.content);
-        } else {
-          console.error("지도 목록 API 실패:", data.message);
+          const content: FestivalMapInfo[] = data.result.content;
+          setMaps(content);
+          // ✅ 처음엔 전체 레이어 활성화
+          setVisibleMapIds(new Set(content.map((m) => m.mapId)));
         }
       })
       .catch((err) => console.error("지도 목록 fetch 실패:", err));
   }, [festivalId]);
-  // C 담당: 지도 로드 완료 후 위치 공유 자동 시작
+
   useEffect(() => {
-    if (maps.length > 0 && !isSharing) {
-      startSharing(festivalId);
-    }
-    return () => {
-      stopSharing();
-    };
+    if (maps.length > 0 && !isSharing) startSharing(festivalId);
+    return () => stopSharing();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maps.length]);
 
-  const currentMap = maps[currentIndex];
+  // ✅ 레이어 토글
+  const toggleLayer = (mapId: number) => {
+    setVisibleMapIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(mapId)) {
+        next.delete(mapId);
+      } else {
+        next.add(mapId);
+      }
+      return next;
+    });
+  };
 
-  const bounds = useMemo<[[number, number], [number, number]]>(() => {
-    if (!currentMap)
-      return [
-        [0, 0],
-        [0, 0],
-      ];
+  const totalBounds = useMemo<
+    [[number, number], [number, number]] | null
+  >(() => {
+    if (maps.length === 0) return null;
+    let minLat = Infinity,
+      minLng = Infinity;
+    let maxLat = -Infinity,
+      maxLng = -Infinity;
+    for (const m of maps) {
+      const [[swLat, swLng], [neLat, neLng]] = normalizeBounds(m);
+      minLat = Math.min(minLat, swLat);
+      minLng = Math.min(minLng, swLng);
+      maxLat = Math.max(maxLat, neLat);
+      maxLng = Math.max(maxLng, neLng);
+    }
     return [
-      [currentMap.bounds.southWest.lat, currentMap.bounds.southWest.lng],
-      [currentMap.bounds.northEast.lat, currentMap.bounds.northEast.lng],
+      [minLat, minLng],
+      [maxLat, maxLng],
     ];
-  }, [currentMap]);
+  }, [maps]);
 
-  if (maps.length === 0) {
+  if (maps.length === 0 || !totalBounds) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-[#0a0b1e]">
         <p className="text-white/40 text-sm tracking-widest animate-pulse">
@@ -113,97 +134,14 @@ export default function FestivalMap({
     );
   }
 
+  const center: [number, number] = [
+    (totalBounds[0][0] + totalBounds[1][0]) / 2,
+    (totalBounds[0][1] + totalBounds[1][1]) / 2,
+  ];
+
   return (
     <div className="relative w-full h-screen">
-      {/* ── 좌우 화살표 버튼 ──────────────────────────────── */}
-      {maps.length > 1 && (
-        <>
-          {/* 이전 버튼 */}
-          <button
-            onClick={() => setCurrentIndex((i) => Math.max(0, i - 1))}
-            disabled={currentIndex === 0}
-            style={{
-              position: "absolute",
-              top: "50%",
-              left: "12px",
-              transform: "translateY(-50%)",
-              zIndex: 1000,
-              width: "56px",
-              height: "56px",
-              borderRadius: "50%",
-              background: "rgba(15, 17, 26, 0.85)",
-              backdropFilter: "blur(8px)",
-              border: "1.5px solid rgba(255,255,255,0.15)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontSize: "28px",
-              lineHeight: 1,
-              cursor: "pointer",
-              pointerEvents: "auto",
-              opacity: currentIndex === 0 ? 0.3 : 1,
-              transition: "opacity 0.2s",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
-            }}
-            aria-label="이전 지도"
-          >
-            ‹
-          </button>
-
-          {/* 다음 버튼 */}
-          <button
-            onClick={() =>
-              setCurrentIndex((i) => Math.min(maps.length - 1, i + 1))
-            }
-            disabled={currentIndex === maps.length - 1}
-            style={{
-              position: "absolute",
-              top: "50%",
-              right: "12px",
-              transform: "translateY(-50%)",
-              zIndex: 1000,
-              width: "56px",
-              height: "56px",
-              borderRadius: "50%",
-              background: "rgba(15, 17, 26, 0.85)",
-              backdropFilter: "blur(8px)",
-              border: "1.5px solid rgba(255,255,255,0.15)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              color: "white",
-              fontSize: "28px",
-              lineHeight: 1,
-              cursor: "pointer",
-              pointerEvents: "auto",
-              opacity: currentIndex === maps.length - 1 ? 0.3 : 1,
-              transition: "opacity 0.2s",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
-            }}
-            aria-label="다음 지도"
-          >
-            ›
-          </button>
-
-          {/* 페이지 인디케이터 */}
-          <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-[1000] flex gap-[6px]">
-            {maps.map((_, i) => (
-              <span
-                key={i}
-                onClick={() => setCurrentIndex(i)}
-                className={`h-[6px] rounded-full cursor-pointer transition-all duration-200 ${
-                  i === currentIndex
-                    ? "bg-[#2bbdee] w-4"
-                    : "bg-white/30 w-[6px]"
-                }`}
-              />
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* ── c: 위치 권한 거부 배너 ───────────────────────────── */}
+      {/* 위치 권한 거부 배너 */}
       {permissionState === "denied" && (
         <div className="absolute top-16 left-1/2 -translate-x-1/2 z-[1000] bg-[#F43F5E]/90 backdrop-blur-md rounded-[10px] px-4 py-2">
           <p className="text-white text-xs font-medium text-center">
@@ -212,27 +150,134 @@ export default function FestivalMap({
         </div>
       )}
 
-      {/* ── Leaflet MapContainer ──────────────────────────── */}
+      {/* ✅ 레이어 토글 버튼 */}
+      <div className="absolute top-4 right-4 z-[1000]">
+        <button
+          onClick={() => setShowLayerPanel((v) => !v)}
+          style={{
+            background: "rgba(15, 17, 26, 0.85)",
+            backdropFilter: "blur(8px)",
+            border: "1.5px solid rgba(255,255,255,0.15)",
+            borderRadius: "10px",
+            padding: "8px 14px",
+            color: "white",
+            fontSize: "13px",
+            cursor: "pointer",
+            boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+          }}
+        >
+          🗂 레이어 ({visibleMapIds.size}/{maps.length})
+        </button>
+
+        {/* ✅ 레이어 목록 패널 */}
+        {showLayerPanel && (
+          <div
+            style={{
+              marginTop: "8px",
+              background: "rgba(15, 17, 26, 0.92)",
+              backdropFilter: "blur(12px)",
+              border: "1.5px solid rgba(255,255,255,0.12)",
+              borderRadius: "12px",
+              padding: "10px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+              minWidth: "160px",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+            }}
+          >
+            {/* 전체 토글 */}
+            <button
+              onClick={() =>
+                setVisibleMapIds(
+                  visibleMapIds.size === maps.length
+                    ? new Set()
+                    : new Set(maps.map((m) => m.mapId)),
+                )
+              }
+              style={{
+                background: "rgba(255,255,255,0.08)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                borderRadius: "6px",
+                padding: "5px 10px",
+                color: "white",
+                fontSize: "11px",
+                cursor: "pointer",
+                marginBottom: "4px",
+              }}
+            >
+              {visibleMapIds.size === maps.length
+                ? "전체 숨기기"
+                : "전체 보이기"}
+            </button>
+
+            {/* 개별 레이어 버튼 - 활성화 여부에 따라 색상 변경 */}
+            {maps.map((m, i) => (
+              <button
+                key={m.mapId}
+                onClick={() => toggleLayer(m.mapId)}
+                style={{
+                  background: visibleMapIds.has(m.mapId)
+                    ? "rgba(43, 189, 238, 0.2)"
+                    : "rgba(255,255,255,0.05)",
+                  border: visibleMapIds.has(m.mapId)
+                    ? "1.5px solid #2bbdee"
+                    : "1.5px solid rgba(255,255,255,0.1)",
+                  borderRadius: "8px",
+                  padding: "10px 12px", // 터치 영역 충분히 확보
+                  color: visibleMapIds.has(m.mapId)
+                    ? "#2bbdee"
+                    : "rgba(255,255,255,0.4)",
+                  fontSize: "12px",
+                  fontWeight: visibleMapIds.has(m.mapId) ? "600" : "400",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  transition: "all 0.15s",
+                  width: "100%",
+                }}
+              >
+                {visibleMapIds.has(m.mapId) ? "● " : "○ "}
+                지도 {i + 1} (#{m.mapId})
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
       <MapContainer
-        center={[
-          (bounds[0][0] + bounds[1][0]) / 2,
-          (bounds[0][1] + bounds[1][1]) / 2,
-        ]}
+        center={center}
         zoom={16}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false}
       >
-        <FixedMap bounds={bounds} />
-        {/* 축제 지도 이미지 오버레이 */}
-        <ImageOverlay
-          url={currentMap.mapImageUrl}
-          bounds={bounds}
-          opacity={1}
-        />
-        {/* B: 혼잡도 레이어 */}
-        {showTraffic && <CongestionLayer mapId={currentMap.mapId} />}
+        {showBaseMap && (
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution="&copy; OpenStreetMap contributors"
+          />
+        )}
 
-        {/* C: 내 위치 마커 */}
+        <FixedMap bounds={totalBounds} />
+
+        {/* ✅ visibleMapIds에 있는 것만 렌더링 */}
+        {maps
+          .filter((m) => visibleMapIds.has(m.mapId))
+          .map((m) => (
+            <ImageOverlay
+              key={m.mapId}
+              url={m.mapImageUrl}
+              bounds={normalizeBounds(m)}
+              opacity={showBaseMap ? 0.75 : 1}
+            />
+          ))}
+
+        {showTraffic &&
+          maps
+            .filter((m) => visibleMapIds.has(m.mapId))
+            .map((m) => (
+              <CongestionLayer key={`congestion-${m.mapId}`} mapId={m.mapId} />
+            ))}
+
         <MyLocationMarker position={position} followOnce />
       </MapContainer>
     </div>
