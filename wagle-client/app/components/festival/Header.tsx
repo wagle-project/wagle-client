@@ -56,7 +56,6 @@ function SideDrawer({
             display: "flex",
             alignItems: "center",
             justifyContent: "between", // justify-content: space-between
-            justifyContent: "space-between",
             padding: "20px 24px",
             borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
           }}
