@@ -13,49 +13,86 @@ function SideDrawer({
 }) {
   const router = useRouter();
 
-  const menuItems = [{ label: "info", path: "/info", icon: "⚙️" }];
+  const menuItems = [{ label: "Company Info", path: "/info", icon: "ℹ️" }];
 
   return (
     <>
       {/* 딤 배경 */}
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 40,
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backdropFilter: "blur(4px)",
+          }}
           onClick={onClose}
         />
       )}
 
       {/* 드로어 패널 */}
-
       <div
-        className={`
-    fixed top-0 right-0 z-50 h-full w-[75%] max-w-[300px]
-    bg-[#0e0f24] border-l border-white/10 flex flex-col
-    transition-transform duration-300 ease-in-out
-    ${
-      isOpen ? "translate-x-0" : "translate-x-full invisible" // 👈 invisible 추가
-    }
-        `}
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          zIndex: 50,
+          height: "100%",
+          width: "75%",
+          maxWidth: "300px",
+          backgroundColor: "#0e0f24",
+          borderLeft: "1px solid rgba(255, 255, 255, 0.1)",
+          display: "flex",
+          flexDirection: "column",
+          transition: "transform 0.3s ease-in-out",
+          transform: isOpen ? "translateX(0)" : "translateX(100%)",
+          visibility: isOpen ? "visible" : "hidden",
+        }}
       >
         {/* 드로어 헤더 */}
-        <div className="flex items-center justify-between px-6 py-5 border-b border-white/10">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "between", // justify-content: space-between
+            justifyContent: "space-between",
+            padding: "20px 24px",
+            borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+          }}
+        >
           <h2
-            className="text-white text-lg"
-            style={{ fontFamily: "var(--font-agbalumo)", fontWeight: "normal" }}
+            style={{
+              color: "white",
+              fontSize: "18px",
+              fontFamily: "var(--font-agbalumo)",
+              fontWeight: "normal",
+              margin: 0,
+            }}
           >
             WagleWagle
           </h2>
 
+          {/* 닫기 버튼 (X 아이콘 핑크색 변경) */}
           <button
             onClick={onClose}
-            className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
-            aria-label="메뉴 닫기"
+            style={{
+              width: "32px",
+              height: "32px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: "50%",
+              backgroundColor: "rgba(255, 255, 255, 0.05)",
+              border: "none",
+              cursor: "pointer",
+            }}
           >
-            <svg width="14" height="14" fill="none" viewBox="0 0 24 24">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24">
               <path
                 d="M18 6L6 18M6 6l12 12"
-                stroke="white"
-                strokeWidth="2"
+                stroke="#FF80DF" // 핑크색 적용
+                strokeWidth="2.5"
                 strokeLinecap="round"
               />
             </svg>
@@ -63,7 +100,15 @@ function SideDrawer({
         </div>
 
         {/* 메뉴 아이템 */}
-        <nav className="flex-1 px-4 py-6 flex flex-col gap-1">
+        <nav
+          style={{
+            flex: 1,
+            padding: "24px 16px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "4px",
+          }}
+        >
           {menuItems.map((item) => (
             <button
               key={item.path}
@@ -71,17 +116,54 @@ function SideDrawer({
                 router.push(item.path);
                 onClose();
               }}
-              className="flex items-center gap-3 px-4 py-3.5 rounded-xl text-white/70 hover:text-white hover:bg-white/5 transition-all text-left w-full"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "12px",
+                padding: "14px 16px",
+                borderRadius: "12px",
+                backgroundColor: "transparent",
+                border: "none",
+                color: "rgba(255, 255, 255, 0.7)",
+                textAlign: "left",
+                width: "100%",
+                cursor: "pointer",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor =
+                  "rgba(255, 255, 255, 0.05)";
+                e.currentTarget.style.color = "white";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = "rgba(255, 255, 255, 0.7)";
+              }}
             >
-              <span className="text-lg">{item.icon}</span>
-              <span className="text-sm font-medium">{item.label}</span>
+              <span style={{ fontSize: "18px" }}>{item.icon}</span>
+              <span style={{ fontSize: "14px", fontWeight: "500" }}>
+                {item.label}
+              </span>
             </button>
           ))}
         </nav>
 
         {/* 드로어 하단 */}
-        <div className="px-6 py-5 border-t border-white/10">
-          <p className="text-white/20 text-xs">WagleWagle v1.0.0</p>
+        <div
+          style={{
+            padding: "20px 24px",
+            borderTop: "1px solid rgba(255, 255, 255, 0.1)",
+          }}
+        >
+          <p
+            style={{
+              color: "rgba(255, 255, 255, 0.2)",
+              fontSize: "12px",
+              margin: 0,
+            }}
+          >
+            WagleWagle v1.0.0
+          </p>
         </div>
       </div>
     </>
@@ -95,7 +177,7 @@ export function Header() {
   console.log("drawerOpen:", drawerOpen);
   return (
     <>
-      <header className="sticky top-0 z-30 flex items-center justify-between px-5 py-4 bg-[#0a0b1e]/90 backdrop-blur-md border-b border-white/5">
+      <header className="sticky top-0 z-30 flex items-center justify-between px-5 py-4  border-b ">
         {/* 홈 버튼 */}
         <button
           onClick={() => router.push("/home")}
@@ -105,18 +187,10 @@ export function Header() {
           <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
             <path
               d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"
-              stroke="#ff3d71"
+              stroke="#ff80DF"
               strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
             />
-            <path
-              d="M9 21V12h6v9"
-              stroke="#ff3d71"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
+            <path d="M9 21V12h6v9" strokeWidth="2" stroke="#ff80DF" />
           </svg>
         </button>
 
@@ -132,11 +206,49 @@ export function Header() {
         <button
           onClick={() => setDrawerOpen(true)}
           aria-label="메뉴 열기"
+          style={{
+            width: "40px",
+            height: "40px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            gap: "5px",
+            borderRadius: "50%",
+            backgroundColor: "rgba(255, 255, 255, 0.05)",
+            border: "none",
+            cursor: "pointer",
+            transition: "background-color 0.2s",
+            padding: "0",
+          }}
           className="w-10 h-10 flex flex-col items-center justify-center gap-[5px] rounded-full bg-white/5 hover:bg-white/10 transition-colors"
         >
-          <span className="w-4 h-[1.5px] bg-white/70 rounded-full" />
-          <span className="w-4 h-[1.5px] bg-white/70 rounded-full" />
-          <span className="w-2.5 h-[1.5px] bg-white/70 rounded-full self-start ml-[10px]" />
+          {/* 첫 번째 선 */}
+          <span
+            style={{
+              width: "16px",
+              height: "2px",
+              backgroundColor: "#FF80DF",
+              borderRadius: "10px",
+            }}
+          />
+          {/* 두 번째 선 */}
+          <span
+            style={{
+              width: "16px",
+              height: "2px",
+              backgroundColor: "#FF80DF",
+              borderRadius: "10px",
+            }}
+          />
+          {/* 세 번째 선 (이미지처럼 조금 짧게 구성) */}
+          <span
+            style={{
+              width: "16px",
+              height: "2px",
+              backgroundColor: "#FF80DF",
+              borderRadius: "10px",
+            }}
+          />
         </button>
       </header>
 

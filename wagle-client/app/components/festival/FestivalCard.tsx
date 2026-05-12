@@ -80,10 +80,48 @@ export function FestivalCard({ festival, onClick }: FestivalCardProps) {
           </div>
         </div>
         <button
-          className="ml-4 w-9 h-9 rounded-full bg-[#2bbdee] flex items-center justify-center flex-shrink-0 shadow-[0_0_12px_rgba(43,189,238,0.35)] group-hover:bg-[#ff3d71] group-hover:shadow-[0_0_12px_rgba(255,61,113,0.35)] transition-all duration-300"
-          aria-label={`${festival.name} 자세히 보기`}
+          style={{
+            marginLeft: "16px",
+            marginBottom: "20px",
+            marginRight: "34px",
+            width: "36px",
+            height: "36px",
+            borderRadius: "50%",
+            backgroundColor: "#2BBDEE", // 기본 파란색
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            flexShrink: 0,
+            border: "none",
+            cursor: "pointer",
+            // 파란색 그림자 효과
+            boxShadow: "0 0 12px rgba(43, 189, 238, 0.35)",
+            transition: "all 0.3s ease",
+            padding: "0",
+          }}
+          // 마우스 오버 시 핑크색으로 변경 (#FF3D71 또는 프로젝트 톤인 #FF80DF 추천)
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "#FF80DF";
+            e.currentTarget.style.boxShadow =
+              "0 0 12px rgba(255, 128, 223, 0.35)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "#2BBDEE";
+            e.currentTarget.style.boxShadow =
+              "0 0 12px rgba(43, 189, 238, 0.35)";
+          }}
+          aria-label="자세히 보기"
         >
-          <span className="text-white text-sm font-bold">→</span>
+          <span
+            style={{
+              color: "white",
+              fontSize: "14px",
+              fontWeight: "bold",
+              lineHeight: 1,
+            }}
+          >
+            →
+          </span>
         </button>
       </div>
     </div>
