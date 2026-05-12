@@ -451,15 +451,15 @@ export default function FestivalDetailPage() {
         {/* ── 지도 탭: FestivalMap으로 교체 ── */}
         {activeTab === "map" && (
           <div className="animate-fadeIn w-full h-full relative">
-            {/* ✅ 누른 상태(showTraffic)에 따라 버튼 전체 배경색이 확실하게 변하도록 수정 */}
+            {/* ✅ 패딩을 강제로 크게 지정 (px-[28px] py-[14px]) */}
             <div
               onClick={() => setShowTraffic(!showTraffic)}
-              className={`absolute flex items-center gap-2 rounded-full px-4 py-2 shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
+              className={`absolute flex items-center gap-3 rounded-full px-[15px] py-[9px] shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
                 showTraffic
                   ? "bg-[#2bbdee] border-[#2bbdee] text-[#0f111a]"
                   : "bg-[#424A5D] border-transparent text-white"
               }`}
-              style={{ zIndex: 9999, top: "40px", right: "16px" }} //  top-4 → top 40px으로 레이어 버튼 아래로
+              style={{ zIndex: 9999, top: "40px", right: "16px" }}
             >
               <span className="text-[12px] font-bold tracking-wider select-none pointer-events-none">
                 SHOW TRAFFIC
