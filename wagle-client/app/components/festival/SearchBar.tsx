@@ -7,7 +7,7 @@ interface SearchBarProps {
 //부모컴포넌트에게 value, onChange, onSearch props값 전달 받아서, 검색어 입력과 검색 버튼 클릭 이벤트 처리
 export function SearchBar({ value, onChange, onSearch }: SearchBarProps) {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2" style={{ padding: "0 20px" }}>
       <div
         style={{
           display: "flex",
