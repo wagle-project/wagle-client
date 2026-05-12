@@ -8,19 +8,53 @@ interface SearchBarProps {
 export function SearchBar({ value, onChange, onSearch }: SearchBarProps) {
   return (
     <div className="flex gap-2">
-      <div className="flex items-center flex-1 rounded-full border border-white/30 bg-white/30 backdrop-blur-md px-5 py-3.5">
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          width: "100%",
+          maxWidth: "500px", // 적절한 최대 너비
+          height: "50px", // 높이
+          backgroundColor: "rgba(51, 53, 55, 0.9)", // 짙은 회색 + 투명도
+          backdropFilter: "blur(10px)", // 블러 효과
+          border: "1px solid rgba(255, 255, 255, 0.1)", // 은은한 테두리
+          borderRadius: "25px", // 캡슐 모양
+          padding: "0 20px", // 좌우 여백
+          boxSizing: "border-box",
+        }}
+        className="flex items-center flex-1 rounded-full border border-white/30 bg-white/30 backdrop-blur-md px-5 py-3.5"
+      >
         <input
+          style={{
+            flex: 1,
+            background: "none",
+            border: "none",
+            outline: "none",
+            color: "white",
+            fontSize: "15px",
+            height: "100%",
+          }}
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && onSearch()}
           placeholder="축제 이름을 검색해 보세요"
           className="flex-1 bg-transparent text-white text-sm placeholder:text-white/60 focus:outline-none"
-          style={{ color: "white" }}
         />
       </div>
 
       <button
+        style={{
+          background: "none",
+          border: "none",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "0",
+          marginLeft: "10px",
+          color: "rgba(255, 255, 255, 0.5)", // 아이콘 색상 (살짝 투명하게)
+        }}
         onClick={onSearch}
         aria-label="검색"
         className="w-12 h-12 rounded-full border border-white/30 bg-white/30 backdrop-blur-md flex items-center justify-center flex-shrink-0 hover:bg-white/40 active:scale-95 transition-all"

@@ -10,17 +10,34 @@ export default function OnboardingPage() {
       {/* ── 상단 헤더 ── */}
       <div className="flex items-center p-6 justify-between z-10">
         <div className="size-10" />
-        <div className="flex-1 text-center">
-          <span className="bg-gradient-to-r from-[#ff3d71] to-[#3facee] bg-clip-text text-transparent font-bold tracking-[0.2em] text-xs uppercase">
-            WagleWagle
-          </span>
-        </div>
-        <button
-          onClick={() => router.back()}
-          className="text-white/40 flex size-10 items-center justify-center rounded-full bg-white/5 hover:bg-white/10 transition-colors"
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "120px",
+            justifyContent: "center", // 끝에 쉼표 추가
+            marginTop: "25px", // 하이픈 제거 후 대문자(CamelCase)로 변경
+          }}
         >
-          ✕
-        </button>
+          <div className="flex-1 text-center">
+            <span className="bg-gradient-to-r from-[#ff3d71] to-[#3facee] bg-clip-text text-transparent font-bold tracking-[0.2em] text-xs uppercase">
+              WagleWagle
+            </span>
+          </div>
+          <button
+            onClick={() => router.back()}
+            className="text-white/40 flex size-10 items-center justify-center rounded-full bg-pink hover:bg-white/10 transition-colors"
+            style={{
+              color: "#FF69B4",
+              background: "none",
+              border: "none" /* 버튼 기본 테두리 제거 */,
+              fontSize: "30px" /* font-size 대신 fontSize 사용 */,
+              cursor: "pointer" /* 마우스를 올렸을 때 손가락 모양 */,
+            }}
+          >
+            ✕
+          </button>
+        </div>
       </div>
 
       {/* ── 캐릭터 영역 ── */}
@@ -53,7 +70,12 @@ export default function OnboardingPage() {
       </div>
 
       {/* ── 하단 텍스트 및 버튼 ── */}
-      <div className="px-8 pb-8 pt-2 text-center z-10">
+      <div
+        className="px-8 pb-8 pt-2 text-center z-10"
+        style={{
+          marginBottom: "65px",
+        }}
+      >
         <h1 className="text-white text-4xl font-bold leading-tight tracking-tight mb-4 break-keep">
           실시간 축제 현황을
           <br />
@@ -75,8 +97,12 @@ export default function OnboardingPage() {
           onClick={() => router.push("/home")}
           className="w-full bg-gradient-to-r from-[#ff3d71] to-[#a855f7] text-white font-bold text-lg py-4 rounded-2xl active:scale-[0.97] transition-all"
           style={{
-            boxShadow:
-              "0 10px 30px -5px rgba(255,61,113,0.4), 0 0 15px rgba(255,61,113,0.4), inset 0 0 10px rgba(255,61,113,0.2)",
+            color: "white",
+            marginTop: "20px",
+            borderRadius: "9999px",
+            height: "45px",
+            fontSize: "18px",
+            background: "linear-gradient(to right, #E93E94, #9079E3, #53A7F1)",
           }}
         >
           축제 즐기러 가기

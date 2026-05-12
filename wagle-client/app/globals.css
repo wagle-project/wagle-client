@@ -16,13 +16,6 @@ body {
   overflow-x: hidden;
 }
 
-body {
-  background-color: #0a0b1e;
-  color: white;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 /* 스크롤바 숨김 (모바일 앱 느낌) */
 ::-webkit-scrollbar {
   display: none;
