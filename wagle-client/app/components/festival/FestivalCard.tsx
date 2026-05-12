@@ -15,6 +15,7 @@ export function FestivalCard({ festival, onClick }: FestivalCardProps) {
       onKeyDown={(e) => e.key === "Enter" && onClick()}
       className="w-full rounded-2xl overflow-hidden cursor-pointer group"
       style={{
+        padding: "0 10px",
         background: "rgba(255,255,255,0.03)",
         border: "1px solid rgba(255,255,255,0.07)",
         transition: "border-color 0.3s, box-shadow 0.3s",

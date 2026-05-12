@@ -55,7 +55,7 @@ function SideDrawer({
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "between", // justify-content: space-between
+            justifyContent: "space-between",
             padding: "20px 24px",
             borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
           }}
@@ -179,17 +179,22 @@ export function Header() {
       <header className="sticky top-0 z-30 flex items-center justify-between px-5 py-4  border-b ">
         {/* 홈 버튼 */}
         <button
-          onClick={() => router.push("/home")}
+          onClick={() => window.location.reload()}
           aria-label="홈으로 이동"
-          className="w-10 h-10 flex items-center justify-center rounded-full bg-[#ff3d71]/10 hover:bg-[#ff3d71]/20 transition-colors"
+          className="text-[#E270CA] bg-transparent outline-none border-none p-2 -mr-2 transition-transform active:scale-95"
         >
-          <svg width="18" height="18" fill="none" viewBox="0 0 24 24">
-            <path
-              d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"
-              stroke="#ff80DF"
-              strokeWidth="2"
-            />
-            <path d="M9 21V12h6v9" strokeWidth="2" stroke="#ff80DF" />
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+            <polyline points="9 22 9 12 15 12 15 22" />
           </svg>
         </button>
 
