@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import { useMap } from "react-leaflet";
 import type { BoothInfo } from "../../types/booth";
 
 interface BoothPopupProps {
@@ -10,6 +12,7 @@ interface BoothPopupProps {
 
 export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const map = useMap();
 
   // 팝업 바깥 클릭 시 닫기
   useEffect(() => {
@@ -18,139 +21,145 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
         onClose();
       }
     };
-    // 이벤트를 약간 지연시켜 마커 클릭 이벤트와 충돌 방지
+    
     const timer = setTimeout(() => {
       document.addEventListener("mousedown", handler);
     }, 100);
+    
     return () => {
       clearTimeout(timer);
       document.removeEventListener("mousedown", handler);
     };
   }, [onClose]);
 
-  return (
-    /* z-[2000] : Leaflet 기본 z-index보다 높게 */
-    <div className="fixed inset-0 z-[2000] flex items-end justify-center pointer-events-none">
-      {/* 반투명 오버레이 (터치 영역만) */}
-      <div className="absolute inset-0 pointer-events-auto" onClick={onClose} />
+  return createPortal(
+    /* 100% 정중앙 정렬을 보장하는 순수 CSS 레이아웃 컨테이너 */
+    <div 
+      style={{ 
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        pointerEvents: "none",
+        padding: "16px",
+        zIndex: 3000 
+      }}
+    >
+      {/* 반투명 오버레이 (지도 크기만큼 꽉 채우도록 순수 CSS로 고정) */}
+      <div 
+        style={{ 
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0, 0, 0, 0.45)",
+          pointerEvents: "auto"
+        }}
+        onClick={onClose} 
+      />
 
       {/* 팝업 카드 */}
       <div
         ref={ref}
-        className="pointer-events-auto relative w-full max-w-sm mb-8 mx-4"
         style={{
-          background: "rgba(10, 11, 30, 0.97)",
-          border: "1.5px solid rgba(255,255,255,0.13)",
-          borderRadius: "20px",
-          boxShadow: "0 8px 40px rgba(0,0,0,0.7)",
-          overflow: "hidden",
-          animation: "slideUp 0.25s cubic-bezier(0.34,1.56,0.64,1)",
+          position: "relative",
+          pointerEvents: "auto",
+          width: "100%",
+          maxWidth: "340px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          background: "#1C1C22",
+          borderRadius: "24px",
+          boxShadow: "0 12px 40px rgba(0,0,0,0.7)",
+          padding: "32px 24px 24px",
+          animation: "popUp 0.25s cubic-bezier(0.34,1.56,0.64,1)",
         }}
       >
-        {/* ── 헤더 ── */}
-        <div
+        {/* ── 닫기 버튼 ── */}
+        <button
+          onClick={onClose}
           style={{
-            background: "rgba(255,61,113,0.15)",
-            borderBottom: "1px solid rgba(255,61,113,0.25)",
-            padding: "14px 18px 12px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
+            position: "absolute",
+            top: "16px",
+            right: "16px",
+            background: "transparent",
+            border: "none",
+            color: "#FF3D71",
+            fontSize: "22px",
+            cursor: "pointer",
+            padding: "8px",
+            lineHeight: 1,
           }}
         >
-          {/* WagleWagle 로고 */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            <span
-              style={{
-                fontSize: "10px",
-                letterSpacing: "3px",
-                color: "rgba(255,255,255,0.45)",
-                textTransform: "uppercase",
-                fontWeight: 600,
-              }}
-            >
-              WAGLEWAGLE
-            </span>
-            <span
-              style={{
-                fontSize: "15px",
-                color: "#fff",
-                fontWeight: 700,
-                letterSpacing: "0.5px",
-              }}
-            >
-              {booth.department}
-            </span>
-          </div>
+          ✕
+        </button>
 
-          {/* 부스 번호 뱃지 */}
-          <div
-            style={{
-              background: "#FF3D71",
-              borderRadius: "50%",
-              width: "36px",
-              height: "36px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "15px",
-              color: "#fff",
-              fontWeight: 800,
-              boxShadow: "0 0 12px rgba(255,61,113,0.5)",
-            }}
-          >
-            {booth.boothNumber}
-          </div>
+        {/* ── WAGLEWAGLE 로고 ── */}
+        <div
+          style={{
+            fontSize: "12px",
+            letterSpacing: "2.5px",
+            fontWeight: 800,
+            marginBottom: "12px",
+            display: "flex",
+          }}
+        >
+          <span style={{ color: "#FF3D71" }}>WAGLE</span>
+          <span style={{ color: "#38BDF8" }}>WAGLE</span>
         </div>
 
-        {/* ── 주막 이름 ── */}
+        {/* ── 학과 이름 ── */}
         <div
           style={{
-            padding: "12px 18px 8px",
-            fontSize: "18px",
+            fontSize: "24px",
             fontWeight: 800,
             color: "#fff",
-            letterSpacing: "0.3px",
+            letterSpacing: "0.5px",
+            marginBottom: "24px",
+            textAlign: "center",
           }}
         >
-          {booth.boothName}
+          {booth.department}
         </div>
 
         {/* ── 메뉴 이미지 ── */}
-        <div style={{ padding: "0 18px 18px" }}>
+        <div 
+          style={{ 
+            width: "100%", 
+            borderRadius: "12px",
+            overflow: "hidden",
+            background: "rgba(255,255,255,0.03)",
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
           {booth.menuImageUrl ? (
-            <div
+            <img
+              src={booth.menuImageUrl}
+              alt={`${booth.department} 메뉴판`}
               style={{
-                borderRadius: "12px",
-                overflow: "hidden",
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.05)",
-                position: "relative",
+                width: "100%",
+                maxHeight: "55vh",
+                objectFit: "contain",
+                display: "block",
               }}
-            >
-              <img
-                src={booth.menuImageUrl}
-                alt={`${booth.boothName} 메뉴판`}
-                style={{
-                  width: "100%",
-                  maxHeight: "320px",
-                  objectFit: "cover",
-                  display: "block",
-                }}
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                  const parent = (e.target as HTMLImageElement).parentElement;
-                  if (parent) {
-                    parent.innerHTML = `<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.3);font-size:13px;">메뉴 이미지를 불러올 수 없습니다</div>`;
-                  }
-                }}
-              />
-            </div>
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+                const parent = (e.target as HTMLImageElement).parentElement;
+                if (parent) {
+                  parent.innerHTML = `<div style="padding:40px;text-align:center;color:rgba(255,255,255,0.3);font-size:13px;">메뉴 이미지를 불러올 수 없습니다</div>`;
+                }
+              }}
+            />
           ) : (
             <div
               style={{
-                borderRadius: "12px",
-                border: "1px dashed rgba(255,255,255,0.15)",
                 padding: "40px",
                 textAlign: "center",
                 color: "rgba(255,255,255,0.3)",
@@ -161,38 +170,15 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
             </div>
           )}
         </div>
-
-        {/* ── 닫기 버튼 ── */}
-        <button
-          onClick={onClose}
-          style={{
-            position: "absolute",
-            top: "12px",
-            right: "60px", // 뱃지 왼쪽
-            background: "rgba(255,255,255,0.1)",
-            border: "none",
-            borderRadius: "50%",
-            width: "28px",
-            height: "28px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "rgba(255,255,255,0.6)",
-            fontSize: "16px",
-            cursor: "pointer",
-            lineHeight: 1,
-          }}
-        >
-          ×
-        </button>
       </div>
 
       <style>{`
-        @keyframes slideUp {
-          from { transform: translateY(40px); opacity: 0; }
-          to   { transform: translateY(0);   opacity: 1; }
+        @keyframes popUp {
+          from { transform: scale(0.95) translateY(10px); opacity: 0; }
+          to   { transform: scale(1) translateY(0); opacity: 1; }
         }
       `}</style>
-    </div>
+    </div>,
+    map.getContainer()
   );
 }
