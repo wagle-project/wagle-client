@@ -1,11 +1,10 @@
-"use client";
-
 import { useEffect, useState, useMemo } from "react";
 import { MapContainer, ImageOverlay, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
 import MyLocationMarker from "./MyLocationMarker";
+import BoothLayer from "./BoothLayer"; // ✅ 추가
 import { useLocation } from "../../hooks/useLocation";
 import type { FestivalMapInfo } from "../../types/festival";
 
@@ -49,7 +48,6 @@ export default function FestivalMap({
   showTraffic = false,
 }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
-  // ✅ 활성화된 mapId Set으로 관리
   const [visibleMapIds, setVisibleMapIds] = useState<Set<number>>(new Set());
   const [showLayerPanel, setShowLayerPanel] = useState(false);
   const showBaseMap = true;
@@ -77,7 +75,6 @@ export default function FestivalMap({
         if (data.isSuccess) {
           const content: FestivalMapInfo[] = data.result.content;
           setMaps(content);
-          // ✅ 처음엔 전체 레이어 활성화
           setVisibleMapIds(new Set(content.map((m) => m.mapId)));
         }
       })
@@ -90,7 +87,6 @@ export default function FestivalMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maps.length]);
 
-  // ✅ 레이어 토글
   const toggleLayer = (mapId: number) => {
     setVisibleMapIds((prev) => {
       const next = new Set(prev);
@@ -150,7 +146,7 @@ export default function FestivalMap({
         </div>
       )}
 
-      {/* ✅ 레이어 토글 버튼 */}
+      {/* 레이어 토글 버튼 */}
       <div className="absolute top-4 right-4 z-[1000]">
         <button
           onClick={() => setShowLayerPanel((v) => !v)}
@@ -169,7 +165,6 @@ export default function FestivalMap({
           🗂 레이어 ({visibleMapIds.size}/{maps.length})
         </button>
 
-        {/* ✅ 레이어 목록 패널 */}
         {showLayerPanel && (
           <div
             style={{
@@ -186,7 +181,6 @@ export default function FestivalMap({
               boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
             }}
           >
-            {/* 전체 토글 */}
             <button
               onClick={() =>
                 setVisibleMapIds(
@@ -211,7 +205,6 @@ export default function FestivalMap({
                 : "전체 보이기"}
             </button>
 
-            {/* 개별 레이어 버튼 - 활성화 여부에 따라 색상 변경 */}
             {maps.map((m, i) => (
               <button
                 key={m.mapId}
@@ -224,7 +217,7 @@ export default function FestivalMap({
                     ? "1.5px solid #2bbdee"
                     : "1.5px solid rgba(255,255,255,0.1)",
                   borderRadius: "8px",
-                  padding: "10px 12px", // 터치 영역 충분히 확보
+                  padding: "10px 12px",
                   color: visibleMapIds.has(m.mapId)
                     ? "#2bbdee"
                     : "rgba(255,255,255,0.4)",
@@ -247,6 +240,7 @@ export default function FestivalMap({
       <MapContainer
         center={center}
         zoom={16}
+        maxZoom={22}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false}
       >
@@ -259,7 +253,6 @@ export default function FestivalMap({
 
         <FixedMap bounds={totalBounds} />
 
-        {/* ✅ visibleMapIds에 있는 것만 렌더링 */}
         {maps
           .filter((m) => visibleMapIds.has(m.mapId))
           .map((m) => (
@@ -279,6 +272,9 @@ export default function FestivalMap({
             ))}
 
         <MyLocationMarker position={position} followOnce />
+
+        {/* ✅ 주막 마커 레이어 추가 */}
+        <BoothLayer festivalId={festivalId} />
       </MapContainer>
     </div>
   );
