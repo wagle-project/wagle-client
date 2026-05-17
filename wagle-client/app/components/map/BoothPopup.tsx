@@ -101,17 +101,10 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
         </button>
 
         {/* ── WAGLEWAGLE 로고 ── */}
-        <div
-          style={{
-            fontSize: "12px",
-            letterSpacing: "2.5px",
-            fontWeight: 800,
-            marginBottom: "12px",
-            display: "flex",
-          }}
-        >
-          <span style={{ color: "#FF3D71" }}>WAGLE</span>
-          <span style={{ color: "#38BDF8" }}>WAGLE</span>
+        <div style={{ marginBottom: "12px" }}>
+          <span className="bg-gradient-to-r from-[#ff3d71] to-[#3facee] bg-clip-text text-transparent font-bold tracking-[0.2em] text-xs uppercase">
+            WagleWagle
+          </span>
         </div>
 
         {/* ── 학과 이름 ── */}
