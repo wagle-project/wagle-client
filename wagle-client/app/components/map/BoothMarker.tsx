@@ -11,35 +11,6 @@ interface BoothMarkerProps {
   onSelect: (boothNumber: number | null) => void;
 }
 
-// 동그라미 숫자 이모지 배열 (① ~ ⑳)
-const circledNumbers = [
-  "①",
-  "②",
-  "③",
-  "④",
-  "⑤",
-  "⑥",
-  "⑦",
-  "⑧",
-  "⑨",
-  "⑩",
-  "⑪",
-  "⑫",
-  "⑬",
-  "⑭",
-  "⑮",
-  "⑯",
-  "⑰",
-  "⑱",
-  "⑲",
-  "⑳",
-];
-
-function getCircledNumber(n: number): string {
-  if (n >= 1 && n <= 20) return circledNumbers[n - 1];
-  return `${n}`;
-}
-
 export default function BoothMarker({
   booth,
   isSelected,
@@ -60,7 +31,7 @@ export default function BoothMarker({
         background: ${isSelected ? "#FF3D71" : "transparent"};
         border: 2.5px solid ${isSelected ? "#FF3D71" : "#111"};
         color: ${isSelected ? "#fff" : "#111"};
-        font-size: 20px;
+        font-size: 13px;
         font-weight: 700;
         cursor: pointer;
         box-shadow: ${
@@ -68,11 +39,10 @@ export default function BoothMarker({
             ? "0 0 0 3px rgba(255,61,113,0.35), 0 4px 16px rgba(255,61,113,0.5)"
             : "0 2px 8px rgba(0,0,0,0.25)"
         };
-        transition: all 0.18s;
         user-select: none;
         line-height: 1;
       ">
-        ${getCircledNumber(booth.boothNumber)}
+        ${booth.boothNumber}
       </div>
     `,
     iconSize: [36, 36],
@@ -87,10 +57,7 @@ export default function BoothMarker({
       map.flyTo(
         [booth.latitude, booth.longitude],
         Math.max(map.getZoom(), 18),
-        {
-          animate: true,
-          duration: 0.5,
-        },
+        { animate: true, duration: 0.5 },
       );
     }
   };
