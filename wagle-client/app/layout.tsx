@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Agbalumo, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
+// app/layout.tsx 에 추가
+import "leaflet/dist/leaflet.css";
 
 const agbalumo = Agbalumo({
   weight: "400",

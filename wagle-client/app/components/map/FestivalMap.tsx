@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from "react";
 import { MapContainer, ImageOverlay, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
+import BoothMapTest from "./BoothMapTest";
 import CongestionLayer from "./CongestionLayer";
 import MyLocationMarker from "./MyLocationMarker";
 import BoothLayer from "./BoothLayer"; // ✅ 추가
@@ -275,6 +276,7 @@ export default function FestivalMap({
 
         {/* ✅ 주막 마커 레이어 추가 */}
         <BoothLayer festivalId={festivalId} />
+        <BoothMapTest />
       </MapContainer>
     </div>
   );
