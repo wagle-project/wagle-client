@@ -247,6 +247,7 @@ export default function FestivalMap({
       <MapContainer
         center={center}
         zoom={16}
+        maxZoom={22}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false}
       >
