@@ -1,12 +1,17 @@
+"use client";
+
 import { useEffect, useState, useMemo } from "react";
 import { MapContainer, ImageOverlay, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 
 import CongestionLayer from "./CongestionLayer";
 import MyLocationMarker from "./MyLocationMarker";
-import BoothLayer from "./BoothLayer"; // ✅ 추가
+import BoothLayer from "./BoothLayer";
+import FacilityLayer from "./FacilityLayer"; // C 담당: 부대시설 레이어
 import { useLocation } from "../../hooks/useLocation";
 import type { FestivalMapInfo } from "../../types/festival";
+import type { FacilityType } from "../../types/facility";
+import { FACILITY_LABEL, FACILITY_ICON } from "../../types/facility";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -16,6 +21,15 @@ L.Icon.Default.mergeOptions({
     "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
+
+/** C 담당: 모든 부대시설 타입 목록 */
+const ALL_FACILITY_TYPES: FacilityType[] = [
+  "TOILET",
+  "ELECTRICITY",
+  "WATER",
+  "GENERAL_WASTE",
+  "FOOD_WASTE",
+];
 
 function normalizeBounds(
   m: FestivalMapInfo,
@@ -52,6 +66,11 @@ export default function FestivalMap({
   const [showLayerPanel, setShowLayerPanel] = useState(false);
   const showBaseMap = true;
 
+  // C 담당: 부대시설 타입별 표시 여부 (기본값: 전체 표시)
+  const [visibleFacilityTypes, setVisibleFacilityTypes] = useState<Set<FacilityType>>(
+    new Set(ALL_FACILITY_TYPES)
+  );
+
   const { position, permissionState, isSharing, startSharing, stopSharing } =
     useLocation();
 
@@ -87,13 +106,14 @@ export default function FestivalMap({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maps.length]);
 
-  const toggleLayer = (mapId: number) => {
-    setVisibleMapIds((prev) => {
+  // C 담당: 부대시설 타입 개별 토글
+  const toggleFacilityType = (type: FacilityType) => {
+    setVisibleFacilityTypes((prev) => {
       const next = new Set(prev);
-      if (next.has(mapId)) {
-        next.delete(mapId);
+      if (next.has(type)) {
+        next.delete(type);
       } else {
-        next.add(mapId);
+        next.add(type);
       }
       return next;
     });
@@ -146,8 +166,8 @@ export default function FestivalMap({
         </div>
       )}
 
-      {/* 레이어 토글 버튼 */}
-      <div className="absolute top-4 right-4 z-[1000]">
+      {/* ── 레이어 패널 (C 담당: 지도 선택 제거 → 부대시설 타입별 토글로 교체) ── */}
+      <div className="absolute top-4 left-4 z-[1000]">
         <button
           onClick={() => setShowLayerPanel((v) => !v)}
           style={{
@@ -162,7 +182,7 @@ export default function FestivalMap({
             boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
           }}
         >
-          🗂 레이어 ({visibleMapIds.size}/{maps.length})
+          🗂 레이어
         </button>
 
         {showLayerPanel && (
@@ -177,16 +197,17 @@ export default function FestivalMap({
               display: "flex",
               flexDirection: "column",
               gap: "6px",
-              minWidth: "160px",
+              minWidth: "180px",
               boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
             }}
           >
+            {/* 전체 토글 버튼 */}
             <button
               onClick={() =>
-                setVisibleMapIds(
-                  visibleMapIds.size === maps.length
+                setVisibleFacilityTypes(
+                  visibleFacilityTypes.size === ALL_FACILITY_TYPES.length
                     ? new Set()
-                    : new Set(maps.map((m) => m.mapId)),
+                    : new Set(ALL_FACILITY_TYPES)
                 )
               }
               style={{
@@ -200,39 +221,48 @@ export default function FestivalMap({
                 marginBottom: "4px",
               }}
             >
-              {visibleMapIds.size === maps.length
+              {visibleFacilityTypes.size === ALL_FACILITY_TYPES.length
                 ? "전체 숨기기"
                 : "전체 보이기"}
             </button>
 
-            {maps.map((m, i) => (
-              <button
-                key={m.mapId}
-                onClick={() => toggleLayer(m.mapId)}
-                style={{
-                  background: visibleMapIds.has(m.mapId)
-                    ? "rgba(43, 189, 238, 0.2)"
-                    : "rgba(255,255,255,0.05)",
-                  border: visibleMapIds.has(m.mapId)
-                    ? "1.5px solid #2bbdee"
-                    : "1.5px solid rgba(255,255,255,0.1)",
-                  borderRadius: "8px",
-                  padding: "10px 12px",
-                  color: visibleMapIds.has(m.mapId)
-                    ? "#2bbdee"
-                    : "rgba(255,255,255,0.4)",
-                  fontSize: "12px",
-                  fontWeight: visibleMapIds.has(m.mapId) ? "600" : "400",
-                  cursor: "pointer",
-                  textAlign: "left",
-                  transition: "all 0.15s",
-                  width: "100%",
-                }}
-              >
-                {visibleMapIds.has(m.mapId) ? "● " : "○ "}
-                지도 {i + 1} (#{m.mapId})
-              </button>
-            ))}
+            {/* 부대시설 타입별 토글 버튼 */}
+            {ALL_FACILITY_TYPES.map((type) => {
+              const isVisible = visibleFacilityTypes.has(type);
+              return (
+                <button
+                  key={type}
+                  onClick={() => toggleFacilityType(type)}
+                  style={{
+                    background: isVisible
+                      ? "rgba(43, 189, 238, 0.15)"
+                      : "rgba(255,255,255,0.05)",
+                    border: isVisible
+                      ? "1.5px solid #2bbdee"
+                      : "1.5px solid rgba(255,255,255,0.1)",
+                    borderRadius: "8px",
+                    padding: "8px 12px",
+                    color: isVisible ? "#2bbdee" : "rgba(255,255,255,0.4)",
+                    fontSize: "12px",
+                    fontWeight: isVisible ? "600" : "400",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    transition: "all 0.15s",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
+                  }}
+                >
+                  <img
+                    src={FACILITY_ICON[type]}
+                    alt={FACILITY_LABEL[type]}
+                    style={{ width: "18px", height: "18px", objectFit: "contain" }}
+                  />
+                  {FACILITY_LABEL[type]}
+                </button>
+              );
+            })}
           </div>
         )}
       </div>
@@ -273,8 +303,11 @@ export default function FestivalMap({
 
         <MyLocationMarker position={position} followOnce />
 
-        {/* ✅ 주막 마커 레이어 추가 */}
+        {/* 주막 마커 레이어 */}
         <BoothLayer festivalId={festivalId} />
+
+        {/* C 담당: 부대시설 마커 레이어 */}
+        <FacilityLayer visibleTypes={visibleFacilityTypes} />
       </MapContainer>
     </div>
   );
