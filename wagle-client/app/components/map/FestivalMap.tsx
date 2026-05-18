@@ -101,7 +101,7 @@ export default function FestivalMap({
   }, [festivalId]);
 
   useEffect(() => {
-    if (maps.length > 0 && !isSharing) startSharing(festivalId);
+    if (maps.length > 0 && !isSharing) startSharing();
     return () => stopSharing();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [maps.length]);

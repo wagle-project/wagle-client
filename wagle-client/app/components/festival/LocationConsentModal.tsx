@@ -46,8 +46,11 @@ export default function LocationConsentModal({ isOpen, onClose, onAgree }: Locat
         // 성공 시 발급받은 accessToken을 localStorage에 저장
         localStorage.setItem("accessToken", data.result.accessToken);
         
+        // ✅ 추가: GlobalLocationTracker에 토큰 저장 완료 알림 (위치 추적 시작 신호탄)
+        window.dispatchEvent(new Event("tokenSaved"));
+
         // 부모 컴포넌트에 동의 및 토큰 발급 완료를 알림 (모달 닫기, 지도 탭 전환 등)
-        onAgree(); 
+        onAgree();
       } else {
         console.warn("API 에러 응답:", data.message);
         alert(data.message || "동의 처리 중 문제가 발생했습니다.");
@@ -62,7 +65,6 @@ export default function LocationConsentModal({ isOpen, onClose, onAgree }: Locat
 
   return (
     <div className="fixed inset-0 z-[9999] w-full max-w-[430px] left-1/2 -translate-x-1/2 h-[100dvh] bg-[#0f111a] flex flex-col animate-in fade-in duration-200">
-      
       {/* 상단 헤더 */}
       <div className="flex items-center w-full h-16 px-5 shrink-0" style={{ marginTop: '40px' }}>
         <div className="w-[38px]" />
@@ -119,7 +121,6 @@ export default function LocationConsentModal({ isOpen, onClose, onAgree }: Locat
           나중에 하기
         </button>
       </div>
-
     </div>
   );
 }

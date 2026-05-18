@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import dynamic from "next/dynamic";
@@ -46,30 +46,13 @@ export default function FestivalDetailPage() {
     "info",
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // ✅ 혼잡도 켜기/끄기 상태 추가
   const [showTraffic, setShowTraffic] = useState(false);
 
   const [festival, setFestival] = useState<FestivalDetail | null>(null);
   const [timetables, setTimetables] = useState<TimetableItem[]>([]);
   const [isDetailLoading, setIsDetailLoading] = useState(true);
 
-  const locationIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  // ── interval 정리 함수 (C 담당) ───────────────────────────
-  // 지도 탭 벗어날 때 호출 → 다시 들어오면 tracking 새로 시작 가능
-  const stopLocationTracking = () => {
-    if (locationIntervalRef.current) {
-      clearInterval(locationIntervalRef.current);
-      locationIntervalRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      stopLocationTracking();
-    };
-  }, []);
+  // 🗑️ 제거됨: locationIntervalRef, stopLocationTracking 관련 코드 모두 삭제 (전역 추적기가 담당하므로 불필요)
 
   useEffect(() => {
     const fetchAllData = async () => {
@@ -90,7 +73,7 @@ export default function FestivalDetailPage() {
         const detailData = await detailRes.json();
         if (detailData.isSuccess) setFestival(detailData.result);
 
-        // 2. 타임테이블 조회 (Swagger 명세 반영)
+        // 2. 타임테이블 조회
         const timetableRes = await fetch(
           `${BASE_URL}/festivals/${festivalId}/timetables`,
           { headers },
@@ -98,7 +81,6 @@ export default function FestivalDetailPage() {
         if (timetableRes.ok) {
           const timetableData = await timetableRes.json();
           if (timetableData.isSuccess && timetableData.result?.content) {
-            // sequence 기준으로 정렬하여 상태에 저장
             const sortedTimetables = timetableData.result.content.sort(
               (a: TimetableItem, b: TimetableItem) => a.sequence - b.sequence,
             );
@@ -120,7 +102,6 @@ export default function FestivalDetailPage() {
           address: "경상북도 김천시 대항면",
         });
 
-        // 백엔드가 꺼져있을 때 UI 확인용 더미 타임테이블 데이터
         setTimetables([
           {
             imageUrl:
@@ -136,98 +117,28 @@ export default function FestivalDetailPage() {
     if (festivalId) fetchAllData();
   }, [festivalId]);
 
-  // ── 위치 전송 (accessToken을 Authorization 헤더로) ──────────
-  const sendLocation = async (lat: number, lng: number) => {
-    const token = localStorage.getItem("accessToken");
-    if (!token) return;
-
-    try {
-      const res = await fetch(
-        `${BASE_URL}/festivals/${festivalId}/visitors/location`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ lat, lng }),
-        },
-      );
-      const data = await res.json();
-      if (data.isSuccess && data.result?.locationUpdateInterval) {
-        return data.result.locationUpdateInterval;
-      }
-    } catch (err) {
-      console.warn("위치 전송 실패:", err);
-    }
-  };
-
-  // ── GPS 추적 시작 ──────────────────────────────────────────
-  const startLocationTracking = () => {
-    if (locationIntervalRef.current) return;
-
-    const DEFAULT_INTERVAL = 5000;
-
-    const track = () => {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          await sendLocation(latitude, longitude);
-        },
-        (err) => console.warn("GPS 오류:", err),
-      );
-    };
-
-    track();
-    locationIntervalRef.current = setInterval(track, DEFAULT_INTERVAL);
-  };
+  // 🗑️ 제거됨: sendLocation, startLocationTracking 함수 삭제 (이제 GlobalLocationTracker가 알아서 함)
 
   // ── 동의 버튼 클릭 ────────────────────────────────────────
-  const handleAgree = async () => {
+  const handleAgree = () => {
     setIsModalOpen(false);
-
-    // ✅ test-token 제거 → 실제 visitors API로 토큰 발급
-    try {
-      let token = localStorage.getItem("accessToken");
-      if (!token) {
-        const res = await fetch(`${BASE_URL}/visitors`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ isTermsAgreed: true }),
-        });
-        const data = await res.json();
-        if (data.isSuccess) {
-          token = data.result.accessToken;
-          localStorage.setItem("accessToken", token!);
-        } else {
-          console.warn("동의 API 실패:", data.message);
-          return;
-        }
-      }
-      if (!navigator.geolocation) {
-        alert("이 기기는 GPS를 지원하지 않습니다.");
-        return;
-      }
-      startLocationTracking();
-      setActiveTab("map");
-    } catch (err) {
-      console.error("동의 처리 중 오류:", err);
-    }
+    
+    // ✅ 수정됨: 모달(LocationConsentModal) 안에서 이미 토큰 저장과 신호탄(Event) 발송을 
+    // 다 끝냈기 때문에, 여기서는 API를 또 부를 필요 없이 그냥 '지도 탭'으로 이동만 시켜주면 됩니다!
+    setActiveTab("map");
   };
 
   // ── 지도 버튼 클릭 (C 담당: checkMyStatus로 토큰 유효성 검사) ──
   const handleMapButtonClick = async () => {
     if (activeTab === "map") {
-      stopLocationTracking(); // 지도 탭 벗어날 때 interval 정리
       setActiveTab("info");
     } else {
       const me = await checkMyStatus();
       if (me) {
-        // 토큰 유효 → 바로 지도로
-        startLocationTracking();
+        // ✅ 수정됨: 토큰 유효 → 바로 지도로 탭 변경 (파란 점 표시는 FestivalMap 렌더링 시 알아서 켜짐)
         setActiveTab("map");
       } else {
-        // 토큰 없거나 만료 → 동의 모달
+        // 토큰 없거나 만료 → 동의 모달 띄우기
         setIsModalOpen(true);
       }
     }
@@ -244,14 +155,13 @@ export default function FestivalDetailPage() {
     return { dateStr: `${startFormat} - ${endFormat}`, days: diffDays };
   };
 
+  // ✅ 수정됨: 탭 이동 시 더 이상 interval을 끄는 복잡한 로직이 필요 없습니다.
   const handleBack = () => {
-    if (activeTab === "map") stopLocationTracking(); // 지도 탭에서 뒤로가기 시 interval 정리
     if (activeTab !== "info") setActiveTab("info");
     else router.back();
   };
 
   const handleTabToggle = (tab: "timetable" | "map") => {
-    if (activeTab === "map") stopLocationTracking(); // 지도 탭에서 다른 탭으로 이동 시 interval 정리
     if (activeTab === tab) setActiveTab("info");
     else setActiveTab(tab);
   };
@@ -451,7 +361,6 @@ export default function FestivalDetailPage() {
         {/* ── 지도 탭: FestivalMap으로 교체 ── */}
         {activeTab === "map" && (
           <div className="animate-fadeIn w-full h-full relative">
-            {/* ✅ 패딩을 강제로 크게 지정 (px-[28px] py-[14px]) */}
             <div
               onClick={() => setShowTraffic(!showTraffic)}
               className={`absolute flex items-center gap-3 rounded-full px-[15px] py-[9px] shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${

@@ -1,159 +1,74 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import type { LocationUpdateResponse } from "../types/festival";
+import { useRef, useState, useCallback } from "react";
+// ✅ 수정됨: 더 이상 locationInfo 등 서버 통신 타입이 필요 없어 제거되었습니다.
 
 const ACCESS_TOKEN_KEY = "accessToken";
-// BASE_URL에 /api/v1이 포함되어 있으므로 API 호출 시 경로에서 /api/v1 제거
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
-const DEFAULT_INTERVAL = 5000; // 5초 기본값
 
 export interface UseLocationReturn {
   /** 브라우저에서 얻은 현재 좌표 (지도에 바로 표시용) */
   position: { lat: number; lng: number } | null;
   /** 위치 권한 상태 */
   permissionState: "idle" | "granted" | "denied" | "unavailable";
-  /** 서버 응답 - 현재 구역 정보 */
-  locationInfo: LocationUpdateResponse | null;
   /** 위치 공유 활성화 여부 */
   isSharing: boolean;
   /** 위치 공유 시작 */
-  startSharing: (festivalId: number) => void;
+  startSharing: () => void;
   /** 위치 공유 중단 */
   stopSharing: () => void;
 }
 
 /**
- * C 담당: 내 위치 + UUID 연결 훅
- *
- * - Flow A: 브라우저 GPS → 지도 위에 바로 표시 (position 상태)
- * - Flow B: 브라우저 GPS → 서버 전송 → 혼잡도 기여 (폴링)
- * - locationUpdateInterval 서버 응답값으로 폴링 간격 동적 조절
+ * C 담당: 내 위치 훅
+ * ✅ 수정됨: 기존의 Flow B (서버 전송) 폴링 로직을 GlobalLocationTracker로 분리했습니다.
+ * 이제 이 훅은 "지도에 내 위치(파란 점)를 실시간으로 그리기" 위한 용도로만 쓰입니다!
  */
 export function useLocation(): UseLocationReturn {
   const [position, setPosition] = useState<{ lat: number; lng: number } | null>(null);
   const [permissionState, setPermissionState] = useState<UseLocationReturn["permissionState"]>("idle");
-  const [locationInfo, setLocationInfo] = useState<LocationUpdateResponse | null>(null);
   const [isSharing, setIsSharing] = useState(false);
 
-  const festivalIdRef = useRef<number | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const watchIdRef = useRef<number | null>(null);
-  const currentIntervalMs = useRef<number>(DEFAULT_INTERVAL);
-  const latestPositionRef = useRef<{ lat: number; lng: number } | null>(null);
-
-  // ── 서버에 위치 전송 (Flow B) ──────────────────────────────
-  const sendLocation = useCallback(async (lat: number, lng: number) => {
-    const festivalId = festivalIdRef.current;
-    const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-    if (!festivalId || !token) return;
-
-    try {
-      // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
-      const res = await fetch(`${BASE_URL}/festivals/${festivalId}/visitors/location`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ lat, lng }),
-      });
-
-      const data = await res.json();
-      if (data.isSuccess) {
-        setLocationInfo(data.result);
-        // 서버 권장 간격으로 동적 조절
-        const newInterval: number = data.result.locationUpdateInterval ?? DEFAULT_INTERVAL;
-        currentIntervalMs.current = newInterval;
-      }
-    } catch (err) {
-      console.error("위치 전송 실패:", err);
-    }
-  }, []);
-
-  // ── 폴링 루프 ─────────────────────────────────────────────
-  const scheduleNext = useCallback(() => {
-    intervalRef.current = setTimeout(async () => {
-      if (!latestPositionRef.current) {
-        scheduleNext();
-        return;
-      }
-      const { lat, lng } = latestPositionRef.current;
-      await sendLocation(lat, lng);
-      scheduleNext(); // 응답 받은 뒤 다음 스케줄 (동적 간격 반영)
-    }, currentIntervalMs.current);
-  }, [sendLocation]);
 
   // ── 위치 공유 시작 ─────────────────────────────────────────
-  const startSharing = useCallback(
-    (festivalId: number) => {
-      if (!navigator.geolocation) {
-        setPermissionState("unavailable");
-        return;
-      }
+  const startSharing = useCallback(() => {
+    if (!navigator.geolocation) {
+      setPermissionState("unavailable");
+      return;
+    }
 
-      festivalIdRef.current = festivalId;
-      setIsSharing(true);
+    setIsSharing(true);
 
-      // Flow A: watchPosition으로 위치 변화 실시간 감지 → 지도에 표시
-      watchIdRef.current = navigator.geolocation.watchPosition(
-        (pos) => {
-          const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-          setPosition(coords);
-          latestPositionRef.current = coords;
-          setPermissionState("granted");
-        },
-        (err) => {
-          console.error("Geolocation 에러:", err);
-          setPermissionState(err.code === 1 ? "denied" : "unavailable");
-          setIsSharing(false);
-        },
-        { enableHighAccuracy: true, maximumAge: 3000 }
-      );
-
-      // Flow B: 폴링 시작 (초기 1회 즉시 전송)
-      scheduleNext();
-    },
-    [scheduleNext]
-  );
+    // Flow A: watchPosition으로 위치 변화 실시간 감지 → 지도에 표시
+    watchIdRef.current = navigator.geolocation.watchPosition(
+      (pos) => {
+        const coords = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+        setPosition(coords);
+        setPermissionState("granted");
+      },
+      (err) => {
+        console.error("Geolocation 에러:", err);
+        setPermissionState(err.code === 1 ? "denied" : "unavailable");
+        setIsSharing(false);
+      },
+      { enableHighAccuracy: true, maximumAge: 3000 }
+    );
+  }, []);
 
   // ── 위치 공유 중단 ─────────────────────────────────────────
   const stopSharing = useCallback(() => {
     setIsSharing(false);
-    festivalIdRef.current = null;
 
     if (watchIdRef.current !== null) {
       navigator.geolocation.clearWatch(watchIdRef.current);
       watchIdRef.current = null;
     }
-    if (intervalRef.current !== null) {
-      clearTimeout(intervalRef.current);
-      intervalRef.current = null;
-    }
   }, []);
 
-  // ── 페이지 이탈 시 공유 중단 (Beacon API) ─────────────────
-  useEffect(() => {
-    const handleUnload = () => {
-      const festivalId = festivalIdRef.current;
-      const token = localStorage.getItem(ACCESS_TOKEN_KEY);
-      if (!festivalId || !token) return;
+  // ✅ 수정됨: 서버 API 전송을 분리했으므로 Beacon API(handleUnload)도 제거되었습니다.
 
-      // sendBeacon은 페이지 종료 시에도 전송 보장
-      // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
-      navigator.sendBeacon(
-        `${BASE_URL}/festivals/${festivalId}/visitors/location`,
-      );
-    };
-
-    window.addEventListener("beforeunload", handleUnload);
-    return () => {
-      window.removeEventListener("beforeunload", handleUnload);
-      stopSharing();
-    };
-  }, [stopSharing]);
-
-  return { position, permissionState, locationInfo, isSharing, startSharing, stopSharing };
+  return { position, permissionState, isSharing, startSharing, stopSharing };
 }
 
 // ── UUID / 토큰 관련 유틸 ──────────────────────────────────────
@@ -168,7 +83,6 @@ export async function checkMyStatus(): Promise<{ uuid: string; isTermsAgreed: bo
   if (!token) return null;
 
   try {
-    // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
     const res = await fetch(`${BASE_URL}/visitors/me`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -188,7 +102,6 @@ export async function checkMyStatus(): Promise<{ uuid: string; isTermsAgreed: bo
  */
 export async function agreeAndRegister(): Promise<string | null> {
   try {
-    // 수정됨: BASE_URL에 /api/v1이 포함되어 있으므로 경로에서 /api/v1 제거
     const res = await fetch(`${BASE_URL}/visitors`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
