@@ -1,48 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import BoothMarker from "./BoothMarker";
 import type { BoothInfo } from "../../types/booth";
 
-interface BoothLayerProps {
-  festivalId: number;
+export interface CollegeGroup {
+  collegeName: string;
+  booths: BoothInfo[];
 }
 
-export default function BoothLayer({ festivalId }: BoothLayerProps) {
+interface BoothLayerProps {
+  festivalId: number;
+  activeCollege: string | null;
+  selectedBoothNumber: number | null;
+  onBoothSelect: (boothNumber: number | null) => void;
+}
+
+export default function BoothLayer({
+  festivalId,
+  activeCollege,
+  selectedBoothNumber,
+  onBoothSelect,
+}: BoothLayerProps) {
   const [booths, setBooths] = useState<BoothInfo[]>([]);
-  const [selectedBoothNumber, setSelectedBoothNumber] = useState<number | null>(
-    null,
-  );
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined"
-        ? localStorage.getItem("accessToken")
-        : null;
-    if (!token) return;
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-    // ⚠️ 아직 백엔드 API 미완성 → 임시 주소 사용 (완성되면 실제 엔드포인트로 교체)
-    fetch(`${baseUrl}/festivals/${festivalId}/booths`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
+    fetch("/booth.json")
       .then((r) => r.json())
       .then((data) => {
-        if (data.isSuccess) {
-          const content: BoothInfo[] = data.result.content;
-          setBooths(content);
-        }
+        if (data.isSuccess) setBooths(data.result.content as BoothInfo[]);
       })
       .catch((err) => console.error("부스 목록 fetch 실패:", err));
   }, [festivalId]);
-
-  const handleSelect = (boothNumber: number | null) => {
-    setSelectedBoothNumber(boothNumber);
-  };
 
   return (
     <>
@@ -51,7 +40,8 @@ export default function BoothLayer({ festivalId }: BoothLayerProps) {
           key={booth.boothNumber}
           booth={booth}
           isSelected={selectedBoothNumber === booth.boothNumber}
-          onSelect={handleSelect}
+          isCollegeActive={activeCollege === booth.college}
+          onSelect={onBoothSelect}
         />
       ))}
     </>

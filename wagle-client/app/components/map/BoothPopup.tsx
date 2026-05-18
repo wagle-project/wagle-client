@@ -90,7 +90,7 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
             right: "16px",
             background: "transparent",
             border: "none",
-            color: "#FF3D71",
+            color: "#E270CA",
             fontSize: "22px",
             cursor: "pointer",
             padding: "8px",
