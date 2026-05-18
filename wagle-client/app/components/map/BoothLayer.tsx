@@ -15,21 +15,8 @@ export default function BoothLayer({ festivalId }: BoothLayerProps) {
   );
 
   useEffect(() => {
-    const token =
-      typeof window !== "undefined"
-        ? localStorage.getItem("accessToken")
-        : null;
-    if (!token) return;
-
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-    // ⚠️ 아직 백엔드 API 미완성 → 임시 주소 사용 (완성되면 실제 엔드포인트로 교체)
-    fetch(`${baseUrl}/festivals/${festivalId}/booths`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    })
+    // ⚠️ 복잡한 API 연결 대신, public 폴더에 있는 booth.json을 바로 불러옵니다 (하드코딩 방식)
+    fetch("/booth.json")
       .then((r) => r.json())
       .then((data) => {
         if (data.isSuccess) {
@@ -38,7 +25,7 @@ export default function BoothLayer({ festivalId }: BoothLayerProps) {
         }
       })
       .catch((err) => console.error("부스 목록 fetch 실패:", err));
-  }, [festivalId]);
+  }, []);
 
   const handleSelect = (boothNumber: number | null) => {
     setSelectedBoothNumber(boothNumber);

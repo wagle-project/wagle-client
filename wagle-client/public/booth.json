@@ -1,0 +1,26 @@
+{
+  "isSuccess": true,
+  "code": "COMMON200",
+  "message": "성공입니다.",
+  "result": {
+    "content": [
+      {
+        "boothNumber": 1,
+        "boothName": "달빛 주막",
+        "department": "컴퓨터공학과",
+        "latitude": 35.834501,
+        "longitude": 128.753254,
+        "menuImageUrl": "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4"
+      },
+      {
+        "boothNumber": 2,
+        "boothName": "만취 주막",
+        "department": "시각디자인학과",
+        "latitude": 35.833935,   
+        "longitude": 128.753439,
+        "menuImageUrl": "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4"
+      }
+    ],
+    "totalElements": 2
+  }
+}

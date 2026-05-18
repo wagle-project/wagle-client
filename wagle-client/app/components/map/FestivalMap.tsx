@@ -182,7 +182,7 @@ export default function FestivalMap({
             boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
           }}
         >
-          🗂 레이어
+          부대시설
         </button>
 
         {showLayerPanel && (
