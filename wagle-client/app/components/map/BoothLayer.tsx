@@ -1,35 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import BoothMarker from "./BoothMarker";
 import type { BoothInfo } from "../../types/booth";
 
-interface BoothLayerProps {
-  festivalId: number;
+export interface CollegeGroup {
+  collegeName: string;
+  booths: BoothInfo[];
 }
 
-export default function BoothLayer({ festivalId }: BoothLayerProps) {
+interface BoothLayerProps {
+  festivalId: number;
+  activeCollege: string | null;
+  selectedBoothNumber: number | null;
+  onBoothSelect: (boothNumber: number | null) => void;
+}
+
+export default function BoothLayer({
+  festivalId,
+  activeCollege,
+  selectedBoothNumber,
+  onBoothSelect,
+}: BoothLayerProps) {
   const [booths, setBooths] = useState<BoothInfo[]>([]);
-  const [selectedBoothNumber, setSelectedBoothNumber] = useState<number | null>(
-    null,
-  );
 
   useEffect(() => {
-    // ⚠️ 복잡한 API 연결 대신, public 폴더에 있는 booth.json을 바로 불러옵니다 (하드코딩 방식)
     fetch("/booth.json")
       .then((r) => r.json())
       .then((data) => {
-        if (data.isSuccess) {
-          const content: BoothInfo[] = data.result.content;
-          setBooths(content);
-        }
+        if (data.isSuccess) setBooths(data.result.content as BoothInfo[]);
       })
       .catch((err) => console.error("부스 목록 fetch 실패:", err));
-  }, []);
-
-  const handleSelect = (boothNumber: number | null) => {
-    setSelectedBoothNumber(boothNumber);
-  };
+  }, [festivalId]);
 
   return (
     <>
@@ -38,7 +40,8 @@ export default function BoothLayer({ festivalId }: BoothLayerProps) {
           key={booth.boothNumber}
           booth={booth}
           isSelected={selectedBoothNumber === booth.boothNumber}
-          onSelect={handleSelect}
+          isCollegeActive={activeCollege === booth.college}
+          onSelect={onBoothSelect}
         />
       ))}
     </>
