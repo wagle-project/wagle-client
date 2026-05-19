@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import BoothMarker from "./BoothMarker";
 import type { BoothInfo } from "../../types/booth";
 

@@ -69,6 +69,7 @@ export default function FestivalMap({
   showTraffic = false,
 }: FestivalMapProps) {
   const [maps, setMaps] = useState<FestivalMapInfo[]>([]);
+  // ✅ 활성화된 mapId Set으로 관리
   const [visibleMapIds, setVisibleMapIds] = useState<Set<number>>(new Set());
   const showBaseMap = true;
 
@@ -109,6 +110,7 @@ export default function FestivalMap({
         if (data.isSuccess) {
           const content: FestivalMapInfo[] = data.result.content;
           setMaps(content);
+          // ✅ 처음엔 전체 레이어 활성화
           setVisibleMapIds(new Set(content.map((m) => m.mapId)));
         }
       })
@@ -474,7 +476,6 @@ export default function FestivalMap({
       <MapContainer
         center={center}
         zoom={16}
-        maxZoom={22}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false}
       >
