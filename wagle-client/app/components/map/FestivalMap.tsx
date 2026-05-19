@@ -10,7 +10,7 @@ import BoothLayer from "./BoothLayer";
 import FacilityLayer from "./FacilityLayer";
 import { useLocation } from "../../hooks/useLocation";
 import type { FestivalMapInfo } from "../../types/festival";
-import type { FacilityType } from "../../types/facility";
+import type { FacilityType } from "../../types/facility.ts";
 import { FACILITY_LABEL, FACILITY_ICON } from "../../types/facility";
 import type { BoothInfo } from "../../types/booth";
 
