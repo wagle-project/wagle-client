@@ -51,7 +51,7 @@ export function useFestivals() {
       const result = await fetchByKeyword(inputValue);
       setFestivals(result);
     } catch {
-      setError("검색 중 오류가 발생했어요.");
+      setError("검색어에 해당하는 축제가 없습니다.");
     } finally {
       setLoading(false);
     }

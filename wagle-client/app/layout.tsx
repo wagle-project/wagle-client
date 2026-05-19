@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from "next";
 import { Agbalumo, Noto_Sans_KR } from "next/font/google";
 import "./globals.css";
 
+// ✅ 추가: 방금 생성한 전역 위치 추적 컴포넌트 불러오기
+import GlobalLocationTracker from "./components/GlobalLocationTracker";
+
 const agbalumo = Agbalumo({
   weight: "400",
   subsets: ["latin"],
@@ -51,6 +54,9 @@ export default function RootLayout({
         className={`${agbalumo.variable} ${notoSansKR.variable} bg-[#0a0b1e] text-white antialiased min-h-dvh w-full overflow-x-hidden`}
         style={{ fontFamily: "var(--font-noto)" }}
       >
+        {/* ✅ 추가: 전역 위치 추적기를 최상위 레이아웃에 심어서 어디서든 돌아가게 함 */}
+        <GlobalLocationTracker />
+
         <main className="mx-auto min-h-screen max-w-[430px] shadow-2xl shadow-black/50">
           {children}
         </main>
