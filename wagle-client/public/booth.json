@@ -6,85 +6,482 @@
     "content": [
       {
         "boothNumber": 1,
-        "boothName": "달빛 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "컴퓨터공학과",
-        "latitude": 35.834501,
-        "longitude": 128.753254,
-        "menuImageUrl": ""
+        "college": "PHARMACY",
+        "collegeName": "약학대학",
+        "department": "약학대학",
+        "latitude": 35.833543861,
+        "longitude": 128.754246547,
+        "menuImages": []
       },
       {
         "boothNumber": 2,
-        "boothName": "별빛 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "미래자동차공학과",
-        "latitude": 35.8343,
-        "longitude": 128.7531,
-        "menuImageUrl": ""
+        "college": "HUMAN_ECOLOGY",
+        "collegeName": "생활과학대학",
+        "department": "식품영양학과",
+        "latitude": 35.83348538,
+        "longitude": 128.754262229,
+        "menuImages": []
       },
       {
         "boothNumber": 3,
-        "boothName": "은하 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "소프트웨어학과",
-        "latitude": 35.83465,
-        "longitude": 128.7534,
-        "menuImageUrl": ""
+        "college": "EDUCATION",
+        "collegeName": "사범대학",
+        "department": "국어교육과",
+        "latitude": 35.833425627,
+        "longitude": 128.754287319,
+        "menuImages": []
       },
       {
         "boothNumber": 4,
-        "boothName": "새벽 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "AI학과",
-        "latitude": 35.8342,
-        "longitude": 128.7536,
-        "menuImageUrl": ""
+        "college": "EDUCATION",
+        "collegeName": "사범대학",
+        "department": "영어교육과",
+        "latitude": 35.833425627,
+        "longitude": 128.754287319,
+        "menuImages": []
       },
       {
         "boothNumber": 5,
-        "boothName": "만취 주막",
-        "college": "MEDICINE",
-        "collegeName": "의학대학",
-        "department": "의학과",
-        "latitude": 35.833935,
-        "longitude": 128.753439,
-        "menuImageUrl": ""
+        "college": "EDUCATION",
+        "collegeName": "사범대학",
+        "department": "수학교육과",
+        "latitude": 35.833309936,
+        "longitude": 128.754326523,
+        "menuImages": []
       },
       {
         "boothNumber": 6,
-        "boothName": "청춘 주막",
-        "college": "MEDICINE",
-        "collegeName": "의학대학",
-        "department": "간호학과",
-        "latitude": 35.8337,
-        "longitude": 128.7532,
-        "menuImageUrl": ""
+        "college": "EDUCATION",
+        "collegeName": "사범대학",
+        "department": "특수체육교육과",
+        "latitude": 35.833255268,
+        "longitude": 128.754353181,
+        "menuImages": []
       },
       {
         "boothNumber": 7,
-        "boothName": "노을 주막",
-        "college": "ART_DESIGN",
-        "collegeName": "디자인미술대학",
-        "department": "시각디자인학과",
-        "latitude": 35.8348,
-        "longitude": 128.7529,
-        "menuImageUrl": ""
+        "college": "EDUCATION",
+        "collegeName": "사범대학",
+        "department": "교육학과",
+        "latitude": 35.833192973,
+        "longitude": 128.754375136,
+        "menuImages": []
       },
       {
         "boothNumber": 8,
-        "boothName": "황혼 주막",
-        "college": "ART_DESIGN",
-        "collegeName": "디자인미술대학",
+        "college": "MEDICINE",
+        "collegeName": "의과대학",
+        "department": "의과대학",
+        "latitude": 35.833134491,
+        "longitude": 128.75439709,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 9,
+        "college": "CHEONMA_HONORS",
+        "collegeName": "천마인재대학",
+        "department": "천마학부대학",
+        "latitude": 35.833077281,
+        "longitude": 128.754420612,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 10,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "산림자원학과",
+        "latitude": 35.833016257,
+        "longitude": 128.754434725,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 11,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "생명공학과",
+        "latitude": 35.832953956,
+        "longitude": 128.754449512,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 12,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "식품공학과",
+        "latitude": 35.832894203,
+        "longitude": 128.754469898,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 13,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "의생명공학과",
+        "latitude": 35.832835721,
+        "longitude": 128.754477739,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 14,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "식품경제외식학과",
+        "latitude": 35.832782325,
+        "longitude": 128.754499693,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 15,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "원예생명과학과",
+        "latitude": 35.832722572,
+        "longitude": 128.754515374,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 16,
+        "college": "BIO_APPLIED_SCIENCE",
+        "collegeName": "생명응용과학대학",
+        "department": "조경학과",
+        "latitude": 35.832676045,
+        "longitude": 128.754551619,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 17,
+        "college": "BUSINESS",
+        "collegeName": "경영대학",
+        "department": "경영학과",
+        "latitude": 35.832629005,
+        "longitude": 128.754568868,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 18,
+        "college": "BUSINESS",
+        "collegeName": "경영대학",
+        "department": "무역학부",
+        "latitude": 35.83258578,
+        "longitude": 128.754598663,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 19,
+        "college": "BUSINESS",
+        "collegeName": "경영대학",
+        "department": "회계세무학과",
+        "latitude": 35.832537469,
+        "longitude": 128.754614345,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 20,
+        "college": "DIGITAL_CONVERGENCE",
+        "collegeName": "디지털융합대학",
+        "department": "컴퓨터학부",
+        "latitude": 35.832477715,
+        "longitude": 128.754644139,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 21,
+        "college": "DIGITAL_CONVERGENCE",
+        "collegeName": "디지털융합대학",
+        "department": "로봇공학과",
+        "latitude": 35.83242559,
+        "longitude": 128.754678639,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 22,
+        "college": "DIGITAL_CONVERGENCE",
+        "collegeName": "디지털융합대학",
+        "department": "전자공학과",
+        "latitude": 35.83237855,
+        "longitude": 128.754710002,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 23,
+        "college": "DIGITAL_CONVERGENCE",
+        "collegeName": "디지털융합대학",
+        "department": "미래자동차공학과",
+        "latitude": 35.832330239,
+        "longitude": 128.75473666,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 24,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "공과대학",
+        "latitude": 35.832298455,
+        "longitude": 128.754768023,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 25,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "건축학부",
+        "latitude": 35.832246329,
+        "longitude": 128.75482134,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 26,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "도시공학과",
+        "latitude": 35.833576642,
+        "longitude": 128.754481038,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 27,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "신소재공학부",
+        "latitude": 35.833518161,
+        "longitude": 128.754490447,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 28,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "전기공학과",
+        "latitude": 35.833453323,
+        "longitude": 128.754509264,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 29,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "기계공학부",
+        "latitude": 35.833396113,
+        "longitude": 128.754537491,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 30,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "건축시스템공학과",
+        "latitude": 35.833331639,
+        "longitude": 128.754560777,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 31,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "화학공학부",
+        "latitude": 35.833271284,
+        "longitude": 128.754581163,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 32,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "환경공학과",
+        "latitude": 35.833211531,
+        "longitude": 128.754599981,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 33,
+        "college": "ENGINEERING",
+        "collegeName": "공과대학",
+        "department": "파이버시스템공학과",
+        "latitude": 35.833150507,
+        "longitude": 128.754621935,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 34,
+        "college": "SOCIAL_SCIENCE",
+        "collegeName": "사회과학대학",
+        "department": "경찰행정학과",
+        "latitude": 35.833092026,
+        "longitude": 128.754640753,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 35,
+        "college": "SOCIAL_SCIENCE",
+        "collegeName": "사회과학대학",
+        "department": "사회학과",
+        "latitude": 35.833032273,
+        "longitude": 128.754659571,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 36,
+        "college": "NATURAL_SCIENCE",
+        "collegeName": "자연과학대학",
+        "department": "자연과학대학",
+        "latitude": 35.83297252,
+        "longitude": 128.754681525,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 37,
+        "college": "NATURAL_SCIENCE",
+        "collegeName": "자연과학대학",
+        "department": "수학과",
+        "latitude": 35.83297252,
+        "longitude": 128.754681525,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 38,
+        "college": "NATURAL_SCIENCE",
+        "collegeName": "자연과학대학",
+        "department": "화학과",
+        "latitude": 35.8328492,
+        "longitude": 128.754723865,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 39,
+        "college": "NATURAL_SCIENCE",
+        "collegeName": "자연과학대학",
+        "department": "통계학과",
+        "latitude": 35.832790718,
+        "longitude": 128.754742683,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 40,
+        "college": "ARTS",
+        "collegeName": "예술대학",
+        "department": "작곡과",
+        "latitude": 35.832790718,
+        "longitude": 128.754742683,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 41,
+        "college": "ARTS",
+        "collegeName": "예술대학",
         "department": "산업디자인학과",
-        "latitude": 35.83405,
-        "longitude": 128.7527,
-        "menuImageUrl": ""
+        "latitude": 35.832790718,
+        "longitude": 128.754742683,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 42,
+        "college": "ARTS",
+        "collegeName": "예술대학",
+        "department": "시각디자인학과",
+        "latitude": 35.832607053,
+        "longitude": 128.754835381,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 43,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "국어국문학과",
+        "latitude": 35.832607053,
+        "longitude": 128.754835381,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 44,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "일어일문학과",
+        "latitude": 35.832492632,
+        "longitude": 128.754899675,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 45,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "역사학과",
+        "latitude": 35.832435421,
+        "longitude": 128.754940447,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 46,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "철학과",
+        "latitude": 35.832382025,
+        "longitude": 128.754992196,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 47,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "문화인류학과",
+        "latitude": 35.832332442,
+        "longitude": 128.755029831,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 48,
+        "college": "HUMANITIES",
+        "collegeName": "인문대학",
+        "department": "유럽언어문화학부",
+        "latitude": 35.832242176,
+        "longitude": 128.755122352,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 49,
+        "college": "GLOBAL_TALENT",
+        "collegeName": "글로벌인재대학",
+        "department": "글로벌교육학부",
+        "latitude": 35.832248427,
+        "longitude": 128.755125749,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 50,
+        "college": "GLOBAL_TALENT",
+        "collegeName": "글로벌인재대학",
+        "department": "중국언어문화학과",
+        "latitude": 35.832195031,
+        "longitude": 128.755172793,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 51,
+        "college": "GLOBAL_TALENT",
+        "collegeName": "글로벌인재대학",
+        "department": "글로벌비즈니스학과",
+        "latitude": 35.832153076,
+        "longitude": 128.755219838,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 52,
+        "college": "GLOBAL_TALENT",
+        "collegeName": "글로벌인재대학",
+        "department": "국제개발새마을학과",
+        "latitude": 35.832108579,
+        "longitude": 128.755270018,
+        "menuImages": []
+      },
+      {
+        "boothNumber": 53,
+        "college": "GLOBAL_TALENT",
+        "collegeName": "글로벌인재대학",
+        "department": "통번역학부",
+        "latitude": 35.832064081,
+        "longitude": 128.755329608,
+        "menuImages": []
       }
     ],
-    "totalElements": 8
+    "totalElements": 53
   }
 }
