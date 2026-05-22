@@ -12,79 +12,26 @@
         "department": "컴퓨터공학과",
         "latitude": 35.834501,
         "longitude": 128.753254,
-        "menuImageUrl": ""
+        "menuImages": [
+          "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4",
+          "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4"
+        ]
       },
       {
         "boothNumber": 2,
-        "boothName": "별빛 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "미래자동차공학과",
-        "latitude": 35.8343,
-        "longitude": 128.7531,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 3,
-        "boothName": "은하 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "소프트웨어학과",
-        "latitude": 35.83465,
-        "longitude": 128.7534,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 4,
-        "boothName": "새벽 주막",
-        "college": "SOFTWARE",
-        "collegeName": "소프트웨어융합대학",
-        "department": "AI학과",
-        "latitude": 35.8342,
-        "longitude": 128.7536,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 5,
         "boothName": "만취 주막",
-        "college": "MEDICINE",
-        "collegeName": "의학대학",
-        "department": "의학과",
-        "latitude": 35.833935,
-        "longitude": 128.753439,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 6,
-        "boothName": "청춘 주막",
-        "college": "MEDICINE",
-        "collegeName": "의학대학",
-        "department": "간호학과",
-        "latitude": 35.8337,
-        "longitude": 128.7532,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 7,
-        "boothName": "노을 주막",
         "college": "ART_DESIGN",
         "collegeName": "디자인미술대학",
         "department": "시각디자인학과",
-        "latitude": 35.8348,
-        "longitude": 128.7529,
-        "menuImageUrl": ""
-      },
-      {
-        "boothNumber": 8,
-        "boothName": "황혼 주막",
-        "college": "ART_DESIGN",
-        "collegeName": "디자인미술대학",
-        "department": "산업디자인학과",
-        "latitude": 35.83405,
-        "longitude": 128.7527,
-        "menuImageUrl": ""
+        "latitude": 35.833935,   
+        "longitude": 128.753439,
+        "menuImages": [
+          "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4",
+          "https://www.google.com/url?q=https://drive.google.com/thumbnail?id%3D1076RHxvA9o-zQH38sn5T8NqRA89QRDPD%26sz%3Dw800&sa=D&source=editors&ust=1778990638621683&usg=AOvVaw1bw8FPc7MZbvGjSeTiTcl4"
+        ]
       }
-    ],
-    "totalElements": 8
+  ],
+    "totalElements": 2
   }
 }
+
