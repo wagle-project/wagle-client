@@ -84,7 +84,11 @@ export default function FestivalMapPage() {
           images={[
             "/images/ad.jpeg", // 첫 번째 사진
             "/images/ad1.jpeg",// 두 번째 사진
-            "/images/ad2.png"
+            "/images/ad2.png",
+            "/images/ad3.png",
+            "/images/ad4.png",
+            "/images/ad5.png",
+            "/images/ad6.jpg"
           ]}
         />
       )}
