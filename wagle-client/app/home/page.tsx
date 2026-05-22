@@ -82,9 +82,9 @@ export default function FestivalMapPage() {
         <AdPopup
           onClose={() => setShowAd(false)}
           images={[
-            "/images/광고.jpeg", // 첫 번째 사진
-            "/images/광고1.jpeg",// 두 번째 사진
-            "/images/광고2.png"
+            "/images/ad.jpeg", // 첫 번째 사진
+            "/images/ad1.jpeg",// 두 번째 사진
+            "/images/ad2.png"
           ]}
         />
       )}
