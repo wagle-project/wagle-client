@@ -125,6 +125,7 @@ export default function FestivalMapPage() {
             "/images/ad.jpeg",
             "/images/ad1.jpeg",
             "/images/ad2.png",
+            "/images/ad7.jpg",
             "/images/ad3.png",
             "/images/ad4.png",
             "/images/ad5.png",
