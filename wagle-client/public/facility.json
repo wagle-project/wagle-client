@@ -1,0 +1,177 @@
+{
+  "isSuccess": true,
+  "code": "COMMON200",
+  "message": "성공입니다.",
+  "result": {
+    "content": [
+      {
+        "facilityId": 1,
+        "facilityType": "TOILET",
+        "latitude": 35.836217846,
+        "longitude": 128.752779886
+      },
+      {
+        "facilityId": 2,
+        "facilityType": "TOILET",
+        "latitude": 35.834100132,
+        "longitude": 128.755107754
+      },
+      {
+        "facilityId": 3,
+        "facilityType": "TOILET",
+        "latitude": 35.834206601,
+        "longitude": 128.756767866
+      },
+      {
+        "facilityId": 4,
+        "facilityType": "TOILET",
+        "latitude": 35.834206601,
+        "longitude": 128.756767866
+      },
+      {
+        "facilityId": 5,
+        "facilityType": "TOILET",
+        "latitude": 35.832752196,
+        "longitude": 128.755955535
+      },
+      {
+        "facilityId": 6,
+        "facilityType": "TOILET",
+        "latitude": 35.833092456,
+        "longitude": 128.757912569
+      },
+      {
+        "facilityId": 7,
+        "facilityType": "TOILET",
+        "latitude": 35.830603768,
+        "longitude": 128.754462471
+      },
+      {
+        "facilityId": 8,
+        "facilityType": "TOILET",
+        "latitude": 35.82993806,
+        "longitude": 128.754433146
+      },
+      {
+        "facilityId": 9,
+        "facilityType": "TOILET",
+        "latitude": 35.830175813,
+        "longitude": 128.757460943
+      },
+      {
+        "facilityId": 10,
+        "facilityType": "TOILET",
+        "latitude": 35.835227422,
+        "longitude": 128.756055157
+      },
+      {
+        "facilityId": 11,
+        "facilityType": "TOILET",
+        "latitude": 35.83673715,
+        "longitude": 128.754389977
+      },
+      {
+        "facilityId": 12,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.833462367,
+        "longitude": 128.754161432
+      },
+      {
+        "facilityId": 13,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.833098808,
+        "longitude": 128.754242151
+      },
+      {
+        "facilityId": 14,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.8327125,
+        "longitude": 128.754354835
+      },
+      {
+        "facilityId": 15,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.832341666,
+        "longitude": 128.754534211
+      },
+      {
+        "facilityId": 16,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.83337519,
+        "longitude": 128.754767398
+      },
+      {
+        "facilityId": 17,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.833016478,
+        "longitude": 128.754857086
+      },
+      {
+        "facilityId": 18,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.832618984,
+        "longitude": 128.754982649
+      },
+      {
+        "facilityId": 19,
+        "facilityType": "ELECTRICITY",
+        "latitude": 35.832265116,
+        "longitude": 128.755227795
+      },
+      {
+        "facilityId": 20,
+        "facilityType": "WATER",
+        "latitude": 35.833362098,
+        "longitude": 128.755060795
+      },
+      {
+        "facilityId": 21,
+        "facilityType": "WATER",
+        "latitude": 35.833018652,
+        "longitude": 128.755125807
+      },
+      {
+        "facilityId": 22,
+        "facilityType": "WATER",
+        "latitude": 35.832777219,
+        "longitude": 128.755262123
+      },
+      {
+        "facilityId": 23,
+        "facilityType": "GENERAL_WASTE",
+        "latitude": 35.833244783,
+        "longitude": 128.755018851
+      },
+      {
+        "facilityId": 24,
+        "facilityType": "GENERAL_WASTE",
+        "latitude": 35.83202879,
+        "longitude": 128.755448853
+      },
+      {
+        "facilityId": 25,
+        "facilityType": "FOOD_WASTE",
+        "latitude": 35.833150281,
+        "longitude": 128.755054947
+      },
+      {
+        "facilityId": 26,
+        "facilityType": "FOOD_WASTE",
+        "latitude": 35.832909557,
+        "longitude": 128.755180282
+      },
+      {
+        "facilityId": 27,
+        "facilityType": "FOOD_WASTE",
+        "latitude": 35.83267488,
+        "longitude": 128.755320537
+      },
+      {
+        "facilityId": 28,
+        "facilityType": "FOOD_WASTE",
+        "latitude": 35.831983792,
+        "longitude": 128.755584094
+      }
+    ]
+  }
+}

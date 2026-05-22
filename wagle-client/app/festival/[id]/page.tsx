@@ -52,8 +52,6 @@ export default function FestivalDetailPage() {
   const [timetables, setTimetables] = useState<TimetableItem[]>([]);
   const [isDetailLoading, setIsDetailLoading] = useState(true);
 
-  // 🗑️ 제거됨: locationIntervalRef, stopLocationTracking 관련 코드 모두 삭제 (전역 추적기가 담당하므로 불필요)
-
   useEffect(() => {
     const fetchAllData = async () => {
       setIsDetailLoading(true);
@@ -117,14 +115,9 @@ export default function FestivalDetailPage() {
     if (festivalId) fetchAllData();
   }, [festivalId]);
 
-  // 🗑️ 제거됨: sendLocation, startLocationTracking 함수 삭제 (이제 GlobalLocationTracker가 알아서 함)
-
   // ── 동의 버튼 클릭 ────────────────────────────────────────
   const handleAgree = () => {
     setIsModalOpen(false);
-    
-    // ✅ 수정됨: 모달(LocationConsentModal) 안에서 이미 토큰 저장과 신호탄(Event) 발송을 
-    // 다 끝냈기 때문에, 여기서는 API를 또 부를 필요 없이 그냥 '지도 탭'으로 이동만 시켜주면 됩니다!
     setActiveTab("map");
   };
 
@@ -135,7 +128,6 @@ export default function FestivalDetailPage() {
     } else {
       const me = await checkMyStatus();
       if (me) {
-        // ✅ 수정됨: 토큰 유효 → 바로 지도로 탭 변경 (파란 점 표시는 FestivalMap 렌더링 시 알아서 켜짐)
         setActiveTab("map");
       } else {
         // 토큰 없거나 만료 → 동의 모달 띄우기
@@ -155,7 +147,6 @@ export default function FestivalDetailPage() {
     return { dateStr: `${startFormat} - ${endFormat}`, days: diffDays };
   };
 
-  // ✅ 수정됨: 탭 이동 시 더 이상 interval을 끄는 복잡한 로직이 필요 없습니다.
   const handleBack = () => {
     if (activeTab !== "info") setActiveTab("info");
     else router.back();
@@ -361,30 +352,32 @@ export default function FestivalDetailPage() {
         {/* ── 지도 탭: FestivalMap으로 교체 ── */}
         {activeTab === "map" && (
           <div className="animate-fadeIn w-full h-full relative">
-            <div
+            
+            {/* ✨ 주막/편의시설 버튼과 완벽하게 똑같은 디자인의 혼잡도 토글 버튼 ✨ */}
+            <button
               onClick={() => setShowTraffic(!showTraffic)}
-              className={`absolute flex items-center gap-3 rounded-full px-[15px] py-[9px] shadow-lg opacity-95 cursor-pointer active:scale-95 transition-all duration-300 border ${
-                showTraffic
-                  ? "bg-[#2bbdee] border-[#2bbdee] text-[#0f111a]"
-                  : "bg-[#424A5D] border-transparent text-white"
-              }`}
-              style={{ zIndex: 9999, top: "40px", right: "16px" }}
+              className="absolute active:scale-95"
+              style={{
+                zIndex: 9999,
+                top: "40px",
+                right: "16px",
+                background: showTraffic
+                  ? "rgba(255,59,34,0.15)"
+                  : "rgba(15,17,26,0.85)",
+                backdropFilter: "blur(8px)",
+                border: `1.5px solid ${showTraffic ? "#FF3B22" : "rgba(255,255,255,0.15)"}`,
+                borderRadius: "10px",
+                padding: "8px 14px",
+                color: showTraffic ? "#FF3B22" : "white",
+                fontSize: "13px",
+                fontWeight: showTraffic ? 700 : 400,
+                cursor: "pointer",
+                boxShadow: "0 4px 16px rgba(0,0,0,0.4)",
+                transition: "all 0.15s",
+              }}
             >
-              <span className="text-[12px] font-bold tracking-wider select-none pointer-events-none">
-                SHOW TRAFFIC
-              </span>
-              <div
-                className={`w-11 h-6 rounded-full flex items-center p-1 transition-colors duration-300 pointer-events-none ${
-                  showTraffic ? "bg-[#0f111a]" : "bg-gray-400"
-                }`}
-              >
-                <div
-                  className={`bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300 ${
-                    showTraffic ? "translate-x-5" : "translate-x-0"
-                  }`}
-                />
-              </div>
-            </div>
+              SHOW TRAFFIC
+            </button>
 
             {/* 1. 지도 컴포넌트 렌더링 */}
             <FestivalMap
