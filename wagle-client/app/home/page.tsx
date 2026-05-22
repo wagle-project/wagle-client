@@ -10,6 +10,7 @@ import { FestivalList } from "@/app/components/festival/FestivalList";
 import { useFestivals } from "@/app/hooks/useFestivals";
 
 import AdPopup from "../components/AdPopup";
+import NoticePopup from "../components/NoticePopup"; // 공지 팝업 import
 
 export default function FestivalMapPage() {
   const router = useRouter();
@@ -17,30 +18,61 @@ export default function FestivalMapPage() {
     useFestivals();
 
   // 팝업 상태 관리
+  const [showNotice, setShowNotice] = useState(false);
   const [showAd, setShowAd] = useState(false);
+  const [pendingAd, setPendingAd] = useState(false); // 공지가 닫힌 후 띄울 광고 대기 상태
 
   useEffect(() => {
     // 린트 에러(동기적 setState 호출 방지) 해결을 위해 setTimeout을 사용해 비동기로 처리합니다.
     const timer = setTimeout(() => {
       try {
         if (typeof window !== "undefined") {
-          const hideAdUntil = window.localStorage.getItem("hideWagleAdUntil");
           const now = new Date().getTime();
 
-          // 저장된 데이터가 없거나, 현재 시간이 '안 보기' 설정 시간을 넘었다면 팝업 띄움
-          if (!hideAdUntil || now > parseInt(hideAdUntil, 10)) {
-            setShowAd(true);
+          // 1. 공지 팝업(Notice) 로컬스토리지 확인
+          const hideNoticeUntil = window.localStorage.getItem("hideNoticePopupExpiry");
+          const shouldShowNotice = !hideNoticeUntil || now > new Date(hideNoticeUntil).getTime();
+
+          // 2. 광고 팝업(Ad) 로컬스토리지 확인
+          const hideAdUntil = window.localStorage.getItem("hideWagleAdUntil");
+          const shouldShowAd = !hideAdUntil || now > parseInt(hideAdUntil, 10);
+
+          // 3. 순서대로 띄우기 로직
+          if (shouldShowNotice) {
+            setShowNotice(true); // 공지를 먼저 띄움
+            if (shouldShowAd) {
+              setPendingAd(true); // 광고도 띄워야 한다면 대기열에 넣어둠
+            }
+          } else if (shouldShowAd) {
+            setShowAd(true); // 공지를 안 띄워도 되면 광고를 바로 띄움
           }
         }
       } catch (err) {
         console.error("로컬스토리지 접근 에러:", err);
-        setShowAd(true);
+        // 에러 시 기본적으로 다 띄우도록 설정
+        setShowNotice(true);
+        setPendingAd(true);
       }
-    }, 0); // 0ms 지연 (렌더링 직후 비동기로 바로 실행됨)
+    }, 0);
 
-    // 컴포넌트 언마운트 시 타이머 정리
     return () => clearTimeout(timer);
   }, []);
+
+  // 공지 팝업 단순히 닫을 때
+  const handleCloseNotice = () => {
+    setShowNotice(false);
+    if (pendingAd) {
+      setShowAd(true); // 대기 중인 광고가 있으면 이제 띄움
+      setPendingAd(false);
+    }
+  };
+
+  // 공지 팝업 '오늘 하루 보지 않기' 눌렀을 때
+  const handleHideNoticeToday = () => {
+    const expiryDate = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+    window.localStorage.setItem("hideNoticePopupExpiry", expiryDate.toISOString());
+    handleCloseNotice(); // 닫기 로직 동일하게 실행 (광고 띄우기)
+  };
 
   return (
     <div className="relative flex flex-col min-h-screen w-full max-w-[430px] mx-auto bg-[#0a0b1e] font-sans">
@@ -77,13 +109,21 @@ export default function FestivalMapPage() {
       <div className="fixed top-0 right-0 w-64 h-64 bg-[#ff3d71]/5 blur-[100px] rounded-full pointer-events-none" />
       <div className="fixed bottom-0 left-0 w-64 h-64 bg-[#2bbdee]/5 blur-[100px] rounded-full pointer-events-none" />
 
-      {/* 광고 팝업 렌더링 */}
+      {/* 1. 공지 팝업 렌더링 */}
+      {showNotice && (
+        <NoticePopup 
+          onClose={handleCloseNotice} 
+          onHideToday={handleHideNoticeToday} 
+        />
+      )}
+
+      {/* 2. 광고 팝업 렌더링 */}
       {showAd && (
         <AdPopup
           onClose={() => setShowAd(false)}
           images={[
-            "/images/ad.jpeg", // 첫 번째 사진
-            "/images/ad1.jpeg",// 두 번째 사진
+            "/images/ad.jpeg",
+            "/images/ad1.jpeg",
             "/images/ad2.png",
             "/images/ad3.png",
             "/images/ad4.png",
