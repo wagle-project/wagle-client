@@ -476,11 +476,14 @@ export default function FestivalMap({
       <MapContainer
         center={center}
         zoom={16}
+        maxZoom={22}
         style={{ width: "100%", height: "100%" }}
         zoomControl={false}
       >
         {showBaseMap && (
           <TileLayer
+            maxZoom={28}
+            maxNativeZoom={28}
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution="&copy; OpenStreetMap contributors"
           />
