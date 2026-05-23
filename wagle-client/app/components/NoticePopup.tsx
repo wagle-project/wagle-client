@@ -163,19 +163,20 @@ export default function NoticePopup({
                 className="inline-flex items-center justify-center gap-2 w-[180px] h-[50px] rounded-[20px] font-extrabold text-sm text-[#0d2e3a] no-underline decoration-transparent border border-transparent bg-origin-border backdrop-blur-md"
                 style={{
                   marginTop: 20,
-                  // 1. 내부 배경은 보내주신 소스처럼 10%만 아주 맑게 투명화 (rgba 0.1)
-                  // 2. 테두리선에만 이미지의 화사한 블루~퍼플 그라데이션 적용
-                  backgroundImage:
-                    "linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), linear-gradient(135deg, #48cffe, #9b89ff)",
-                  backgroundClip: "padding-box, border-box",
-                  // 보내주신 소스의 맑은 하이라이트 테두리 광택 그림자 그대로 이식
+                  // 1. 내부 배경은 맑은 투명도를 유지하기 위해 기존 스타일 그대로 10% 반투명 흰색 지정
+                  backgroundColor: "rgba(253, 75, 141, 0.58)",
+
+                  // 2. 테두리만 원하시는 단색(#fd4b8d)으로 지정
+                  borderColor: "#fd4b8d",
+
+                  // 보내주신 소스의 맑은 하이라이트 테두리 광택 그림자 그대로 유지
                   boxShadow:
                     "inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), inset 0 0 3px 1px rgba(255, 255, 255, 0.7)",
                 }}
               >
                 <span
                   className="font-extrabold text-base"
-                  style={{ fontWeight: "bold", color: "black", fontSize: "12" }}
+                  style={{ fontWeight: "bold", color: "white", fontSize: "12" }}
                 >
                   앱 사용법 확인
                 </span>
