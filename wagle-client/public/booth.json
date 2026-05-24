@@ -9,8 +9,8 @@
         "college": "PHARMACY",
         "collegeName": "약학대학",
         "department": "약학대학",
-        "latitude": 35.833543861,
-        "longitude": 128.754246547,
+        "latitude": 35.833542306,
+        "longitude": 128.754209962,
         "menuImages": []
       },
       {
@@ -18,8 +18,8 @@
         "college": "HUMAN_ECOLOGY",
         "collegeName": "생활과학대학",
         "department": "식품영양학과",
-        "latitude": 35.83348538,
-        "longitude": 128.754262229,
+        "latitude": 35.833481704,
+        "longitude": 128.754232712,
         "menuImages": []
       },
       {
@@ -27,8 +27,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "국어교육과",
-        "latitude": 35.833425627,
-        "longitude": 128.754287319,
+        "latitude": 35.833426371,
+        "longitude": 128.754258713,
         "menuImages": []
       },
       {
@@ -36,8 +36,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "영어교육과",
-        "latitude": 35.833425627,
-        "longitude": 128.754287319,
+        "latitude": 35.833363133,
+        "longitude": 128.754281463,
         "menuImages": []
       },
       {
@@ -45,8 +45,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "수학교육과",
-        "latitude": 35.833309936,
-        "longitude": 128.754326523,
+        "latitude": 35.833305165,
+        "longitude": 128.754300964,
         "menuImages": []
       },
       {
@@ -54,8 +54,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "특수체육교육과",
-        "latitude": 35.833255268,
-        "longitude": 128.754353181,
+        "latitude": 35.833247198,
+        "longitude": 128.754323714,
         "menuImages": []
       },
       {
@@ -63,8 +63,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "교육학과",
-        "latitude": 35.833192973,
-        "longitude": 128.754375136,
+        "latitude": 35.833190091,
+        "longitude": 128.754353718,
         "menuImages": []
       },
       {
@@ -72,8 +72,8 @@
         "college": "MEDICINE",
         "collegeName": "의과대학",
         "department": "의과대학",
-        "latitude": 35.833134491,
-        "longitude": 128.75439709,
+        "latitude": 35.833132053,
+        "longitude": 128.754376089,
         "menuImages": []
       },
       {
@@ -81,8 +81,8 @@
         "college": "CHEONMA_HONORS",
         "collegeName": "천마인재대학",
         "department": "천마학부대학",
-        "latitude": 35.833077281,
-        "longitude": 128.754420612,
+        "latitude": 35.833070388,
+        "longitude": 128.754400697,
         "menuImages": []
       },
       {
@@ -90,8 +90,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "산림자원학과",
-        "latitude": 35.833016257,
-        "longitude": 128.754434725,
+        "latitude": 35.833014164,
+        "longitude": 128.754416357,
         "menuImages": []
       },
       {
@@ -99,8 +99,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "생명공학과",
-        "latitude": 35.832953956,
-        "longitude": 128.754449512,
+        "latitude": 35.832954312,
+        "longitude": 128.754440965,
         "menuImages": []
       },
       {
@@ -108,8 +108,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "식품공학과",
-        "latitude": 35.832894203,
-        "longitude": 128.754469898,
+        "latitude": 35.83289446,
+        "longitude": 128.754465573,
         "menuImages": []
       },
       {
@@ -117,8 +117,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "의생명공학과",
-        "latitude": 35.832835721,
-        "longitude": 128.754477739,
+        "latitude": 35.832834609,
+        "longitude": 128.754487944,
         "menuImages": []
       },
       {
@@ -126,8 +126,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "식품경제외식학과",
-        "latitude": 35.832782325,
-        "longitude": 128.754499693,
+        "latitude": 35.832780198,
+        "longitude": 128.754508078,
         "menuImages": []
       },
       {
@@ -135,8 +135,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "원예생명과학과",
-        "latitude": 35.832722572,
-        "longitude": 128.754515374,
+        "latitude": 35.832716719,
+        "longitude": 128.754537161,
         "menuImages": []
       },
       {
@@ -144,8 +144,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "조경학과",
-        "latitude": 35.832676045,
-        "longitude": 128.754551619,
+        "latitude": 35.832656867,
+        "longitude": 128.754559532,
         "menuImages": []
       },
       {
@@ -153,8 +153,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "경영학과",
-        "latitude": 35.832629005,
-        "longitude": 128.754568868,
+        "latitude": 35.832658681,
+        "longitude": 128.754555057,
         "menuImages": []
       },
       {
@@ -162,8 +162,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "무역학부",
-        "latitude": 35.83258578,
-        "longitude": 128.754598663,
+        "latitude": 35.832601314,
+        "longitude": 128.754580664,
         "menuImages": []
       },
       {
@@ -171,8 +171,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "회계세무학과",
-        "latitude": 35.832537469,
-        "longitude": 128.754614345,
+        "latitude": 35.832542521,
+        "longitude": 128.754612653,
         "menuImages": []
       },
       {
@@ -180,8 +180,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "컴퓨터학부",
-        "latitude": 35.832477715,
-        "longitude": 128.754644139,
+        "latitude": 35.832488108,
+        "longitude": 128.754643974,
         "menuImages": []
       },
       {
@@ -189,8 +189,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "로봇공학과",
-        "latitude": 35.83242559,
-        "longitude": 128.754678639,
+        "latitude": 35.832374635,
+        "longitude": 128.754708652,
         "menuImages": []
       },
       {
@@ -198,8 +198,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "전자공학과",
-        "latitude": 35.83237855,
-        "longitude": 128.754710002,
+        "latitude": 35.832318893,
+        "longitude": 128.754742148,
         "menuImages": []
       },
       {
@@ -207,8 +207,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "미래자동차공학과",
-        "latitude": 35.832330239,
-        "longitude": 128.75473666,
+        "latitude": 35.832259607,
+        "longitude": 128.754773571,
         "menuImages": []
       },
       {
@@ -216,8 +216,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "공과대학",
-        "latitude": 35.832298455,
-        "longitude": 128.754768023,
+        "latitude": 35.832210406,
+        "longitude": 128.754806515,
         "menuImages": []
       },
       {
@@ -225,8 +225,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "건축학부",
-        "latitude": 35.832246329,
-        "longitude": 128.75482134,
+        "latitude": 35.832155582,
+        "longitude": 128.754862,
         "menuImages": []
       },
       {
@@ -234,8 +234,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "도시공학과",
-        "latitude": 35.833576642,
-        "longitude": 128.754481038,
+        "latitude": 35.83358315,
+        "longitude": 128.754501832,
         "menuImages": []
       },
       {
@@ -243,8 +243,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "신소재공학부",
-        "latitude": 35.833518161,
-        "longitude": 128.754490447,
+        "latitude": 35.833526778,
+        "longitude": 128.754526168,
         "menuImages": []
       },
       {
@@ -252,8 +252,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "전기공학과",
-        "latitude": 35.833453323,
-        "longitude": 128.754509264,
+        "latitude": 35.833464769,
+        "longitude": 128.754557458,
         "menuImages": []
       },
       {
@@ -261,8 +261,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "기계공학부",
-        "latitude": 35.833396113,
-        "longitude": 128.754537491,
+        "latitude": 35.833402759,
+        "longitude": 128.754578319,
         "menuImages": []
       },
       {
@@ -270,8 +270,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "건축시스템공학과",
-        "latitude": 35.833331639,
-        "longitude": 128.754560777,
+        "latitude": 35.833343568,
+        "longitude": 128.754595702,
         "menuImages": []
       },
       {
@@ -279,8 +279,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "화학공학부",
-        "latitude": 35.833271284,
-        "longitude": 128.754581163,
+        "latitude": 35.833284377,
+        "longitude": 128.754616562,
         "menuImages": []
       },
       {
@@ -288,8 +288,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "환경공학과",
-        "latitude": 35.833211531,
-        "longitude": 128.754599981,
+        "latitude": 35.833228004,
+        "longitude": 128.754644375,
         "menuImages": []
       },
       {
@@ -297,8 +297,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "파이버시스템공학과",
-        "latitude": 35.833150507,
-        "longitude": 128.754621935,
+        "latitude": 35.833165995,
+        "longitude": 128.754668712,
         "menuImages": []
       },
       {
@@ -306,8 +306,8 @@
         "college": "SOCIAL_SCIENCE",
         "collegeName": "사회과학대학",
         "department": "경찰행정학과",
-        "latitude": 35.833092026,
-        "longitude": 128.754640753,
+        "latitude": 35.833109874,
+        "longitude": 128.754694762,
         "menuImages": []
       },
       {
@@ -315,8 +315,8 @@
         "college": "SOCIAL_SCIENCE",
         "collegeName": "사회과학대학",
         "department": "사회학과",
-        "latitude": 35.833032273,
-        "longitude": 128.754659571,
+        "latitude": 35.83305344,
+        "longitude": 128.754712723,
         "menuImages": []
       },
       {
@@ -324,8 +324,8 @@
         "college": "NATURAL_SCIENCE",
         "collegeName": "자연과학대학",
         "department": "자연과학대학",
-        "latitude": 35.83297252,
-        "longitude": 128.754681525,
+        "latitude": 35.832992309,
+        "longitude": 128.754736287,
         "menuImages": []
       },
       {
@@ -333,8 +333,8 @@
         "college": "NATURAL_SCIENCE",
         "collegeName": "자연과학대학",
         "department": "수학과",
-        "latitude": 35.83297252,
-        "longitude": 128.754681525,
+        "latitude": 35.832934998,
+        "longitude": 128.754752781,
         "menuImages": []
       },
       {
@@ -342,8 +342,8 @@
         "college": "NATURAL_SCIENCE",
         "collegeName": "자연과학대학",
         "department": "화학과",
-        "latitude": 35.8328492,
-        "longitude": 128.754723865,
+        "latitude": 35.832875777,
+        "longitude": 128.754778701,
         "menuImages": []
       },
       {
@@ -351,8 +351,8 @@
         "college": "NATURAL_SCIENCE",
         "collegeName": "자연과학대학",
         "department": "통계학과",
-        "latitude": 35.832790718,
-        "longitude": 128.754742683,
+        "latitude": 35.832820402,
+        "longitude": 128.754802163,
         "menuImages": []
       },
       {
@@ -360,8 +360,8 @@
         "college": "ARTS",
         "collegeName": "예술대학",
         "department": "작곡과",
-        "latitude": 35.832790718,
-        "longitude": 128.754742683,
+        "latitude": 35.832757352,
+        "longitude": 128.754831126,
         "menuImages": []
       },
       {
@@ -369,8 +369,8 @@
         "college": "ARTS",
         "collegeName": "예술대학",
         "department": "산업디자인학과",
-        "latitude": 35.832790718,
-        "longitude": 128.754742683,
+        "latitude": 35.832696826,
+        "longitude": 128.754852123,
         "menuImages": []
       },
       {
@@ -378,8 +378,8 @@
         "college": "ARTS",
         "collegeName": "예술대학",
         "department": "시각디자인학과",
-        "latitude": 35.832607053,
-        "longitude": 128.754835381,
+        "latitude": 35.83263993,
+        "longitude": 128.754876557,
         "menuImages": []
       },
       {
@@ -387,8 +387,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "국어국문학과",
-        "latitude": 35.832607053,
-        "longitude": 128.754835381,
+        "latitude": 35.832582856,
+        "longitude": 128.754900832,
         "menuImages": []
       },
       {
@@ -396,8 +396,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "일어일문학과",
-        "latitude": 35.832492632,
-        "longitude": 128.754899675,
+        "latitude": 35.832523813,
+        "longitude": 128.754929963,
         "menuImages": []
       },
       {
@@ -405,8 +405,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "역사학과",
-        "latitude": 35.832435421,
-        "longitude": 128.754940447,
+        "latitude": 35.832466739,
+        "longitude": 128.75495181,
         "menuImages": []
       },
       {
@@ -414,8 +414,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "철학과",
-        "latitude": 35.832382025,
-        "longitude": 128.754992196,
+        "latitude": 35.832411633,
+        "longitude": 128.754980941,
         "menuImages": []
       },
       {
@@ -423,8 +423,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "문화인류학과",
-        "latitude": 35.832332442,
-        "longitude": 128.755029831,
+        "latitude": 35.83235259,
+        "longitude": 128.755012499,
         "menuImages": []
       },
       {
@@ -432,8 +432,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "유럽언어문화학부",
-        "latitude": 35.832242176,
-        "longitude": 128.755122352,
+        "latitude": 35.832298647,
+        "longitude": 128.75504855,
         "menuImages": []
       },
       {
@@ -441,8 +441,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌교육학부",
-        "latitude": 35.832248427,
-        "longitude": 128.755125749,
+        "latitude": 35.832244808,
+        "longitude": 128.755100728,
         "menuImages": []
       },
       {
@@ -450,8 +450,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "중국언어문화학과",
-        "latitude": 35.832195031,
-        "longitude": 128.755172793,
+        "latitude": 35.832190969,
+        "longitude": 128.755155277,
         "menuImages": []
       },
       {
@@ -459,8 +459,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌비즈니스학과",
-        "latitude": 35.832153076,
-        "longitude": 128.755219838,
+        "latitude": 35.832144822,
+        "longitude": 128.755219313,
         "menuImages": []
       },
       {
@@ -468,8 +468,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "국제개발새마을학과",
-        "latitude": 35.832108579,
-        "longitude": 128.755270018,
+        "latitude": 35.832096751,
+        "longitude": 128.755288092,
         "menuImages": []
       },
       {
@@ -477,12 +477,11 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "통번역학부",
-        "latitude": 35.832064081,
-        "longitude": 128.755329608,
+        "latitude": 35.832052526,
+        "longitude": 128.755356871,
         "menuImages": []
       }
     ],
     "totalElements": 53
   }
 }
-
