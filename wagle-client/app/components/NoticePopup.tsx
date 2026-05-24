@@ -2,28 +2,27 @@
 
 import { useEffect, useRef, useState } from "react";
 
-interface AdPopupProps {
+interface NoticePopupProps {
   onClose: () => void;
-  images?: string[];
-  title?: string;
+  onHideToday: () => void;
 }
 
-export default function AdPopup({
+export default function NoticePopup({
   onClose,
-  images = [],
-  title = "와글와글 공지",
-}: AdPopupProps) {
+  onHideToday,
+}: NoticePopupProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const touchStartX = useRef<number>(0);
   const [hideForToday, setHideForToday] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
 
+  // 닫기 버튼이나 배경을 눌렀을 때 실행되는 함수
   const handleClose = () => {
     if (hideForToday) {
-      const tomorrow = new Date().getTime() + 24 * 60 * 60 * 1000;
-      localStorage.setItem("hideWagleAdUntil", tomorrow.toString());
+      // 체크박스가 체크되어 있으면 부모에서 넘겨준 onHideToday 실행 (로컬스토리지 저장 + 닫기)
+      onHideToday();
+    } else {
+      // 아니면 그냥 닫기
+      onClose();
     }
-    onClose();
   };
 
   useEffect(() => {
@@ -39,26 +38,7 @@ export default function AdPopup({
       clearTimeout(timer);
       document.removeEventListener("mousedown", handler);
     };
-  }, [hideForToday, onClose]);
-
-  const goToPrevious = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-  const goToNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e: React.TouchEvent) => {
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 40) {
-      if (diff > 0) goToNext();
-      else goToPrevious();
-    }
-  };
+  }, [hideForToday, onClose, onHideToday]);
 
   return (
     <div
@@ -76,6 +56,7 @@ export default function AdPopup({
         zIndex: 9999,
       }}
     >
+      {/* 어두운 배경 */}
       <div
         style={{
           position: "absolute",
@@ -89,6 +70,7 @@ export default function AdPopup({
         onClick={handleClose}
       />
 
+      {/* 팝업 모달 컨테이너 */}
       <div
         ref={ref}
         style={{
@@ -106,6 +88,7 @@ export default function AdPopup({
           animation: "popUp 0.25s cubic-bezier(0.34,1.56,0.64,1)",
         }}
       >
+        {/* 닫기 버튼 */}
         <button
           onClick={handleClose}
           style={{
@@ -125,13 +108,14 @@ export default function AdPopup({
           ✕
         </button>
 
-        <div style={{ marginBottom: "12px" }}>
+        {/* 상단 로고 */}
+        <div style={{ marginBottom: "16px" }}>
           <span className="bg-gradient-to-r from-[#ff3d71] to-[#3facee] bg-clip-text text-transparent font-bold tracking-[0.2em] text-xs uppercase">
             WagleWagle
           </span>
         </div>
 
-        {/* ── 사진 슬라이더 영역 ── */}
+        {/* ── 공지 내용 영역 (사진 대신 텍스트) ── */}
         <div
           style={{
             width: "100%",
@@ -142,67 +126,67 @@ export default function AdPopup({
           }}
         >
           <div
-            onTouchStart={handleTouchStart}
-            onTouchEnd={handleTouchEnd}
             style={{
               width: "100%",
               borderRadius: "12px",
               overflow: "hidden",
               background: "rgba(255,255,255,0.03)",
               display: "flex",
-              justifyContent: "center",
-              position: "relative",
+              flexDirection: "column",
+              alignItems: "center",
+              padding: "32px 24px",
+              textAlign: "center",
             }}
           >
-            {images.length > 0 ? (
-              <img
-                src={images[currentIndex]}
-                alt={`공지 이미지 ${currentIndex + 1}`}
+            <h2
+              style={{
+                color: "#ffffff",
+                fontSize: "18px",
+                fontWeight: "bold",
+                marginBottom: "12px",
+              }}
+            >
+              📢 와글와글 오픈 공지
+            </h2>
+            <p
+              style={{
+                color: "rgba(255,255,255,0.7)",
+                fontSize: "14px",
+                lineHeight: "1.6",
+                wordBreak: "keep-all",
+              }}
+            >
+              와글와글에 오신 것을 환영합니다! 🎉
+              <br />
+              <a
+                href="https://your-link-here.com"
+                className="inline-flex items-center justify-center gap-2 w-[180px] h-[50px] rounded-[20px] font-extrabold text-sm text-[#0d2e3a] no-underline decoration-transparent border border-transparent bg-origin-border backdrop-blur-md"
                 style={{
-                  width: "100%",
-                  maxHeight: "55vh",
-                  objectFit: "contain",
-                  display: "block",
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  padding: "40px",
-                  textAlign: "center",
-                  color: "rgba(255,255,255,0.3)",
-                  fontSize: "13px",
+                  marginTop: 20,
+                  // 1. 내부 배경은 맑은 투명도를 유지하기 위해 기존 스타일 그대로 10% 반투명 흰색 지정
+                  backgroundColor: "rgba(253, 75, 141, 0.58)",
+
+                  // 2. 테두리만 원하시는 단색(#fd4b8d)으로 지정
+                  borderColor: "#fd4b8d",
+
+                  // 보내주신 소스의 맑은 하이라이트 테두리 광택 그림자 그대로 유지
+                  boxShadow:
+                    "inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), inset 0 0 3px 1px rgba(255, 255, 255, 0.7)",
                 }}
               >
-                광고/공지용 이미지가 없습니다
-              </div>
-            )}
+                <span
+                  className="font-extrabold text-base"
+                  style={{ fontWeight: "bold", color: "white", fontSize: "12" }}
+                >
+                  앱 사용법 확인
+                </span>
+                <span className="text-base">🔗</span>
+              </a>
+            </p>
           </div>
-
-          {/* 사진이 2장 이상일 때 하단 점(Dots) 표시 */}
-          {images.length > 1 && (
-            <div style={{ display: "flex", gap: "6px", marginTop: "12px" }}>
-              {images.map((_, idx) => (
-                <div
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  style={{
-                    width: "8px",
-                    height: "8px",
-                    borderRadius: "50%",
-                    cursor: "pointer",
-                    background:
-                      currentIndex === idx
-                        ? "#E270CA"
-                        : "rgba(255,255,255,0.2)",
-                    transition: "background 0.2s",
-                  }}
-                />
-              ))}
-            </div>
-          )}
         </div>
 
+        {/* 하단 오늘 하루 보지 않기 체크박스 */}
         <label
           style={{
             display: "flex",
@@ -229,6 +213,7 @@ export default function AdPopup({
         </label>
       </div>
 
+      {/* 애니메이션 스타일 */}
       <style>{`
         @keyframes popUp {
           from { transform: scale(0.95) translateY(10px); opacity: 0; }
