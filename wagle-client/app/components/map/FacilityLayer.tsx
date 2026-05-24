@@ -2,43 +2,15 @@
 
 import { Marker } from "react-leaflet";
 import L from "leaflet";
-import type { FacilityInfo, FacilityType } from "../../types/facility.ts";
+import type { FacilityInfo, FacilityType } from "../../types/facility";
 import { FACILITY_ICON, FACILITY_LABEL } from "../../types/facility";
 
-// 영남대 축제 부대시설 하드코딩 더미 데이터
-// ⚠️ 백엔드 API 연결 시 이 데이터를 fetch로 교체
-const FACILITY_DATA: FacilityInfo[] = [
-  {
-    facilityId: 1,
-    facilityType: "WATER",
-    latitude: 35.83531,
-    longitude: 128.755501,
-  },
-  {
-    facilityId: 2,
-    facilityType: "ELECTRICITY",
-    latitude: 35.834532,
-    longitude: 128.756658,
-  },
-  {
-    facilityId: 3,
-    facilityType: "FOOD_WASTE",
-    latitude: 35.833001,
-    longitude: 128.755759,
-  },
-  {
-    facilityId: 4,
-    facilityType: "GENERAL_WASTE",
-    latitude: 35.836419,
-    longitude: 128.756044,
-  },
-  {
-    facilityId: 5,
-    facilityType: "TOILET",
-    latitude: 35.835123,
-    longitude: 128.755987,
-  },
-];
+// public/facility.json에서 부대시설 데이터 로드
+// ⚠️ 백엔드 API 연결 시 이 import를 fetch로 교체
+import facilityData from "../../../public/facility.json";
+
+// facility.json의 result.content를 FacilityInfo[] 타입으로 사용
+const FACILITY_DATA: FacilityInfo[] = facilityData.result.content as FacilityInfo[];
 
 interface FacilityLayerProps {
   /** 표시할 부대시설 타입 목록 (빈 Set이면 전체 숨김) */
