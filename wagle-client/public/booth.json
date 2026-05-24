@@ -153,8 +153,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "경영학과",
-        "latitude": 35.832658681,
-        "longitude": 128.754555057,
+        "latitude": 35.832601314,
+        "longitude": 128.754580664,
         "menuImages": []
       },
       {
@@ -162,8 +162,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "무역학부",
-        "latitude": 35.832601314,
-        "longitude": 128.754580664,
+        "latitude": 35.832542521,
+        "longitude": 128.754612653,
         "menuImages": []
       },
       {
@@ -171,8 +171,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "회계세무학과",
-        "latitude": 35.832542521,
-        "longitude": 128.754612653,
+        "latitude": 35.832488108,
+        "longitude": 128.754643974,
         "menuImages": []
       },
       {
@@ -180,8 +180,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "컴퓨터학부",
-        "latitude": 35.832488108,
-        "longitude": 128.754643974,
+        "latitude": 35.832432347,
+        "longitude": 128.754670464,
         "menuImages": []
       },
       {
