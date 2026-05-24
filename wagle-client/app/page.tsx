@@ -12,7 +12,7 @@ export default function SplashScreen() {
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setProgress((prev) => Math.min(prev + 1, 100));
-    }, 30);
+    }, 5);
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
