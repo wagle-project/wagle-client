@@ -244,6 +244,7 @@ export default function FestivalMap({
                 maxHeight: "70vh",
                 overflowY: "auto",
                 boxShadow: "0 4px 20px rgba(0,0,0,0.5)",
+                touchAction: "pan-y",
               }}
             >
               {/* 전체 on/off */}
