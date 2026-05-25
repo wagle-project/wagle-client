@@ -38,7 +38,7 @@ export default function BoothMarker({
     zoom: () => setZoom(map.getZoom()),
   });
 
-  console.log(zoom);
+  // console.log(zoom);
 
   const size = getMarkerSize(zoom);
   const fontSize = size <= 12 ? 4 : size <= 13 ? 5 : size <= 14 ? 9 : 10;
