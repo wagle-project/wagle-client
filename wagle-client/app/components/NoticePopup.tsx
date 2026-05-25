@@ -159,7 +159,7 @@ export default function NoticePopup({
               와글와글에 오신 것을 환영합니다! 🎉
               <br />
               <a
-                href="https://your-link-here.com"
+                href="https://www.instagram.com/p/DYwxaJiExp4/?img_index=1&igsh=MWVsYWE3YWN1MHl3bw=="
                 className="inline-flex items-center justify-center gap-2 w-[180px] h-[50px] rounded-[20px] font-extrabold text-sm text-[#0d2e3a] no-underline decoration-transparent border border-transparent bg-origin-border backdrop-blur-md"
                 style={{
                   marginTop: 20,
