@@ -474,8 +474,8 @@
         "college": "ARTS",
         "collegeName": "예술대학",
         "department": "시각디자인학과",
-        "latitude": 35.83273699999996,
-        "longitude": 128.7547189999999,
+        "latitude": 35.832737,
+        "longitude": 128.754719,
         "menuImages": [
           "/images/bar/42-1.webp"
         ]
@@ -485,8 +485,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "국어국문학과",
-        "latitude": 35.83267891581366,
-        "longitude": 128.75472733956568,
+        "latitude": 35.832693522443,
+        "longitude": 128.754750461001,
         "menuImages": [
           "/images/bar/43-1.webp"
         ]
@@ -496,8 +496,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "일어일문학과",
-        "latitude": 35.832631388593974,
-        "longitude": 128.75474930465637,
+        "latitude": 35.832645509251,
+        "longitude": 128.754774467597,
         "menuImages": [
           "/images/bar/44-1.webp"
         ]
@@ -507,8 +507,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "역사학과",
-        "latitude": 35.832590262064635,
-        "longitude": 128.75477953090473,
+        "latitude": 35.832606164983,
+        "longitude": 128.754810501684,
         "menuImages": [
           "/images/bar/45-1.webp"
         ]
@@ -518,8 +518,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "철학과",
-        "latitude": 35.83255224991142,
-        "longitude": 128.75481377677457,
+        "latitude": 35.832564200147,
+        "longitude": 128.754842899926,
         "menuImages": [
           "/images/bar/46-1.webp"
         ]
@@ -529,8 +529,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "문화인류학과",
-        "latitude": 35.832514935782186,
-        "longitude": 128.75484892356064,
+        "latitude": 35.832516186955,
+        "longitude": 128.754866906523,
         "menuImages": [
           "/images/bar/47-1.webp"
         ]
@@ -540,8 +540,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "유럽언어문화학부",
-        "latitude": 35.83247677328682,
-        "longitude": 128.75488297538885,
+        "latitude": 35.832468173762,
+        "longitude": 128.754890913119,
         "menuImages": [
           "/images/bar/48-1.webp"
         ]
@@ -551,8 +551,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌교육학부",
-        "latitude": 35.83243708599729,
-        "longitude": 128.75491505921607,
+        "latitude": 35.83242016057,
+        "longitude": 128.754914919715,
         "menuImages": [
           "/images/bar/49-1.webp",
           "/images/bar/49-2.webp"
@@ -563,8 +563,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "중국언어문화학과",
-        "latitude": 35.832396067447625,
-        "longitude": 128.7549454248302,
+        "latitude": 35.832381471079,
+        "longitude": 128.754951862255,
         "menuImages": [
           "/images/bar/50-1.webp"
         ]
@@ -574,8 +574,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌비즈니스학과",
-        "latitude": 35.83235478113389,
-        "longitude": 128.75497544485017,
+        "latitude": 35.832343513317,
+        "longitude": 128.754989820016,
         "menuImages": [
           "/images/bar/51-1.webp",
           "/images/bar/51-2.webp",
@@ -588,8 +588,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "국제개발새마을학과",
-        "latitude": 35.83231516051424,
-        "longitude": 128.75500761472594,
+        "latitude": 35.832305555556,
+        "longitude": 128.755027777778,
         "menuImages": [
           "/images/bar/52-1.webp"
         ]
@@ -599,8 +599,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "통번역학부",
-        "latitude": 35.832253,
-        "longitude": 128.755094,
+        "latitude": 35.832277777778,
+        "longitude": 128.755111111111,
         "menuImages": [
           "/images/bar/53-1.webp"
         ]
