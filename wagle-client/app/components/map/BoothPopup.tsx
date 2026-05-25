@@ -17,12 +17,14 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
   // JSON 데이터에서 제공하는 실제 메뉴 이미지 배열을 바로 사용 (없으면 빈 배열)
   const menuImages = booth.menuImages || [];
 
-  // ── 사진 슬라이더용 상태 관리 ──
+  // ── 사진 슬라이더 및 이미지 확대용 상태 관리 ──
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false); // 이미지 확대 상태 추가
 
   // 팝업 바깥 클릭 시 닫기
   useEffect(() => {
     const handler = (e: MouseEvent) => {
+      if (isZoomed) return; // 이미지 확대 상태일 때는 바깥을 클릭해도 팝업이 닫히지 않도록 방지
       if (ref.current && !ref.current.contains(e.target as Node)) {
         onClose();
       }
@@ -34,7 +36,7 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
       clearTimeout(timer);
       document.removeEventListener("mousedown", handler);
     };
-  }, [onClose]);
+  }, [onClose, isZoomed]);
 
   // 이전/다음 사진 보기 함수
   const goToPrevious = () => {
@@ -197,15 +199,16 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
                 )}
 
                 {/* ── 실제 이미지 ── */}
-                {/* 현재 index에 해당하는 이미지만 보여주면 되므로 1장만 렌더링 */}
                 <img
                   src={menuImages[currentIndex]}
                   alt={`${booth.department} 메뉴판 ${currentIndex + 1}`}
+                  onClick={() => setIsZoomed(true)} // 클릭 시 이미지 확대 기능 추가
                   style={{
                     width: "100%",
                     maxHeight: "55vh",
                     objectFit: "contain",
                     display: "block",
+                    cursor: "zoom-in", // 확대 가능함을 알리는 커서
                   }}
                 />
 
@@ -264,6 +267,37 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
         </div>
       </div>
 
+      {/* ── 확대된 메뉴판 이미지 오버레이 (클릭 시 전체화면 표시) ── */}
+      {isZoomed && (
+        <div
+          onClick={() => setIsZoomed(false)} // 다시 클릭하면 축소(닫기)
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background: "rgba(0, 0, 0, 0.85)", // 어두운 배경
+            zIndex: 4000,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "auto",
+            cursor: "zoom-out",
+          }}
+        >
+          <img
+            src={menuImages[currentIndex]}
+            alt="확대된 메뉴판"
+            style={{
+              maxWidth: "95%",
+              maxHeight: "95%",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+      )}
+
       <style>{`
         @keyframes popUp {
           from { transform: scale(0.95) translateY(10px); opacity: 0; }
@@ -274,3 +308,4 @@ export default function BoothPopup({ booth, onClose }: BoothPopupProps) {
     map.getContainer(),
   );
 }
+
