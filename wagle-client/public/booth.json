@@ -485,8 +485,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "국어국문학과",
-        "latitude": 35.83269024326689,
-        "longitude": 128.75474116927947,
+        "latitude": 35.8326979507423,
+        "longitude": 128.75475227332123,
         "menuImages": [
           "/images/bar/43-1.webp"
         ]
@@ -496,8 +496,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "일어일문학과",
-        "latitude": 35.832645061907364,
-        "longitude": 128.7547664149731,
+        "latitude": 35.832659620571256,
+        "longitude": 128.7547863726943,
         "menuImages": [
           "/images/bar/44-1.webp"
         ]
@@ -507,8 +507,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "역사학과",
-        "latitude": 35.83260345096383,
-        "longitude": 128.75479716993894,
+        "latitude": 35.83262372198687,
+        "longitude": 128.75482299069807,
         "menuImages": [
           "/images/bar/45-1.webp"
         ]
@@ -518,8 +518,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "철학과",
-        "latitude": 35.832560480219335,
-        "longitude": 128.75482601808295,
+        "latitude": 35.8325851617036,
+        "longitude": 128.75485679415664,
         "menuImages": [
           "/images/bar/46-1.webp"
         ]
@@ -529,8 +529,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "문화인류학과",
-        "latitude": 35.832519384097445,
-        "longitude": 128.75485743704994,
+        "latitude": 35.83254665568473,
+        "longitude": 128.75489068964418,
         "menuImages": [
           "/images/bar/47-1.webp"
         ]
@@ -540,8 +540,8 @@
         "college": "HUMANITIES",
         "collegeName": "인문대학",
         "department": "유럽언어문화학부",
-        "latitude": 35.832474102226946,
-        "longitude": 128.75488224517514,
+        "latitude": 35.83250430372554,
+        "longitude": 128.75491893215852,
         "menuImages": [
           "/images/bar/48-1.webp"
         ]
@@ -551,8 +551,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌교육학부",
-        "latitude": 35.8324293467084,
-        "longitude": 128.75490812183932,
+        "latitude": 35.832459045346035,
+        "longitude": 128.7549430775287,
         "menuImages": [
           "/images/bar/49-1.webp",
           "/images/bar/49-2.webp"
@@ -563,8 +563,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "중국언어문화학과",
-        "latitude": 35.83238909096477,
-        "longitude": 128.75494015355162,
+        "latitude": 35.832415449947135,
+        "longitude": 128.75496989073127,
         "menuImages": [
           "/images/bar/50-1.webp"
         ]
@@ -574,8 +574,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "글로벌비즈니스학과",
-        "latitude": 35.83235088785721,
-        "longitude": 128.75497490743317,
+        "latitude": 35.832375029815935,
+        "longitude": 128.75500130069491,
         "menuImages": [
           "/images/bar/51-1.webp",
           "/images/bar/51-2.webp",
@@ -588,8 +588,8 @@
         "college": "GLOBAL_TALENT",
         "collegeName": "글로벌인재대학",
         "department": "국제개발새마을학과",
-        "latitude": 35.83231329111675,
-        "longitude": 128.75501000935202,
+        "latitude": 35.832331084746976,
+        "longitude": 128.7550274791197,
         "menuImages": [
           "/images/bar/52-1.webp"
         ]
