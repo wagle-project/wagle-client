@@ -180,8 +180,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "조경학과",
-        "latitude": 35.83284155415131,
-        "longitude": 128.75452345434732,
+        "latitude": 35.83283769543779,
+        "longitude": 128.75452522292434,
         "menuImages": [
           "/images/bar/16-1.webp"
         ]
@@ -191,8 +191,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "경영학과",
-        "latitude": 35.83279564891448,
-        "longitude": 128.7545303233306,
+        "latitude": 35.83278720781308,
+        "longitude": 128.75453122773433,
         "menuImages": [
           "/images/bar/17-1.webp"
         ]
@@ -202,8 +202,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "무역학부",
-        "latitude": 35.832750973587245,
-        "longitude": 128.75454275052323,
+        "latitude": 35.83273903218199,
+        "longitude": 128.75454717326593,
         "menuImages": [
           "/images/bar/18-1.webp"
         ]
@@ -213,8 +213,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "회계세무학과",
-        "latitude": 35.83270776384437,
-        "longitude": 128.754560358238,
+        "latitude": 35.8326923289903,
+        "longitude": 128.7545674325461,
         "menuImages": [
           "/images/bar/19-1.webp"
         ]
@@ -224,8 +224,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "컴퓨터학부",
-        "latitude": 35.83266567674667,
-        "longitude": 128.7545805388691,
+        "latitude": 35.83264692895928,
+        "longitude": 128.7545904866747,
         "menuImages": [
           "/images/bar/20-1.webp"
         ]
@@ -235,8 +235,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "로봇공학과",
-        "latitude": 35.8326243743218,
-        "longitude": 128.7546023128391,
+        "latitude": 35.83260159483542,
+        "longitude": 128.7546137025823,
         "menuImages": [
           "/images/bar/21-1.webp"
         ]
@@ -246,8 +246,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "전자공학과",
-        "latitude": 35.832541990991906,
-        "longitude": 128.75464619750468,
+        "latitude": 35.83253463758443,
+        "longitude": 128.75465043985514,
         "menuImages": [
           "/images/bar/22-1.webp"
         ]
@@ -257,8 +257,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "미래자동차공학과",
-        "latitude": 35.83246145701176,
-        "longitude": 128.75469338784873,
+        "latitude": 35.83246836513154,
+        "longitude": 128.75468845347746,
         "menuImages": [
           "/images/bar/23-1.webp",
           "/images/bar/23-2.webp"
@@ -269,8 +269,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "공과대학",
-        "latitude": 35.83242342251559,
-        "longitude": 128.7547204701678,
+        "latitude": 35.83242691547156,
+        "longitude": 128.7547180583649,
         "menuImages": []
       },
       {
