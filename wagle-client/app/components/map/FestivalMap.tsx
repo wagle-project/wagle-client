@@ -484,8 +484,8 @@ export default function FestivalMap({
           <TileLayer
             maxZoom={28}
             maxNativeZoom={28}
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution="&copy; OpenStreetMap contributors"
+            url={`https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png?api_key=${process.env.NEXT_PUBLIC_STADIA_API_KEY}`}
+            attribution="&copy; Stadia Maps &copy; OpenStreetMap contributors"
           />
         )}
         <FixedMap bounds={totalBounds} />
