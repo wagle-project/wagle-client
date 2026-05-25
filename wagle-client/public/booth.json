@@ -26,8 +26,8 @@
         "college": "HUMAN_ECOLOGY",
         "collegeName": "생활과학대학",
         "department": "식품영양학과",
-        "latitude": 35.83360735714286,
-        "longitude": 128.75424214285715,
+        "latitude": 35.8336078125,
+        "longitude": 128.754241375,
         "menuImages": [
           "/images/bar/2-1.webp"
         ]
@@ -37,8 +37,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "국어교육과",
-        "latitude": 35.83355171428572,
-        "longitude": 128.75426228571428,
+        "latitude": 35.833552625,
+        "longitude": 128.75426075000001,
         "menuImages": [
           "/images/bar/3-1.webp"
         ]
@@ -48,8 +48,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "영어교육과",
-        "latitude": 35.83349607142857,
-        "longitude": 128.75428242857143,
+        "latitude": 35.8334974375,
+        "longitude": 128.754280125,
         "menuImages": [
           "/images/bar/4-1.webp"
         ]
@@ -59,8 +59,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "수학교육과",
-        "latitude": 35.83344042857143,
-        "longitude": 128.75430257142858,
+        "latitude": 35.833442250000004,
+        "longitude": 128.7542995,
         "menuImages": [
           "/images/bar/5-1.webp"
         ]
@@ -70,8 +70,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "특수체육교육과",
-        "latitude": 35.83338478571429,
-        "longitude": 128.7543227142857,
+        "latitude": 35.8333870625,
+        "longitude": 128.754318875,
         "menuImages": [
           "/images/bar/6-1.webp"
         ]
@@ -81,8 +81,8 @@
         "college": "EDUCATION",
         "collegeName": "사범대학",
         "department": "교육학과",
-        "latitude": 35.833329142857146,
-        "longitude": 128.75434285714286,
+        "latitude": 35.833331875,
+        "longitude": 128.75433825,
         "menuImages": [
           "/images/bar/7-1.webp"
         ]
@@ -92,8 +92,8 @@
         "college": "MEDICINE",
         "collegeName": "의과대학",
         "department": "의과대학",
-        "latitude": 35.833273500000004,
-        "longitude": 128.754363,
+        "latitude": 35.8332766875,
+        "longitude": 128.754357625,
         "menuImages": [
           "/images/bar/8-1.webp"
         ]
@@ -103,8 +103,8 @@
         "college": "CHEONMA_HONORS",
         "collegeName": "천마인재대학",
         "department": "천마학부대학",
-        "latitude": 35.833217857142856,
-        "longitude": 128.75438314285714,
+        "latitude": 35.8332215,
+        "longitude": 128.754377,
         "menuImages": [
           "/images/bar/9-1.webp"
         ]
@@ -114,8 +114,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "산림자원학과",
-        "latitude": 35.833162214285714,
-        "longitude": 128.7544032857143,
+        "latitude": 35.8331663125,
+        "longitude": 128.754396375,
         "menuImages": [
           "/images/bar/10-1.webp"
         ]
@@ -125,8 +125,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "생명공학과",
-        "latitude": 35.83310657142857,
-        "longitude": 128.7544234285714,
+        "latitude": 35.833111125,
+        "longitude": 128.75441575000002,
         "menuImages": [
           "/images/bar/11-1.webp"
         ]
@@ -136,8 +136,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "식품공학과",
-        "latitude": 35.83305092857143,
-        "longitude": 128.75444357142857,
+        "latitude": 35.8330559375,
+        "longitude": 128.75443512500001,
         "menuImages": [
           "/images/bar/12-1.webp"
         ]
@@ -147,8 +147,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "의생명공학과",
-        "latitude": 35.83299528571428,
-        "longitude": 128.75446371428572,
+        "latitude": 35.83300075,
+        "longitude": 128.7544545,
         "menuImages": [
           "/images/bar/13-1.webp"
         ]
@@ -158,8 +158,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "식품경제외식학과",
-        "latitude": 35.83293964285714,
-        "longitude": 128.75448385714284,
+        "latitude": 35.8329455625,
+        "longitude": 128.754473875,
         "menuImages": [
           "/images/bar/14-1.webp"
         ]
@@ -169,8 +169,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "원예생명과학과",
-        "latitude": 35.832884,
-        "longitude": 128.754504,
+        "latitude": 35.832890375,
+        "longitude": 128.75449325,
         "menuImages": [
           "/images/bar/15-1.webp"
         ]
@@ -180,8 +180,8 @@
         "college": "BIO_APPLIED_SCIENCE",
         "collegeName": "생명응용과학대학",
         "department": "조경학과",
-        "latitude": 35.83283769543779,
-        "longitude": 128.75452522292434,
+        "latitude": 35.8328351875,
+        "longitude": 128.75451262500002,
         "menuImages": [
           "/images/bar/16-1.webp"
         ]
@@ -191,8 +191,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "경영학과",
-        "latitude": 35.83278720781308,
-        "longitude": 128.75453122773433,
+        "latitude": 35.83278,
+        "longitude": 128.754532,
         "menuImages": [
           "/images/bar/17-1.webp"
         ]
@@ -202,8 +202,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "무역학부",
-        "latitude": 35.83273903218199,
-        "longitude": 128.75454717326593,
+        "latitude": 35.8327329896904,
+        "longitude": 128.75454941122578,
         "menuImages": [
           "/images/bar/18-1.webp"
         ]
@@ -213,8 +213,8 @@
         "college": "BUSINESS",
         "collegeName": "경영대학",
         "department": "회계세무학과",
-        "latitude": 35.8326923289903,
-        "longitude": 128.7545674325461,
+        "latitude": 35.83268720353487,
+        "longitude": 128.75456978171317,
         "menuImages": [
           "/images/bar/19-1.webp"
         ]
@@ -224,8 +224,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "컴퓨터학부",
-        "latitude": 35.83264692895928,
-        "longitude": 128.7545904866747,
+        "latitude": 35.83264265998881,
+        "longitude": 128.75459275184267,
         "menuImages": [
           "/images/bar/20-1.webp"
         ]
@@ -235,8 +235,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "로봇공학과",
-        "latitude": 35.83260159483542,
-        "longitude": 128.7546137025823,
+        "latitude": 35.83259799274536,
+        "longitude": 128.75461550362732,
         "menuImages": [
           "/images/bar/21-1.webp"
         ]
@@ -246,8 +246,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "전자공학과",
-        "latitude": 35.83253463758443,
-        "longitude": 128.75465043985514,
+        "latitude": 35.83253219573678,
+        "longitude": 128.7546518486134,
         "menuImages": [
           "/images/bar/22-1.webp"
         ]
@@ -257,8 +257,8 @@
         "college": "DIGITAL_CONVERGENCE",
         "collegeName": "디지털융합대학",
         "department": "미래자동차공학과",
-        "latitude": 35.83246836513154,
-        "longitude": 128.75468845347746,
+        "latitude": 35.83246705428533,
+        "longitude": 128.75468938979617,
         "menuImages": [
           "/images/bar/23-1.webp",
           "/images/bar/23-2.webp"
@@ -269,8 +269,8 @@
         "college": "ENGINEERING",
         "collegeName": "공과대학",
         "department": "공과대학",
-        "latitude": 35.83242691547156,
-        "longitude": 128.7547180583649,
+        "latitude": 35.832426252667744,
+        "longitude": 128.75471851601512,
         "menuImages": []
       },
       {
