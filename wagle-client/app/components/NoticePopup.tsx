@@ -165,10 +165,8 @@ export default function NoticePopup({
                   marginTop: 20,
                   // 1. 내부 배경은 맑은 투명도를 유지하기 위해 기존 스타일 그대로 10% 반투명 흰색 지정
                   backgroundColor: "rgba(253, 75, 141, 0.58)",
-
                   // 2. 테두리만 원하시는 단색(#fd4b8d)으로 지정
                   borderColor: "#fd4b8d",
-
                   // 보내주신 소스의 맑은 하이라이트 테두리 광택 그림자 그대로 유지
                   boxShadow:
                     "inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7), inset 0 0 3px 1px rgba(255, 255, 255, 0.7)",
